@@ -5,13 +5,29 @@ import addfile_tpl from '../templates/addfile-tpl';
 import dialogPolyfill from 'dialog-polyfill'
 import '../../../lib/dropbox/dropins';
 
+
+function print_composers(piece) {
+  var printed_role_list = [];
+  if (piece.mass) {
+    var all_roles = piece.roles.concat(piece.mass.roles);
+  }
+  else {
+    var all_roles = piece.roles;
+  }
+  for (let role of all_roles) {
+    if (role.role_type.role_type_id == "composer") {
+      printed_role_list.push(role.person.name);
+    }
+  };
+  return printed_role_list.join(", ");
+}
+
 class AddFile extends Backbone.View {
 
   initialize (options) {
     Dropbox.appKey = "gwuog2373cwj45g";
     this.container = options.container;
-    this.filebase = "http://92.154.49.37/CRIM/files/original/"
-    this.scores = []
+    this.scores = [];
   }
 
   get tagName(){
@@ -39,8 +55,8 @@ class AddFile extends Backbone.View {
     $("#loader").show()
     if (this.$el.find("#crim-panel.is-active").length > 0){
       for (let score of this.$el.find("#crim-panel .mdl-checkbox__input:checked")){
-        let $score = $(score)
-        this.fromUrl($score.val(), $score.data("composer"), $score.data("title") )
+        let $score = $(score);
+        this.fromUrl($score.val(), $score.data("roles"), $score.data("title") )
       }
     }
     else {
@@ -49,22 +65,21 @@ class AddFile extends Backbone.View {
     this.close()
   }
 
-  fromUrl(url, composer, title) {
+  fromUrl(url, roles, title) {
 
     if (!url){
       url = this.$el.find("#url_input").val().trim();
     }
-    // Go via Omas to bypass CORS
-    let omas_url = "http://mith.umd.edu/ema/"+encodeURIComponent(url)+"/all/all/@all"
+    // let processed_url = url + "/all/all/@all"
 
     let fileInfo = {
         "filename": url.replace(/^.*[\\\/]/, ''),
-        "composer": composer,
+        "roles": roles,
         "title": title,
         "url": url
     };
 
-    $.get(omas_url, (data) => {
+    $.get(url, (data) => {
       fileInfo["string"] = data;
       Events.trigger('addScore', fileInfo);
     }, 'text')
@@ -130,25 +145,28 @@ class AddFile extends Backbone.View {
   }
 
   render() {
+    var all_pieces_url = document.getElementById("main-citations").getAttribute("data-pieces");
 
     // get files info
-    return $.get("http://92.154.49.37/CRIM/api/meifiles", (data)=>{
-      for (let score of data){
-        for (let file of score.files){
-          let title = score.item_title
-          let origf = file.original_filename
-          origf = origf.match("Mass") ? origf.split(/[_\.]/)[3] : ""
-          if (origf) {
-            title = title + " (" + origf + ")"
-          }
-          let fileinfo = {
-            title: title,
-            composer: score.composer,
-            url: this.filebase + file.filename,
-            id: "s"+file.id
-          }
-          this.scores.push(fileinfo)
+    return $.get(all_pieces_url, (pieces)=>{
+      for (let piece of pieces) {
+        if (piece.mass) {
+          var title = "[" + piece.piece_id + "] " + piece.mass.title + ": " + piece.title;
         }
+        else {
+          var title = "[" + piece.piece_id + "] " + piece.title;
+        }
+        // Add composer, editor, etc. to roles
+        title = title + " (" + print_composers(piece) + ")"
+        // Use only the first MEI link, at least for now -- or until we have
+        // better defined desired behavior for multiple links
+        let first_mei_link = piece.mei_links[0];
+        let fileinfo = {
+          title: title,
+          url: first_mei_link,
+          id: (piece.piece_id)
+        };
+        this.scores.push(fileinfo);
       }
 
       this.container.append(this.$el.html(this.template({scores:this.scores})))
@@ -161,4 +179,4 @@ class AddFile extends Backbone.View {
 
 }
 
-export default AddFile
+export default AddFile;

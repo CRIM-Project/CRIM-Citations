@@ -29,7 +29,7 @@ let addfile_tpl = `
         {{#each scores}}
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="s_{{this.id}}">
             <input type="checkbox" id="s_{{this.id}}" class="mdl-checkbox__input" value="{{this.url}}" data-composer="{{this.composer}}" data-title="{{this.title}}">
-            <span class="mdl-checkbox__label">{{this.composer}}: <em>{{this.title}}</em></span>
+            <span class="mdl-checkbox__label">{{this.title}}</span>
           </label>
         {{/each}}
       </div>

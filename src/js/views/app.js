@@ -57,7 +57,7 @@ class AppView extends Backbone.View {
   addScore(fileInfo, createnew=true) {
     let title = fileInfo.filename
     if (fileInfo.title){
-      title = fileInfo.composer + ": " + fileInfo.title
+      title = fileInfo.title
     }
     let scoreView = new ScoreView({model:
       this.scores.add({mei: fileInfo.string, title: title, url: fileInfo.url})
