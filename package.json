@@ -4,7 +4,9 @@
   "description": "Backbone app to cite and relate portions of MEI music scores.",
   "main": "src/js/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "gulp run",
+    "build": "gulp && cp ~/Repositories/CRIM-Citations/dist/css/* ~/Repositories/CRIM-online/crim/static/node_modules/crim-citations && cp ~/Repositories/CRIM-Citations/dist/js/* ~/Repositories/CRIM-online/crim/static/node_modules/crim-citations"
   },
   "repository": {
     "type": "git",
