@@ -15,13 +15,8 @@
 
 .score_collapsed {
   height: 45px !important;
-  overflow: hidden;
 
-  .score {
-    display: none;
-  }
-
-  .score_pagination {
+  .score_collapsible {
     display: none;
   }
 }
