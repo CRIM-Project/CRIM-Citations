@@ -43,7 +43,7 @@
 
 /* Make sure to make responsive */
 .score_observation_dialog, .score_relationship_dialog, .score_observations_dialog {
-  width: 500px !important;
+  width: 640px;
 
   .types {
     padding: 4px;
@@ -173,11 +173,11 @@ svg {
 }
 
 .import {
-  width: 500px !important;
+  width: 640px;
 }
 
 .addFile {
-  width: 500px !important;
+  width: 640px;
   label {
     height: 100% !important;
   }
