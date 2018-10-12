@@ -1,11 +1,6 @@
 @import "../../node_modules/dialog-polyfill/dialog-polyfill";
 @import "../../node_modules/continuo/dist/css/continuo.css";
 
-.score_header {
-  min-height: 45px !important;
-  border-bottom: 1px solid rgba(0,0,0,.1);
-}
-
 .score {
   padding: 5px;
   overflow: hidden;
@@ -29,7 +24,6 @@
   .score_pagination {
     display: none;
   }
-
 }
 
 .cnt-container {

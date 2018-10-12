@@ -28,8 +28,8 @@ let addfile_tpl = `
       <div class="mdl-tabs__panel is-active" id="crim-panel">
         {{#each scores}}
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="s_{{this.id}}">
-            <input type="checkbox" id="s_{{this.id}}" class="mdl-checkbox__input" value="{{this.url}}" data-composer="{{this.composer}}" data-title="{{this.title}}">
-            <span class="mdl-checkbox__label">{{this.title}}</span>
+            <input type="checkbox" id="s_{{this.id}}" class="mdl-checkbox__input" value="{{this.url}}" data-composer="{{this.composer}}" data-title="{{this.title}}" data-piece_id="{{this.piece_id}}">
+            <span class="mdl-checkbox__label">[{{this.piece_id}}] {{this.title}} ({{this.composer}})</span>
           </label>
         {{/each}}
       </div>

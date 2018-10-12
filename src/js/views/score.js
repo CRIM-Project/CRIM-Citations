@@ -63,7 +63,11 @@ class ScoreView extends Backbone.View {
     let score_id = 'score-' + this.model.cid
     this.$el.prop("id", score_id);
 
-    this.$el.html(this.template({title: this.model.get("title")}));
+    this.$el.html(this.template({
+      title: this.model.get("title"),
+      piece_id: this.model.get("piece_id"),
+      composer: this.model.get("composer")
+    }));
 
     Events.trigger("scoreRendered")
 

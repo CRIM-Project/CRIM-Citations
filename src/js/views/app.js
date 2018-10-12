@@ -55,12 +55,26 @@ class AppView extends Backbone.View {
   }
 
   addScore(fileInfo, createnew=true) {
-    let title = fileInfo.filename
+    let title = fileInfo.filename;
+    let piece_id = '';
+    let composer = '';
     if (fileInfo.title){
-      title = fileInfo.title
+      title = fileInfo.title;
+    }
+    if (fileInfo.piece_id) {
+      piece_id = '[' + fileInfo.piece_id + ']';
+    }
+    if (fileInfo.composer) {
+      composer = 'Composer: ' + fileInfo.composer;
     }
     let scoreView = new ScoreView({model:
-      this.scores.add({mei: fileInfo.string, title: title, url: fileInfo.url})
+      this.scores.add({
+        mei: fileInfo.string,
+        url: fileInfo.url,
+        title: title,
+        piece_id: piece_id,
+        composer: composer
+      })
     })
     this.$el.find("#create_edit .mdl-grid").append(scoreView.render())
     scoreView.renderContinuoScore()

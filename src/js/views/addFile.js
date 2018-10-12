@@ -6,7 +6,7 @@ import dialogPolyfill from 'dialog-polyfill'
 import '../../../lib/dropbox/dropins';
 
 
-function print_composers(piece) {
+function printComposers(piece) {
   var printed_role_list = [];
   if (piece.mass) {
     var all_roles = piece.roles.concat(piece.mass.roles);
@@ -56,7 +56,7 @@ class AddFile extends Backbone.View {
     if (this.$el.find("#crim-panel.is-active").length > 0){
       for (let score of this.$el.find("#crim-panel .mdl-checkbox__input:checked")){
         let $score = $(score);
-        this.fromUrl($score.val(), $score.data("roles"), $score.data("title") )
+        this.fromUrl($score.val(), $score.data("piece_id"), $score.data("title"), $score.data("composer"));
       }
     }
     else {
@@ -65,7 +65,7 @@ class AddFile extends Backbone.View {
     this.close()
   }
 
-  fromUrl(url, roles, title) {
+  fromUrl(url, piece_id, title, composer) {
 
     if (!url){
       url = this.$el.find("#url_input").val().trim();
@@ -74,8 +74,9 @@ class AddFile extends Backbone.View {
 
     let fileInfo = {
         "filename": url.replace(/^.*[\\\/]/, ''),
-        "roles": roles,
+        "piece_id": piece_id,
         "title": title,
+        "composer": composer,
         "url": url
     };
 
@@ -150,21 +151,21 @@ class AddFile extends Backbone.View {
     // get files info
     return $.get(all_pieces_url, (pieces)=>{
       for (let piece of pieces) {
+        // Add title of mass to piece title
         if (piece.mass) {
-          var title = "[" + piece.piece_id + "] " + piece.mass.title + ": " + piece.title;
+          var title = piece.mass.title + ": " + piece.title;
         }
         else {
-          var title = "[" + piece.piece_id + "] " + piece.title;
+          var title = piece.title;
         }
-        // Add composer, editor, etc. to roles
-        title = title + " (" + print_composers(piece) + ")"
         // Use only the first MEI link, at least for now -- or until we have
         // better defined desired behavior for multiple links
         let first_mei_link = piece.mei_links[0];
         let fileinfo = {
           title: title,
           url: first_mei_link,
-          id: (piece.piece_id)
+          piece_id: (piece.piece_id),
+          composer: printComposers(piece)
         };
         this.scores.push(fileinfo);
       }
