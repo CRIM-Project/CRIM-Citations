@@ -13,7 +13,7 @@ import * as Handlebars from 'handlebars';
 //   <div class="mdl-dialog__actions">
 //     <button type="button" class="btn btn-primary" id="from_dropbox">Open from Dropbox</button>
 //     <button type="button" class="btn btn-primary" id="from_url">Load from URL</button>
-//     <button type="button" class="btn">Cancel</button>
+//     <button type="button" class="btn close">Cancel</button>
 //   </div>
 // `
 
@@ -45,7 +45,7 @@ let addfile_tpl = `
   </div>
   <div class="mdl-dialog__actions">
     <button type="button" class="btn btn-primary" id="openFile">Open</button>
-    <button type="button" class="btn">Cancel</button>
+    <button type="button" class="btn close">Cancel</button>
   </div>
 `
 
