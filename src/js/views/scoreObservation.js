@@ -1,11 +1,11 @@
 import $ from 'jquery';
 import * as Backbone from 'backbone';
 import Events from '../utils/backbone-events';
-import score_assertion_tpl from '../templates/score_assertion-tpl';
+import score_observation_tpl from '../templates/score_observation-tpl';
 import voice_tpl from '../templates/voice-tpl';
 import dialogPolyfill from 'dialog-polyfill'
 
-class ScoreAssertion extends Backbone.View {
+class ScoreObservation extends Backbone.View {
 
   initialize(options){
     this.container = options.container
@@ -15,7 +15,7 @@ class ScoreAssertion extends Backbone.View {
   }
 
   template(tpl){
-      return score_assertion_tpl(tpl);
+      return score_observation_tpl(tpl);
   }
 
   get tagName(){
@@ -23,7 +23,7 @@ class ScoreAssertion extends Backbone.View {
   }
 
   get className() {
-    return "mdl-dialog score_assertion_dialog"
+    return "mdl-dialog score_observation_dialog"
   }
 
   get events() {
@@ -31,8 +31,8 @@ class ScoreAssertion extends Backbone.View {
           "click .close": this.close,
           "click .drop": this.showMusType,
           "change .cb": this.showMusTypeCh,
-          "click #save_score_assertion": this.save,
-          "click #cancel_score_assertion": this.cancel,
+          "click #save_score_observation": this.save,
+          "click #cancel_score_observation": this.cancel,
           "click .hide_button": this.hide,
           "click .addVoice": this.addVoice
       }
@@ -64,7 +64,7 @@ class ScoreAssertion extends Backbone.View {
     }
     // reset types
     this.model.set("types", {})
-    this.model.set("comment", this.$el.find("#assert-comment").val())
+    this.model.set("comment", this.$el.find("#observ-comment").val())
     this.$el.find(".types").each((i, type) => {
       let $type = $(type)
       let $cb = $type.find(".cb")
@@ -161,7 +161,7 @@ class ScoreAssertion extends Backbone.View {
   }
 
   addRemoveVoice(div){
-    let removebtn = $(`<button class="voiceremove mdl-button mdl-js-button mdl-button--icon">
+    let removebtn = $(`<button class="voiceremove btn btn-danger">
       <i class="material-icons">close</i>
     </button>`)
     div.append(removebtn)
@@ -234,9 +234,9 @@ class ScoreAssertion extends Backbone.View {
     this.$el.data("hiding", "false")
   }
 
-  render(assert) {
-    if (assert) {
-      this.model = this.collection.get(assert)
+  render(observ) {
+    if (observ) {
+      this.model = this.collection.get(observ)
     }
     else {
       this.model = this.collection.add({})
@@ -263,4 +263,4 @@ class ScoreAssertion extends Backbone.View {
 
 }
 
-export default ScoreAssertion
+export default ScoreObservation
