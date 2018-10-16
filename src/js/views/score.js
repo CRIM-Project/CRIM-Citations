@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import * as Backbone from 'backbone';
-import Continuo from 'continuo';
+import Continuo from '../../lib/continuo/js/continuo';
 import Events from '../utils/backbone-events';
 import score_tpl from '../templates/score-tpl'
 import ScoreAssertionView from './scoreAssertion';
