@@ -1,34 +1,11 @@
 @import "../../node_modules/dialog-polyfill/dialog-polyfill";
 @import "../../lib/continuo/css/continuo.css";
 
-.mdl-navigation {
-  .mdl-button {
-    margin-left: .5em;
-  }
-}
-
-.mdl-layout__header-row {
-  padding: 0 25px 0 25px !important;
-}
-
-.score_header {
-  min-height: 45px !important;
-  border-bottom: 1px solid rgba(0,0,0,.1);
-
-  .mdl-layout__header-row {
-    height: 45px;
-    padding: 0 5px 0 5px
-  }
-
-  .mdl-layout-title {
-    margin: 0 0 0 8px;
-  }
-}
-
 .score {
   padding: 5px;
   overflow: hidden;
   min-height: 400px;
+  // max-height: 500px;
   // transition: width 300ms ease-out, height 300ms ease-out;
 }
 
@@ -38,16 +15,10 @@
 
 .score_collapsed {
   height: 45px !important;
-  overflow: hidden;
 
-  .score {
+  .score_collapsible {
     display: none;
   }
-
-  .score_pagination {
-    display: none;
-  }
-
 }
 
 .cnt-container {
@@ -71,8 +42,8 @@
 }
 
 /* Make sure to make responsive */
-.score_assertion_dialog, .score_relationship_dialog, .score_assertions_dialog {
-  width: 500px !important;
+.score_observation_dialog, .score_relationship_dialog, .score_observations_dialog {
+  width: 640px;
 
   .types {
     padding: 4px;
@@ -122,11 +93,6 @@ svg {
   }
 }
 
-.mdl-button--attention {
-  background-color: #ffb944 !important;
-}
-
-
 .truncate {
   width: 160px;
   white-space: nowrap;
@@ -138,7 +104,7 @@ svg {
   width: 112px;
 }
 
-.assert_ema, .assert_score {
+.observ_ema, .observ_score {
   text-align: right;
   font-size: 20px;
   font-weight: bold;
@@ -149,14 +115,14 @@ svg {
   text-overflow: ellipsis;
 }
 
-.assert_ema {
+.observ_ema {
   color: rgb(68,138,255);
 }
 
 .hide_button{
-  position:absolute !important;
-  top:10px;
-  right:10px;
+  position: absolute !important;
+  top: 10px;
+  right: 10px;
 }
 
 .hide_mode{
@@ -207,43 +173,13 @@ svg {
 }
 
 .import {
-  width: 500px !important;
-
-  .mdl-tabs__panel {
-    padding-top: 20px;
-    text-align: center;
-  }
+  width: 640px;
 }
 
 .addFile {
-  width: 500px !important;
-  .mdl-tabs__panel {
-    padding-top: 20px;
-  }
+  width: 640px;
   label {
     height: 100% !important;
-  }
-}
-
-.mdl-button--file {
-  input {
-    cursor: pointer;
-    height: 100%;
-    right: 0;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    width: 300px;
-    z-index: 4;
-  }
-}
-.mdl-textfield--file {
-  .mdl-textfield__input {
-    box-sizing: border-box;
-    width: calc(100% - 32px);
-  }
-  .mdl-button--file {
-    right: 0;
   }
 }
 

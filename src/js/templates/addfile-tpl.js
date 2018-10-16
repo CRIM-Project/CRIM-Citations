@@ -11,9 +11,9 @@ import * as Handlebars from 'handlebars';
 //     </form>
 //   </div>
 //   <div class="mdl-dialog__actions">
-//     <button type="button" class="mdl-button mdl-button--accent" id="from_dropbox">Open from DropBox</button>
-//     <button type="button" class="mdl-button mdl-button--accent" id="from_url">Load from URL</button>
-//     <button type="button" class="mdl-button close">Cancel</button>
+//     <button type="button" class="btn btn-primary" id="from_dropbox">Open from Dropbox</button>
+//     <button type="button" class="btn btn-primary" id="from_url">Load from URL</button>
+//     <button type="button" class="btn close">Cancel</button>
 //   </div>
 // `
 
@@ -27,10 +27,12 @@ let addfile_tpl = `
       </div>
       <div class="mdl-tabs__panel is-active" id="crim-panel">
         {{#each scores}}
-          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="s_{{this.id}}">
-            <input type="checkbox" id="s_{{this.id}}" class="mdl-checkbox__input" value="{{this.url}}" data-composer="{{this.composer}}" data-title="{{this.title}}">
-            <span class="mdl-checkbox__label">{{this.title}}</span>
-          </label>
+          <div style="display: block;">
+            <input type="checkbox" id="s_{{this.piece_id}}" class="mdl-checkbox__input" value="{{this.url}}" data-composer="{{this.composer}}" data-title="{{this.title}}" data-piece_id="{{this.piece_id}}" />
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" style="display: inline;" for="s_{{this.piece_id}}">
+              [{{this.piece_id}}] {{this.title}} ({{this.composer}})
+            </label>
+          </div>
         {{/each}}
       </div>
       <div class="mdl-tabs__panel" id="web-panel">
@@ -44,8 +46,8 @@ let addfile_tpl = `
     </div>
   </div>
   <div class="mdl-dialog__actions">
-    <button type="button" class="mdl-button mdl-button--accent" id="openFile">Open</button>
-    <button type="button" class="mdl-button close">Cancel</button>
+    <button type="button" class="btn btn-primary" id="openFile">Open</button>
+    <button type="button" class="btn close">Cancel</button>
   </div>
 `
 

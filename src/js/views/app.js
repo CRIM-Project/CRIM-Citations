@@ -55,12 +55,26 @@ class AppView extends Backbone.View {
   }
 
   addScore(fileInfo, createnew=true) {
-    let title = fileInfo.filename
+    let title = fileInfo.filename;
+    let piece_id = '';
+    let composer = '';
     if (fileInfo.title){
-      title = fileInfo.title
+      title = fileInfo.title;
+    }
+    if (fileInfo.piece_id) {
+      piece_id = '[' + fileInfo.piece_id + ']';
+    }
+    if (fileInfo.composer) {
+      composer = 'Composer: ' + fileInfo.composer;
     }
     let scoreView = new ScoreView({model:
-      this.scores.add({mei: fileInfo.string, title: title, url: fileInfo.url})
+      this.scores.add({
+        mei: fileInfo.string,
+        url: fileInfo.url,
+        title: title,
+        piece_id: piece_id,
+        composer: composer
+      })
     })
     this.$el.find("#create_edit .mdl-grid").append(scoreView.render())
     scoreView.renderContinuoScore()
@@ -119,7 +133,7 @@ class AppView extends Backbone.View {
       let export_obj = {
         relationships : this.relationships.toJSON(),
         scores: this.scores.export(),
-        assertions: this.scores.exportAssertions(),
+        observations: this.scores.exportObservations(),
         created_at: time,
         user: this.user
       }
@@ -152,7 +166,7 @@ class AppView extends Backbone.View {
   resetData() {
     this.relationships.reset()
     this.scores.each((s)=>{
-      s.assertions.reset()
+      s.observations.reset()
     })
     if (history.pushState) {
       var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
@@ -200,13 +214,13 @@ class AppView extends Backbone.View {
       let s = this.scores.add(score)
       s.set("id", score.cid)
       s.cid = score.cid
-      s.assertions.score = score.cid
+      s.observations.score = score.cid
 
-      for (let assert of data.assertions){
-        if (assert.score == s.cid) {
-          let a = s.assertions.add(assert)
-          a.set("id", assert.cid)
-          a.cid = assert.cid
+      for (let observ of data.observations){
+        if (observ.score == s.cid) {
+          let a = s.observations.add(observ)
+          a.set("id", observ.cid)
+          a.cid = observ.cid
         }
       }
 
@@ -231,7 +245,7 @@ class AppView extends Backbone.View {
   doImport(){
     this.relationships.reset()
     this.scores.each((s)=>{
-      s.assertions.reset()
+      s.observations.reset()
       s.trigger("close", true)
     })
     this.scores.reset()
@@ -251,8 +265,8 @@ class AppView extends Backbone.View {
 
   removeRel(relid){
     let rel = this.relationships.get(relid)
-    this.scores.trigger("delete_assertion", rel.get("scoreAassert"))
-    this.scores.trigger("delete_assertion", rel.get("scoreBassert"))
+    this.scores.trigger("delete_observation", rel.get("scoreAobserv"))
+    this.scores.trigger("delete_observation", rel.get("scoreBobserv"))
     this.relationships.remove(relid)
   }
 

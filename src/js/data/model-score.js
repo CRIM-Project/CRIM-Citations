@@ -1,13 +1,13 @@
 import * as Backbone from 'backbone';
 import $ from 'jquery';
-import ScoreAssertions from './coll-score-assertions'
+import ScoreObservations from './coll-score-observations'
 
 class Score extends Backbone.Model {
   initialize() {
-      this.assertions = new ScoreAssertions
-      this.assertions.score = this.cid
+      this.observations = new ScoreObservations
+      this.observations.score = this.cid
       if (!this.get("voices")){
-        this.storeVoices()        
+        this.storeVoices()
       }
   }
 
@@ -26,10 +26,10 @@ class Score extends Backbone.Model {
     return json;
   }
 
-  newAssertion() {
-    let new_assert = this.assertions.add({})
-    this.trigger("new_assertion", new_assert.cid)
-    return new_assert
+  newObservation() {
+    let new_observ = this.observations.add({})
+    this.trigger("new_observation", new_observ.cid)
+    return new_observ
   }
 
   storeVoices(){

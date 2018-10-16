@@ -2,7 +2,7 @@ import * as Handlebars from 'handlebars';
 
 let score_relationship_tpl = `
   <h4 class="mdl-dialog__title">Score relationship</h4>
-  <button class="mdl-button mdl-js-button mdl-button--raised hide_button">
+  <button class="btn hide_button">
     Hide
   </button>
   <div class="mdl-dialog__content">
@@ -10,29 +10,23 @@ let score_relationship_tpl = `
       <li class="mdl-list__item" data-score="A">
         <span class="mdl-list__item-primary-content">
           <span class="truncate truncate_short" title="{{titleA}}">{{titleA}}</span>&nbsp;<span class="truncate truncate_short" title="{{scoreA_ema}}">{{scoreA_ema}}</span>
-          <span class="truncate truncate_short assert_typesA"></span>
+          <span class="truncate truncate_short observ_typesA"></span>
         </span>
         <span class="mdl-list__item-secondary-action">
-          <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--attention show-score-assertion">
+          <button class="btn btn-primary show-score-observation">
             <i class="material-icons">playlist_add</i>
           </button>
-          <!--<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--accent selection_preview">
-            <i class="material-icons" title="preview first measure">remove_red_eye</i>
-          </button>-->
         </span>
       </li>
       <li class="mdl-list__item" data-score="B">
         <span class="mdl-list__item-primary-content">
           <span class="truncate truncate_short" title="{{titleB}}">{{titleB}}</span>&nbsp;<span class="truncate truncate_short" title="{{scoreB_ema}}">{{scoreB_ema}}</span>
-          <span class="truncate truncate_short assert_typesB"></span>
+          <span class="truncate truncate_short observ_typesB"></span>
         </span>
         <span class="mdl-list__item-secondary-action">
-          <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--attention show-score-assertion">
+          <button class="btn btn-primary show-score-observation">
             <i class="material-icons">playlist_add</i>
           </button>
-          <!--<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--accent selection_preview">
-            <i class="material-icons" title="preview first measure">remove_red_eye</i>
-          </button>-->
         </span>
       </li>
     </ul>
@@ -54,7 +48,7 @@ let score_relationship_tpl = `
         <input type="checkbox" id="rt-q" class="mdl-checkbox__input cb" {{#if types.rt-q}}checked{{/if}}>
         <span class="mdl-checkbox__label">Quotation</span>
       </label>
-      <button class="mdl-button mdl-js-button mdl-button--icon drop">
+      <button class="btn drop">
         <i class="material-icons">arrow_drop_down</i>
       </button>
       <div class="rest" style="display:none">
@@ -75,7 +69,7 @@ let score_relationship_tpl = `
         <input type="checkbox" id="rt-tm" class="mdl-checkbox__input cb" {{#if types.rt-tm}}checked{{/if}}>
         <span class="mdl-checkbox__label">Transformation (mechanical)</span>
       </label>
-      <button class="mdl-button mdl-js-button mdl-button--icon drop">
+      <button class="btn drop">
         <i class="material-icons">arrow_drop_down</i>
       </button>
       <div class="rest" style="display:none">
@@ -110,7 +104,7 @@ let score_relationship_tpl = `
         <input type="checkbox" id="rt-tnm" class="mdl-checkbox__input cb" {{#if types.rt-tnm}}checked{{/if}}>
         <span class="mdl-checkbox__label">Transformation (non-mechanical)</span>
       </label>
-      <button class="mdl-button mdl-js-button mdl-button--icon drop">
+      <button class="btn drop">
         <i class="material-icons">arrow_drop_down</i>
       </button>
       <div class="rest" style="display:none">
@@ -170,8 +164,8 @@ let score_relationship_tpl = `
     <div class="messages mdl-shadow--2dp"></div>
   </div>
   <div class="mdl-dialog__actions">
-    <button type="button" class="mdl-button mdl-button--accent" id="save_score_relationship">Save</button>
-    <button type="button" class="mdl-button close" id="cancel_score_relationship">Cancel</button>
+    <button type="button" class="btn btn-active" id="save_score_relationship">Save</button>
+    <button type="button" class="btn close" id="cancel_score_relationship">Cancel</button>
   </div>
   <div class="score_preview_cnt mdl-shadow--2dp" style="display:none">
     <div class="score_preview"></div>
