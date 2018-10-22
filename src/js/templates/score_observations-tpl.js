@@ -11,7 +11,7 @@ let score_observation_tpl = `
           <span class="mdl-list__item-primary-content">
             <i class="material-icons delete_item clickable" title="edit relationship">delete_forever</i>
             <span class="truncate truncate_short" title="{{this.titleA}}">{{this.titleA}}</span>
-            <i class="material-icons">{{#if this.boolDir}}arrow_forward{{else}}arrow_back{{/if}}</i>
+            <i class="material-icons">{{#if this.boolDir}}&rarr;{{else}}&larr;{{/if}}</i>
             <span class="truncate truncate_short" title="{{this.titleB}}">{{this.titleB}}</span>
             <span class="truncate truncate_short" title="{{#each this.types}}{{label}}{{#unless @last}},{{/unless}}{{/each}}">({{#each this.types}}{{label}}{{#unless @last}},{{/unless}}{{/each}})</span>
           </span>

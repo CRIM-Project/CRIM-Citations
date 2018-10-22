@@ -9,14 +9,11 @@ let pag_tpl = `
       <button type="button" class="btn btn-danger close_score_button">
         Remove piece
       </button>
-      <button type="button" class="btn collapse_expand_button">
-        Collapse
-      </button>
-      <button type="button" class="btn show-score-relationship" style="display:none">
-        Show relationship
-      </button>
       <button type="button" class="btn show-score-observations">
-        Show observations
+        See observations
+      </button>
+      <button type="button" class="btn btn-primary show-score-relationship" style="display:none">
+        New relationship
       </button>
     </div>
     <div class="btn-group pull-right" role="group">
@@ -25,6 +22,11 @@ let pag_tpl = `
       </button>
       <button type="button" class="btn btn-active nextPage score_collapsible">
         &gt;
+      </button>
+    </div>
+    <div class="pull-right">
+      <button type="button" class="btn collapse_expand_button">
+        Collapse
       </button>
     </div>
   </div>

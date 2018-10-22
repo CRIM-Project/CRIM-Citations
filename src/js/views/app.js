@@ -120,7 +120,7 @@ class AppView extends Backbone.View {
     })
     if (scores_with_selection.length == 2) {
       for (let score of scores_with_selection) {
-        score.trigger("showRelationshipButton", scores_with_selection)
+        score.trigger("showRelationshipButtons", scores_with_selection)
       }
     }
     else this.scores.trigger("hideRelationshipButtons")

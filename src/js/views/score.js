@@ -24,7 +24,7 @@ class ScoreView extends Backbone.View {
     this.listenTo(this.model, "redoVerovioLayout", this.doVerovioLayout)
     this.listenTo(this.model, "highlight", this.highlight)
     this.listenTo(this.model, "clearHighlight", ()=>{this.setData(); this.continuo.clearHighlight()})
-    this.listenTo(this.model, "showRelationshipButton", ()=>{this.$el.find(".show-score-relationship").show()})
+    this.listenTo(this.model, "showRelationshipButtons", ()=>{this.$el.find(".show-score-relationship").show()})
     this.listenTo(this.model.collection, "hideRelationshipButtons", ()=>{this.$el.find(".show-score-relationship").hide()})
     this.listenTo(this.model.collection, "clearScoreSelections", this.clearScoreSelections)
     this.listenTo(this.model.collection, "storeSelections", this.storeSelection)
@@ -51,7 +51,6 @@ class ScoreView extends Backbone.View {
           "click .prevPage": this.prevPage,
           "click .collapse_expand_button": this.toggle,
           "click .show-score-observations": this.showObservations,
-          // "click .show-score-observation": this.newObservation,
           "click .show-score-relationship": this.showRelationship,
           "click .close_score_button": this.close
       }
