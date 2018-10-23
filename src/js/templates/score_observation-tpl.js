@@ -12,7 +12,7 @@ let score_observation_tpl = `
     <div class="mdl-shadow--2dp types">
       <label for="mt-cf" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
         <input type="checkbox" id="mt-cf" class="mdl-checkbox__input cb" {{#if types.mt-cf}}checked{{/if}}>
-        Cantus Firmus
+        <span class="mdl-checkbox__label">Cantus Firmus</span>
       </label>
       <button class="btn drop">
         <i class="material-icons clickable">arrow_drop_down</i>
@@ -30,18 +30,18 @@ let score_observation_tpl = `
         </div>
         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-cf-dur">
           <input type="checkbox" id="mt-cf-dur" class="mdl-checkbox__input" {{#if types.mt-cf.dur}}checked{{/if}} {{#unless types.mt-cf}}checked disabled{{/unless}}>
-          Rhythmic durations
+          <span class="mdl-checkbox__label">Rhythmic durations</span>
         </label>
         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-cf-mel">
           <input type="checkbox" id="mt-cf-mel" class="mdl-checkbox__input" {{#if types.mt-cf.mel}}checked{{/if}} {{#unless types.mt-cf}}checked disabled{{/unless}}>
-          Melodic intervals
+          <span class="mdl-checkbox__label">Melodic intervals</span>
         </label>
       </div>
     </div>
     <div class="mdl-shadow--2dp types">
       <label for="mt-sog" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
         <input type="checkbox" id="mt-sog" class="mdl-checkbox__input cb" {{#if types.mt-sog}}checked{{/if}}>
-        Soggetto
+        <span class="mdl-checkbox__label">Soggetto</span>
       </label>
       <button class="btn drop">
         <i class="material-icons clickable">arrow_drop_down</i>
@@ -65,19 +65,19 @@ let score_observation_tpl = `
         <div>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-sog-dur">
             <input type="checkbox" id="mt-sog-dur" class="mdl-checkbox__input" {{#if types.mt-sog.dur}}checked{{/if}} {{#unless types.mt-sog}}checked disabled{{/unless}}>
-            Rhythmic durations
+            <span class="mdl-checkbox__label">Rhythmic durations</span>
           </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-sog-mel">
             <input type="checkbox" id="mt-sog-mel" class="mdl-checkbox__input" {{#if types.mt-sog.mel}}checked{{/if}} {{#unless types.mt-sog}}checked disabled{{/unless}}>
-            Melodic intervals
+            <span class="mdl-checkbox__label">Melodic intervals</span>
           </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-sog-ost">
             <input type="checkbox" id="mt-sog-ost" class="mdl-checkbox__input" {{#if types.mt-sog.ost}}checked{{/if}} {{#unless types.mt-sog}}disabled{{/unless}}>
-            Ostinato repetition
+            <span class="mdl-checkbox__label">Ostinato repetition</span>
           </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-sog-per">
             <input type="checkbox" id="mt-sog-per" class="mdl-checkbox__input" {{#if types.mt-sog.per}}checked{{/if}} {{#unless types.mt-sog}}disabled{{/unless}}>
-            Periodic phrasing
+            <span class="mdl-checkbox__label">Periodic phrasing</span>
           </label>
         </div>
       </div>
@@ -85,7 +85,7 @@ let score_observation_tpl = `
     <div class="mdl-shadow--2dp types">
       <label for="mt-csog" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
         <input type="checkbox" id="mt-csog" class="mdl-checkbox__input cb" {{#if types.mt-csog}}checked{{/if}}>
-        Counter Soggetto
+        <span class="mdl-checkbox__label">Counter Soggetto</span>
       </label>
       <button class="btn drop">
         <i class="material-icons clickable">arrow_drop_down</i>
@@ -103,18 +103,18 @@ let score_observation_tpl = `
         </div>
         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-csog-dur">
           <input type="checkbox" id="mt-csog-dur" class="mdl-checkbox__input" {{#if types.mt-csog.dur}}checked{{/if}} {{#unless types.mt-csog}}checked disabled{{/unless}}>
-          Rhythmic durations
+          <span class="mdl-checkbox__label">Rhythmic durations</span>
         </label>
         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-cs-mel">
           <input type="checkbox" id="mt-csog-mel" class="mdl-checkbox__input" {{#if types.mt-csog.mel}}checked{{/if}} {{#unless types.mt-csog}}checked disabled{{/unless}}>
-          Melodic intervals
+          <span class="mdl-checkbox__label">Melodic intervals</span>
         </label>
       </div>
     </div>
     <div class="mdl-shadow--2dp types">
       <label for="mt-cd" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
         <input type="checkbox" id="mt-cd" class="mdl-checkbox__input cb" {{#if types.mt-cd}}checked{{/if}}>
-        Contrapuntal Duo
+        <span class="mdl-checkbox__label">Contrapuntal Duo</span>
       </label>
       <button class="btn drop">
         <i class="material-icons clickable">arrow_drop_down</i>
@@ -140,7 +140,7 @@ let score_observation_tpl = `
     <div class="mdl-shadow--2dp types">
       <label for="mt-fg" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
         <input type="checkbox" id="mt-fg" class="mdl-checkbox__input cb" {{#if types.mt-fg}}checked{{/if}}>
-        Fuga
+        <span class="mdl-checkbox__label">Fuga</span>
       </label>
       <button class="btn drop">
         <i class="material-icons clickable">arrow_drop_down</i>
@@ -186,15 +186,15 @@ let score_observation_tpl = `
           </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-fg-se">
             <input type="checkbox" id="mt-fg-se" class="mdl-checkbox__input" {{#unless types.mt-fg}}disabled{{/unless}} {{#if types.mt-fg.se}}checked{{/if}}>
-            Sequential entries
+            <span class="mdl-checkbox__label">Sequential entries</span>
           </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-fg-ie">
             <input type="checkbox" id="mt-fg-ie" class="mdl-checkbox__input" {{#unless types.mt-fg}}disabled{{/unless}} {{#if types.mt-fg.ie}}checked{{/if}}>
-            Inverted entries
+            <span class="mdl-checkbox__label">Inverted entries</span>
           </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-fg-re">
             <input type="checkbox" id="mt-fg-re" class="mdl-checkbox__input" {{#unless types.mt-fg}}disabled{{/unless}} {{#if types.mt-fg.re}}checked{{/if}}>
-            Retrograde entries
+            <span class="mdl-checkbox__label">Retrograde entries</span>
           </label>
         </div>
       </div>
@@ -202,7 +202,7 @@ let score_observation_tpl = `
     <div class="mdl-shadow--2dp types">
       <label for="mt-id" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
         <input type="checkbox" id="mt-id" class="mdl-checkbox__input cb" {{#if types.mt-id}}checked{{/if}}>
-        Imitative Duos
+        <span class="mdl-checkbox__label">Imitative Duos</span>
       </label>
       <button class="btn drop">
         <i class="material-icons clickable">arrow_drop_down</i>
@@ -253,7 +253,7 @@ let score_observation_tpl = `
           </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-id-ic">
             <input type="checkbox" id="mt-id-ic" class="mdl-checkbox__input" {{#if types.mt-id.ic}}checked{{/if}} {{#unless types.mt-id}}disabled{{/unless}}>
-            Invertible counterpoint
+            <span class="mdl-checkbox__label">Invertible counterpoint</span>
           </label>
         </div>
       </div>
@@ -261,7 +261,7 @@ let score_observation_tpl = `
     <div class="mdl-shadow--2dp types">
       <label for="mt-pe" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
         <input type="checkbox" id="mt-pe" class="mdl-checkbox__input cb" {{#if types.mt-pe}}checked{{/if}}>
-        Periodic Entries
+        <span class="mdl-checkbox__label">Periodic Entries</span>
       </label>
       <button class="btn drop">
         <i class="material-icons clickable">arrow_drop_down</i>
@@ -307,15 +307,15 @@ let score_observation_tpl = `
           </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-pe-se">
             <input type="checkbox" id="mt-pe-se" class="mdl-checkbox__input" {{#if types.mt-pe.se}}checked{{/if}} {{#unless types.mt-pe}}disable{{/unless}}>
-            Sequential entries
+            <span class="mdl-checkbox__label">Sequential entries</span>
           </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-pe-ae">
             <input type="checkbox" id="mt-pe-ae" class="mdl-checkbox__input" {{#if types.mt-pe.ae}}checked{{/if}} {{#unless types.mt-pe}}disable{{/unless}}>
-            Added entries
+            <span class="mdl-checkbox__label">Added entries</span>
           </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-pe-ic">
             <input type="checkbox" id="mt-pe-ic" class="mdl-checkbox__input" {{#if types.mt-pe.ic}}checked{{/if}} {{#unless types.mt-pe}}disable{{/unless}}>
-            Invertible counterpoint
+            <span class="mdl-checkbox__label">Invertible counterpoint</span>
           </label>
         </div>
       </div>
@@ -323,7 +323,7 @@ let score_observation_tpl = `
     <div class="mdl-shadow--2dp types">
       <label for="mt-nid" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
         <input type="checkbox" id="mt-nid" class="mdl-checkbox__input cb" {{#if types.mt-nid}}checked{{/if}}>
-        Non-Imitative Duos
+        <span class="mdl-checkbox__label">Non-Imitative Duos</span>
       </label>
       <button class="btn drop">
         <i class="material-icons clickable">arrow_drop_down</i>
@@ -374,11 +374,11 @@ let score_observation_tpl = `
           </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-nid-se">
             <input type="checkbox" id="mt-nid-se" class="mdl-checkbox__input" {{#if types.mt-nid.se}}checked{{/if}} {{#unless types.mt-nid}}disabled{{/unless}}>
-            Sequential entries
+            <span class="mdl-checkbox__label">Sequential entries</span>
           </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-nid-ic">
             <input type="checkbox" id="mt-nid-ic" class="mdl-checkbox__input" {{#if types.mt-nid.ic}}checked{{/if}} {{#unless types.mt-nid}}disabled{{/unless}}>
-            Invertible counterpoint
+            <span class="mdl-checkbox__label">Invertible counterpoint</span>
           </label>
         </div>
       </div>
@@ -386,7 +386,7 @@ let score_observation_tpl = `
     <div class="mdl-shadow--2dp types">
       <label for="mt-hr" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
         <input type="checkbox" id="mt-hr" class="mdl-checkbox__input cb" {{#if types.mt-hr}}checked{{/if}}>
-        Homorhythm
+        <span class="mdl-checkbox__label">Homorhythm</span>
       </label>
       <button class="btn drop">
         <i class="material-icons clickable">arrow_drop_down</i>
@@ -430,7 +430,7 @@ let score_observation_tpl = `
     <div class="mdl-shadow--2dp types">
       <label for="mt-cad" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
         <input type="checkbox" id="mt-cad" class="mdl-checkbox__input cb" {{#if types.mt-cad}}checked{{/if}}>
-        Cadences
+        <span class="mdl-checkbox__label">Cadences</span>
       </label>
       <button class="btn drop">
         <i class="material-icons clickable">arrow_drop_down</i>
@@ -490,7 +490,7 @@ let score_observation_tpl = `
     <div class="mdl-shadow--2dp types">
       <label for="mt-int" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
         <input type="checkbox" id="mt-int" class="mdl-checkbox__input cb" {{#if types.mt-int}}checked{{/if}}>
-        Interval patterns
+        <span class="mdl-checkbox__label">Interval patterns</span>
       </label>
       <button class="btn drop">
         <i class="material-icons clickable">arrow_drop_down</i>
@@ -537,19 +537,19 @@ let score_observation_tpl = `
     <div class="mdl-shadow--2dp types">
       <label for="mt-fp" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
         <input type="checkbox" id="mt-fp" class="mdl-checkbox__input cb" {{#if types.mt-fp}}checked{{/if}}>
-        Form and Process
+        <span class="mdl-checkbox__label">Form and Process</span>
       </label>
       <button class="btn drop">
         <i class="material-icons clickable">arrow_drop_down</i>
       </button>
       <div class="rest" style="display:none">
         <div class="mdl-textfield mdl-js-textfield">
+          <label class="mdl-textfield__label" for="mt-fp-text"></label>
           <textarea class="mdl-textfield__input" type="text" rows= "3" id="mt-fp-text" {{#unless types.mt-fp}}disabled{{/unless}}>{{#if types.mt-fp.text}}{{types.mt-fp.text}}{{/if}}</textarea>
-          <label class="mdl-textfield__label" for="mt-fp-text">Comment...</label>
         </div>
         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-fp-ir">
           <input type="checkbox" id="mt-fp-ir" class="mdl-checkbox__input" {{#if types.mt-fp.ir}}checked{{/if}} {{#unless types.mt-fp}}disabled{{/unless}}>
-          Internal repetition
+          <span class="mdl-checkbox__label">Internal repetition</span>
         </label>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
           <input class="mdl-textfield__input" type="text" pattern="(\\d+-\\d+)(,\\d+-\\d+)*" id="mt-fp-r" {{#unless types.mt-fp}}disabled{{/unless}} {{#if types.mt-fp}}value="{{types.mt-fp.r}}"{{/if}}>
@@ -560,7 +560,7 @@ let score_observation_tpl = `
     </div>
     <h4>Comment</h4>
     <div class="mdl-textfield mdl-js-textfield">
-      <textarea class="mdl-textfield__input" type="text" rows="5" id="observ-comment">{{#if comment}}{{comment}}{{/if}}</textarea>
+      <textarea class="mdl-textfield__input" type="text" rows="5" style="width: 80%;" id="observ-comment">{{#if comment}}{{comment}}{{/if}}</textarea>
       <label class="mdl-textfield__label" for="observ-comment">Comment&hellip;</label>
     </div>
     <div class="messages mdl-shadow--2dp"></div>
