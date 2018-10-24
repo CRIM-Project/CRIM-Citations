@@ -162,7 +162,7 @@ class ScoreObservation extends Backbone.View {
 
   addRemoveVoice(div){
     let removebtn = $(`<button class="voiceremove btn btn-danger">
-      <i class="material-icons">close</i>
+      Remove
     </button>`)
     div.append(removebtn)
     removebtn.click(()=>{
@@ -175,7 +175,7 @@ class ScoreObservation extends Backbone.View {
     let $a = $(e.target).closest("div")
     let $div = $a.prev("div")
     let type = $a.data("for")
-    let $cnt = $("<span class='group'></span>")
+    let $cnt = $("<div class='group block'></div>")
     $div.append($cnt)
     this.addVoiceTpl($cnt, type)
     if ($a.data("pair")) {

@@ -88,7 +88,7 @@ let score_relationship_tpl = `
           </label>
           <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="rt-tm-ms">
             <input type="checkbox" id="rt-tm-ms" class="inline mdl-checkbox__input" {{#if types.rt-tm.ms}}checked{{/if}} {{#unless types.rt-tm}}disabled{{/unless}}>
-            Metrically shifted: counterpoint with new time interval
+            Metrically shifted
           </label>
           <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="rt-tm-t">
             <input type="checkbox" id="rt-tm-t" class="inline mdl-checkbox__input" {{#if types.rt-tm.t}}checked{{/if}} {{#unless types.rt-tm}}disabled{{/unless}}>
@@ -96,7 +96,7 @@ let score_relationship_tpl = `
           </label>
           <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="rt-tm-td">
             <input type="checkbox" id="rt-tm-td" class="inline mdl-checkbox__input" {{#if types.rt-tm.td}}checked{{/if}} {{#unless types.rt-tm}}disabled{{/unless}}>
-            Transposed different amounts: double or invertible counterpoint
+            Double or invertible counterpoint
           </label>
         </div>
       </p>
@@ -162,7 +162,7 @@ let score_relationship_tpl = `
         </label>
       </p>
     </div>
-    <h3>Comment</h3>
+    <h3>Remarks</h3>
     <div class="mdl-textfield mdl-js-textfield">
       <label class="mdl-textfield__label" for="rel-comment"></label>
       <textarea class="mdl-textfield__input" type="text" rows="5" style="width: 80%;" id="rel-comment">{{#if comment}}{{comment}}{{/if}}</textarea>
