@@ -151,6 +151,7 @@ class ScoreRelationship extends Backbone.View {
       score.set("mei_ids", this.model.get("score"+score_place+"_meiids"))
       let new_observ = score.newObservation()
       this.model.set("score"+score_place+"observ", new_observ.cid)
+      score.trigger("edit_observation", score_observ_id)
     }
     else {
       score.trigger("edit_observation", score_observ_id)
