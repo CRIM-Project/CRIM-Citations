@@ -205,7 +205,6 @@ class ScoreObservation extends Backbone.View {
       rest.show()
     }
     else {
-      rest.hide()
       rest.find("input, textarea, select, button").prop("disabled", true).parent().addClass("is-disabled")
     }
   }

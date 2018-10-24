@@ -199,7 +199,6 @@ class ScoreRelationship extends Backbone.View {
       rest.show()
     }
     else {
-      rest.hide()
       rest.find("input, textarea").prop("disabled", true).parent().addClass("is-disabled")
     }
   }
