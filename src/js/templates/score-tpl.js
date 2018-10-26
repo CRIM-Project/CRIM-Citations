@@ -9,8 +9,8 @@ let pag_tpl = `
       <button type="button" class="btn btn-danger close_score_button">
         Remove piece
       </button>
-      <button type="button" class="btn show-score-observations">
-        See observations
+      <button type="button" class="btn btn-primary show-score-observations" style="display:none">
+        See relationship
       </button>
       <button type="button" class="btn btn-primary show-score-relationship" style="display:none">
         New relationship

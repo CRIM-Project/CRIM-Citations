@@ -32,6 +32,17 @@ class Export extends Backbone.View {
       }
   }
 
+  // Converts data from the internal format into the serialization used
+  // by the Django webapp.
+  get internalToSerialized(internal_data) {
+
+  }
+
+  // Converts serialized data into the internal representation.
+  get serializedToInternal(serialized_data) {
+
+  }
+
   expToDisk() {
     let string = JSON.stringify(this.data)
     let bb = new Blob([string], {"type":"application\/json"});
@@ -69,7 +80,7 @@ class Export extends Backbone.View {
             }, '1100')
           },
           error: (err) => {
-            this.$el.find(".mdl-dialog__content p").html("<strong>An error occured!</strong>")
+            this.$el.find(".mdl-dialog__content p").html("<strong>An error occured</strong>")
             console.log(err)
           }
       });

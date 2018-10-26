@@ -9,22 +9,22 @@ let score_relationship_tpl = `
   <div class="mdl-dialog__content">
     <p class="mdl-list">
       <div class="mdl-list__item" data-score="A">
-      <span class="mdl-list__item-secondary-action">
-        <button class="btn btn-primary show-score-observation">
-          Edit observation
-        </button>
-      </span>
+        <span class="mdl-list__item-secondary-action">
+          <button class="btn btn-primary show-score-observation">
+            Edit observation
+          </button>
+        </span>
         <span class="mdl-list__item-primary-content">
           <span class="truncate truncate_short" title="{{titleA}}">{{titleA}}</span>&nbsp;<span class="truncate truncate_short" title="{{scoreA_ema}}">{{scoreA_ema}}</span>
           <span class="truncate truncate_short observ_typesA"></span>
         </span>
       </div>
       <div class="mdl-list__item" data-score="B">
-      <span class="mdl-list__item-secondary-action">
-        <button class="btn btn-primary show-score-observation">
-          Edit observation
-        </button>
-      </span>
+        <span class="mdl-list__item-secondary-action">
+          <button class="btn btn-primary show-score-observation">
+            Edit observation
+          </button>
+        </span>
         <span class="mdl-list__item-primary-content">
           <span class="truncate truncate_short" title="{{titleB}}">{{titleB}}</span>&nbsp;<span class="truncate truncate_short" title="{{scoreB_ema}}">{{scoreB_ema}}</span>
           <span class="truncate truncate_short observ_typesB"></span>
