@@ -9,7 +9,7 @@ class HideModeComponent extends Backbone.View {
   }
 
   get className() {
-    return "btn hide_mode"
+    return "mdl-button mdl-js-button mdl-button--raised hide_mode mdl-button--attention"
   }
 
   get events() {

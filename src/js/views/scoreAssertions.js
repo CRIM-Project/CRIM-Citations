@@ -1,11 +1,11 @@
 import $ from 'jquery';
 import * as Backbone from 'backbone';
 import Events from '../utils/backbone-events';
-import score_observations_tpl from '../templates/score_observations-tpl';
+import score_assertions_tpl from '../templates/score_assertions-tpl';
 import dialogPolyfill from 'dialog-polyfill'
 import verovioToolkit from '../utils/verovioInstance';
 
-class ScoreObservations extends Backbone.View {
+class ScoreAssertions extends Backbone.View {
 
   initialize(options){
     this.container = options.container
@@ -22,7 +22,7 @@ class ScoreObservations extends Backbone.View {
   }
 
   template(tpl){
-      return score_observations_tpl(tpl);
+      return score_assertions_tpl(tpl);
   }
 
   get tagName(){
@@ -30,13 +30,13 @@ class ScoreObservations extends Backbone.View {
   }
 
   get className() {
-    return "mdl-dialog score_observations_dialog"
+    return "mdl-dialog score_assertions_dialog"
   }
 
   get events() {
       return {
           "click .close": this.close,
-          "click .edit_observation": this.edit,
+          "click .edit_assertion": this.edit,
           "click .selection_preview": this.preview,
           "click .rel_preview": this.relPreview,
           "click .edit_relationship": this.editRel,
@@ -65,9 +65,9 @@ class ScoreObservations extends Backbone.View {
   }
 
   edit(e) {
-    let observid = $(e.target).closest("li").data("observationid")
+    let assertid = $(e.target).closest("li").data("assertionid")
     this.close()
-    this.collection.trigger("edit_observation", observid)
+    this.collection.trigger("edit_assertion", assertid)
   }
 
   editRel(e){
@@ -78,7 +78,7 @@ class ScoreObservations extends Backbone.View {
 
   deleteItem(e) {
     let rel = $(e.target).closest("li").data("relid")
-    let observ = $(e.target).closest("li").data("observationid")
+    let assert = $(e.target).closest("li").data("assertionid")
 
     let r = confirm("Are you sure you want to delete this item? (Cannot undo)")
 
@@ -86,8 +86,8 @@ class ScoreObservations extends Backbone.View {
       Events.trigger("delete_relationship", rel)
       this.$el.find("#i_"+rel).remove()
     }
-    else if (r && observ) {
-      this.collection.trigger("delete_observation", observ)
+    else if (r && assert) {
+      this.collection.trigger("delete_assertion", assert)
     }
   }
 
@@ -97,16 +97,16 @@ class ScoreObservations extends Backbone.View {
 
   preview(e) {
 
-    let observ = this.collection.get($(e.target).closest("li").data("observationid"))
+    let assert = this.collection.get($(e.target).closest("li").data("assertionid"))
 
     verovioToolkit.setOptions(this.preview_opts)
     verovioToolkit.redoLayout()
 
-    let page = verovioToolkit.getPageWithElement(observ.get("mei_ids")[0])
+    let page = verovioToolkit.getPageWithElement(assert.get("mei_ids")[0])
     let svg = verovioToolkit.renderPage(page)
 
     this.$el.find(".score_preview").html(svg)
-    for (let id of observ.get("mei_ids")) {
+    for (let id of assert.get("mei_ids")) {
         let el = this.$el.find("#"+id)
         if (el.length > 0) {
             el.get(0).setAttribute("class", "preview_selected")
@@ -153,14 +153,14 @@ class ScoreObservations extends Backbone.View {
 
   render() {
     // This is ugly but time constraint led me here.
-    // A refactoring would move relationships and observations under the same model
+    // A refactoring would move relationships and assertions under the same model
     return new Promise((resolve, reject)=>{
       new Promise((res, rej)=>{
         this.listenTo(Events, "response:relationships", (rels) => res(rels))
         Events.trigger("request:relationshipsFor", this.score)
       }).then((rels)=>{
         this.relationships = rels
-        let json = {observations: this.collection.toJSON(), relationships: (new Backbone.Collection(rels)).toJSON()}
+        let json = {assertions: this.collection.toJSON(), relationships: (new Backbone.Collection(rels)).toJSON()}
         this.container.append(this.$el.html(this.template(json)))
         if (! this.el.showModal) {
           dialogPolyfill.registerDialog(this.el);
@@ -172,4 +172,4 @@ class ScoreObservations extends Backbone.View {
 
 }
 
-export default ScoreObservations
+export default ScoreAssertions

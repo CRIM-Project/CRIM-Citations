@@ -3,24 +3,24 @@ import * as Backbone from 'backbone';
 import Continuo from 'continuo';
 import Events from '../utils/backbone-events';
 import score_tpl from '../templates/score-tpl'
-import ScoreObservationView from './scoreObservation';
-import ScoreObservationsView from './scoreObservations';
+import ScoreAssertionView from './scoreAssertion';
+import ScoreAssertionsView from './scoreAssertions';
 import verovioToolkit from '../utils/verovioInstance';
 
 class ScoreView extends Backbone.View {
 
   initialize (options) {
     this.page = 1
-    this.scoreObservationDialog = new ScoreObservationView({container: $("#dialogs"), collection: this.model.observations, score: this.model})
-    this.ScoreObservationsDialog = new ScoreObservationsView({container: $("#dialogs"), collection: this.model.observations, score: this.model.cid})
+    this.scoreAssertionDialog = new ScoreAssertionView({container: $("#dialogs"), collection: this.model.assertions, score: this.model})
+    this.scoreAssertionsDialog = new ScoreAssertionsView({container: $("#dialogs"), collection: this.model.assertions, score: this.model.cid})
 
-    this.listenTo(this.model.observations, "edit_observation", this.showObservation)
-    this.listenTo(this.model.observations, "delete_observation", this.deleteObservation)
-    this.listenTo(this.model.collection, "delete_observation", this.deleteObservation)
-    this.listenTo(this.model, "edit_observation", this.showObservation)
-    this.listenTo(this.model, "new_observation", this.newObesrvation)
+    this.listenTo(this.model.assertions, "edit_assertion", this.showAssertion)
+    this.listenTo(this.model.assertions, "delete_assertion", this.deleteAssertion)
+    this.listenTo(this.model.collection, "delete_assertion", this.deleteAssertion)
+    this.listenTo(this.model, "edit_assertion", this.showAssertion)
+    this.listenTo(this.model, "new_assertion", this.newAssertion)
     this.listenTo(this.model, "close", this.close)
-    this.listenTo(this.ScoreObservationsDialog, "redoVerovioLayout", this.doVerovioLayout)
+    this.listenTo(this.scoreAssertionsDialog, "redoVerovioLayout", this.doVerovioLayout)
     this.listenTo(this.model, "redoVerovioLayout", this.doVerovioLayout)
     this.listenTo(this.model, "highlight", this.highlight)
     this.listenTo(this.model, "clearHighlight", ()=>{this.setData(); this.continuo.clearHighlight()})
@@ -50,7 +50,8 @@ class ScoreView extends Backbone.View {
           "click .nextPage": this.nextPage,
           "click .prevPage": this.prevPage,
           "click .collapse_expand_button": this.toggle,
-          "click .show-score-observations": this.showObservations,
+          "click .show-score-assertions": this.showAssertions,
+          // "click .show-score-assertion": this.newAssertion,
           "click .show-score-relationship": this.showRelationship,
           "click .close_score_button": this.close
       }
@@ -113,20 +114,20 @@ class ScoreView extends Backbone.View {
     this.$el.height(this.$el.find('svg').height() + 100)
 
     this.listenTo(this.continuo, "selected", ()=>{
-      // show observation button
-      // this.$el.find(".show-score-observation").show()
+      // show assertion button
+      // this.$el.find(".show-score-assertion").show()
       this.model.set("hasSelection", true)
     })
     this.listenTo(this.continuo, "deselected", ()=>{
       if (this.continuo.selectedElements.length == 0) {
-        // hide observation button
-        // this.$el.find(".show-score-observation").hide()
+        // hide assertion button
+        // this.$el.find(".show-score-assertion").hide()
         this.model.set("hasSelection", false)
       }
     })
     this.listenTo(this.continuo, "clearedSelection", ()=>{
-      // hide observation button
-      // this.$el.find(".show-score-observation").hide()
+      // hide assertion button
+      // this.$el.find(".show-score-assertion").hide()
       this.model.set("hasSelection", false)
     })
 
@@ -184,47 +185,47 @@ class ScoreView extends Backbone.View {
     }
   }
 
-  deleteObservation(observ) {
-    this.model.observations.remove(observ)
+  deleteAssertion(assert) {
+    this.model.assertions.remove(assert)
   }
 
-  showObservations() {
-    this.ScoreObservationsDialog.render().then(()=>{
+  showAssertions() {
+    this.scoreAssertionsDialog.render().then(()=>{
       // Assumes MDL JS
       if(!(typeof(componentHandler) == 'undefined')){
           componentHandler.upgradeAllRegistered();
       }
-      this.ScoreObservationsDialog.show()
+      this.scoreAssertionsDialog.show()
     })
   }
 
-  showObservation(observ) {
-    if (!this.scoreObservationDialog.voices){
-      this.scoreObservationDialog.voices = this.model.get("voices")
+  showAssertion(assert) {
+    if (!this.scoreAssertionDialog.voices){
+      this.scoreAssertionDialog.voices = this.model.get("voices")
     }
-    this.scoreObservationDialog.render(observ)
+    this.scoreAssertionDialog.render(assert)
     // Assumes MDL JS
     if(!(typeof(componentHandler) == 'undefined')){
         componentHandler.upgradeAllRegistered();
     }
-    this.scoreObservationDialog.show()
+    this.scoreAssertionDialog.show()
   }
 
-  newObservation(new_observ){
-    this.scoreObservationDialog.ema = this.$el.find(".cnt-emaexpr-expr").text()
-    if (!this.scoreObservationDialog.ema) {
-      this.scoreObservationDialog.ema = this.model.get("ema")
+  newAssertion(new_assert){
+    this.scoreAssertionDialog.ema = this.$el.find(".cnt-emaexpr-expr").text()
+    if (!this.scoreAssertionDialog.ema) {
+      this.scoreAssertionDialog.ema = this.model.get("ema")
     }
-    // this.scoreObservationDialog.score = this.model
-    this.scoreObservationDialog.title = this.model.get("title")
-    this.scoreObservationDialog.voices = this.model.get("voices")
-    this.scoreObservationDialog.mei_ids = this.continuo.selectedElements
-    if (this.scoreObservationDialog.mei_ids.length == 0) {
-      this.scoreObservationDialog.mei_ids = this.model.get("mei_ids")
+    // this.scoreAssertionDialog.score = this.model
+    this.scoreAssertionDialog.title = this.model.get("title")
+    this.scoreAssertionDialog.voices = this.model.get("voices")
+    this.scoreAssertionDialog.mei_ids = this.continuo.selectedElements
+    if (this.scoreAssertionDialog.mei_ids.length == 0) {
+      this.scoreAssertionDialog.mei_ids = this.model.get("mei_ids")
     }
-    this.showObservation(new_observ)
+    this.showAssertion(new_assert)
     // this.continuo.clearSelection()
-    // this.$el.find(".show-score-observation").hide()
+    // this.$el.find(".show-score-assertion").hide()
   }
 
   getSelections(){
@@ -249,7 +250,7 @@ class ScoreView extends Backbone.View {
 
   disableButtons(){
     this.$el.find(".show-score-relationship").attr("disabled", true)
-    this.$el.find(".show-score-observations").attr("disabled", true)
+    this.$el.find(".show-score-assertions").attr("disabled", true)
     // find a way to cover .cnt-container to stop click events on it
     let $score = this.$el.find(".score")
     let $mask = $("<div class='mask'></div>")
@@ -260,17 +261,17 @@ class ScoreView extends Backbone.View {
 
   renableButtons(){
     this.$el.find(".show-score-relationship").attr("disabled", false)
-    this.$el.find(".show-score-observations").attr("disabled", false)
+    this.$el.find(".show-score-assertions").attr("disabled", false)
     this.$el.find(".mask").remove()
   }
 
   close(force=false){
-    // only close if it's not a target of a relationship or observation
+    // only close if it's not a target of a relationship or assertion
     new Promise((res, rej)=>{
       this.listenTo(Events, "response:relationships", (rels) => res(rels))
       Events.trigger("request:relationshipsFor", this.model.cid)
     }).then((rels)=>{
-      if (this.model.observations.models.length == 0 && rels.length == 0) {
+      if (this.model.assertions.models.length == 0 && rels.length == 0) {
         let r = false
         if (!force) {
           r = confirm("Are you sure you want to close this score?")
@@ -282,7 +283,7 @@ class ScoreView extends Backbone.View {
         }
       }
       else {
-        alert("Cannot close this score because it contains relationships or observations.")
+        alert("Cannot close this score because it contains relationships or assertions.")
       }
     })
   }

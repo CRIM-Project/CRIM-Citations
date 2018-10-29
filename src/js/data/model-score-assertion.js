@@ -1,6 +1,6 @@
 import * as Backbone from 'backbone';
 
-class ScoreObservation extends Backbone.Model {
+class ScoreAssertion extends Backbone.Model {
   get defaults() {
     return {
       types : {}
@@ -14,4 +14,4 @@ class ScoreObservation extends Backbone.Model {
   }
 }
 
-export default ScoreObservation;
+export default ScoreAssertion;

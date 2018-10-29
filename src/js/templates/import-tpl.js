@@ -13,14 +13,14 @@ let import_tpl = `
       <div class="mdl-tabs__panel is-active" id="local-panel">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--file">
           <input class="mdl-textfield__input" placeholder="File" type="text" id="uploadFile" readonly/>
-          <div class="btn btn-primary">
-            File upload<input type="file" id="uploadBtn">
+          <div class="mdl-button mdl-button--primary mdl-button--icon mdl-button--file">
+            <i class="material-icons">file_upload</i><input type="file" id="uploadBtn">
           </div>
         </div>
       </div>
       <div class="mdl-tabs__panel" id="db-panel">
-        <button id="from_dropbox" class="btn btn-primary">
-          Open from Dropbox
+        <button id="from_dropbox" class="mdl-button mdl-js-button mdl-button--raised">
+          Open from DropBox
         </button>
       </div>
       <div class="mdl-tabs__panel" id="url-panel">
@@ -37,8 +37,8 @@ let import_tpl = `
     </div>
   </div>
   <div class="mdl-dialog__actions">
-    <button type="button" class="btn btn-primary" id="doImport">Import</button>
-    <button type="button" class="btn close">Cancel</button>
+    <button type="button" class="mdl-button mdl-button--accent" id="doImport">Import</button>
+    <button type="button" class="mdl-button close">Cancel</button>
   </div>
 `
 

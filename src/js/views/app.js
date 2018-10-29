@@ -133,7 +133,7 @@ class AppView extends Backbone.View {
       let export_obj = {
         relationships : this.relationships.toJSON(),
         scores: this.scores.export(),
-        observations: this.scores.exportObservations(),
+        assertions: this.scores.exportAssertions(),
         created_at: time,
         user: this.user
       }
@@ -166,7 +166,7 @@ class AppView extends Backbone.View {
   resetData() {
     this.relationships.reset()
     this.scores.each((s)=>{
-      s.observations.reset()
+      s.assertions.reset()
     })
     if (history.pushState) {
       var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
@@ -214,13 +214,13 @@ class AppView extends Backbone.View {
       let s = this.scores.add(score)
       s.set("id", score.cid)
       s.cid = score.cid
-      s.observations.score = score.cid
+      s.assertions.score = score.cid
 
-      for (let observ of data.observations){
-        if (observ.score == s.cid) {
-          let a = s.observations.add(observ)
-          a.set("id", observ.cid)
-          a.cid = observ.cid
+      for (let assert of data.assertions){
+        if (assert.score == s.cid) {
+          let a = s.assertions.add(assert)
+          a.set("id", assert.cid)
+          a.cid = assert.cid
         }
       }
 
@@ -245,7 +245,7 @@ class AppView extends Backbone.View {
   doImport(){
     this.relationships.reset()
     this.scores.each((s)=>{
-      s.observations.reset()
+      s.assertions.reset()
       s.trigger("close", true)
     })
     this.scores.reset()
@@ -265,8 +265,8 @@ class AppView extends Backbone.View {
 
   removeRel(relid){
     let rel = this.relationships.get(relid)
-    this.scores.trigger("delete_observation", rel.get("scoreAobserv"))
-    this.scores.trigger("delete_observation", rel.get("scoreBobserv"))
+    this.scores.trigger("delete_assertion", rel.get("scoreAassert"))
+    this.scores.trigger("delete_assertion", rel.get("scoreBassert"))
     this.relationships.remove(relid)
   }
 

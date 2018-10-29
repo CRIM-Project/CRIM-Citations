@@ -1,8 +1,8 @@
 import * as Handlebars from 'handlebars';
 
 let score_relationship_tpl = `
-  <h2 class="mdl-dialog__title">Editing relationship</2>
-  <button class="btn hide_button">
+  <h4 class="mdl-dialog__title">Score relationship</h4>
+  <button class="mdl-button mdl-js-button mdl-button--raised hide_button">
     Hide
   </button>
   <h3>Observations</h3>
@@ -16,18 +16,29 @@ let score_relationship_tpl = `
         </span>
         <span class="mdl-list__item-primary-content">
           <span class="truncate truncate_short" title="{{titleA}}">{{titleA}}</span>&nbsp;<span class="truncate truncate_short" title="{{scoreA_ema}}">{{scoreA_ema}}</span>
-          <span class="truncate truncate_short observ_typesA"></span>
+          <span class="truncate truncate_short assert_typesA"></span>
         </span>
       </li>
       <li class="mdl-list__item" data-score="B">
         <span class="mdl-list__item-secondary-action">
-          <button class="btn btn-primary show-score-observation">
-            Edit observation
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--attention show-score-assertion">
+            <i class="material-icons">playlist_add</i>
           </button>
+          <!--<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--accent selection_preview">
+            <i class="material-icons" title="preview first measure">remove_red_eye</i>
+          </button>-->
         </span>
         <span class="mdl-list__item-primary-content">
           <span class="truncate truncate_short" title="{{titleB}}">{{titleB}}</span>&nbsp;<span class="truncate truncate_short" title="{{scoreB_ema}}">{{scoreB_ema}}</span>
-          <span class="truncate truncate_short observ_typesB"></span>
+          <span class="truncate truncate_short assert_typesB"></span>
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--attention show-score-assertion">
+            <i class="material-icons">playlist_add</i>
+          </button>
+          <!--<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--accent selection_preview">
+            <i class="material-icons" title="preview first measure">remove_red_eye</i>
+          </button>-->
         </span>
       </li>
     </ul>
@@ -46,37 +57,74 @@ let score_relationship_tpl = `
     </div>
     <h3>Relationship type</h3>
     <div class="mdl-shadow--2dp types">
-      <p>
-        <label for="rt-q" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-          <input type="checkbox" id="rt-q" class="inline mdl-checkbox__input cb" {{#if types.rt-q}}checked{{/if}}>
-          Quotation
-        </label>
-        <a class="drop">(expand)</a>
-        <div class="rest" style="display:none">
-          <div>
-            <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect for="rt-q-ex">
-              <input type="radio" name="rt-q-opts" id="rt-q-ex" class="inline mdl-radio__button" {{#if types.rt-q.ex}}checked{{/if}} {{#unless types.rt-q}}checked disabled{{/unless}}>
-              <span class="mdl-radio__label">Exact</span>
-            </label>
-            <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="rt-q-mo">
-              <input type="radio" name="rt-q-opts" id="rt-q-mo" class="inline mdl-radio__button" {{#if types.rt-q.mo}}checked{{/if}} {{#unless types.rt-q}}disabled{{/unless}}>
-              <span class="mdl-radio__label">Monnayage</span>
-            </label>
-          </div>
+      <label for="rt-q" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+        <input type="checkbox" id="rt-q" class="mdl-checkbox__input cb" {{#if types.rt-q}}checked{{/if}}>
+        <span class="mdl-checkbox__label">Quotation</span>
+      </label>
+      <button class="mdl-button mdl-js-button mdl-button--icon drop">
+        <i class="material-icons">arrow_drop_down</i>
+      </button>
+      <div class="rest" style="display:none">
+        <div>
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect for="rt-q-ex">
+            <input type="radio" name="rt-q-opts" id="rt-q-ex" class="mdl-radio__button" {{#if types.rt-q.ex}}checked{{/if}} {{#unless types.rt-q}}checked disabled{{/unless}}>
+            <span class="mdl-radio__label">Exact</span>
+          </label>
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="rt-q-mo">
+            <input type="radio" name="rt-q-opts" id="rt-q-mo" class="mdl-radio__button" {{#if types.rt-q.mo}}checked{{/if}} {{#unless types.rt-q}}disabled{{/unless}}>
+            <span class="mdl-radio__label">Monnayage</span>
+          </label>
         </div>
       </p>
     </div>
     <div class="mdl-shadow--2dp types">
-      <p>
-        <label for="rt-tm" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-          <input type="checkbox" id="rt-tm" class="inline mdl-checkbox__input cb" {{#if types.rt-tm}}checked{{/if}}>
-          Mechanical transformation
+      <label for="rt-tm" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+        <input type="checkbox" id="rt-tm" class="mdl-checkbox__input cb" {{#if types.rt-tm}}checked{{/if}}>
+        <span class="mdl-checkbox__label">Transformation (mechanical)</span>
+      </label>
+      <button class="mdl-button mdl-js-button mdl-button--icon drop">
+        <i class="material-icons">arrow_drop_down</i>
+      </button>
+      <div class="rest" style="display:none">
+        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="rt-tm-snd">
+          <input type="checkbox" id="rt-tm-snd" class="mdl-checkbox__input" {{#if types.rt-tm.snd}}checked{{/if}} {{#unless types.rt-tm}}disabled{{/unless}}>
+          <span class="mdl-checkbox__label">Sounding in different voice(s) = change of voice role</span>
         </label>
-        <a class="drop">(expand)</a>
-        <div class="rest" style="display:none">
-          <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="rt-tm-snd">
-            <input type="checkbox" id="rt-tm-snd" class="inline mdl-checkbox__input" {{#if types.rt-tm.snd}}checked{{/if}} {{#unless types.rt-tm}}disabled{{/unless}}>
-            Sounding in different voice(s): change of voice role
+        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="rt-tm-minv">
+          <input type="checkbox" id="rt-tm-minv" class="mdl-checkbox__input" {{#if types.rt-tm.minv}}checked{{/if}} {{#unless types.rt-tm}}disabled{{/unless}}>
+          <span class="mdl-checkbox__label">Melodically inverted</span>
+        </label>
+        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="rt-tm-r">
+          <input type="checkbox" id="rt-tm-r" class="mdl-checkbox__input" {{#if types.rt-tm.r}}checked{{/if}} {{#unless types.rt-tm}}disabled{{/unless}}>
+          <span class="mdl-checkbox__label">In retrograde</span>
+        </label>
+        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="rt-tm-ms">
+          <input type="checkbox" id="rt-tm-ms" class="mdl-checkbox__input" {{#if types.rt-tm.ms}}checked{{/if}} {{#unless types.rt-tm}}disabled{{/unless}}>
+          <span class="mdl-checkbox__label">Metrically shifted (counterpoint with new time interval)</span>
+        </label>
+        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="rt-tm-t">
+          <input type="checkbox" id="rt-tm-t" class="mdl-checkbox__input" {{#if types.rt-tm.t}}checked{{/if}} {{#unless types.rt-tm}}disabled{{/unless}}>
+          <span class="mdl-checkbox__label">Transposed</span>
+        </label>
+        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="rt-tm-td">
+          <input type="checkbox" id="rt-tm-td" class="mdl-checkbox__input" {{#if types.rt-tm.td}}checked{{/if}} {{#unless types.rt-tm}}disabled{{/unless}}>
+          <span class="mdl-checkbox__label">Transposed different amounts (double or invertible cpt)</span>
+        </label>
+      </div>
+    </div>
+    <div class="mdl-shadow--2dp types">
+      <label for="rt-tnm" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+        <input type="checkbox" id="rt-tnm" class="mdl-checkbox__input cb" {{#if types.rt-tnm}}checked{{/if}}>
+        <span class="mdl-checkbox__label">Transformation (non-mechanical)</span>
+      </label>
+      <button class="mdl-button mdl-js-button mdl-button--icon drop">
+        <i class="material-icons">arrow_drop_down</i>
+      </button>
+      <div class="rest" style="display:none">
+        <div>
+          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect for="rt-tnm-em">
+            <input type="checkbox" id="rt-tnm-em" class="mdl-checkbox__input" {{#if types.rt-tnm.em}}checked{{/if}} {{#unless types.rt-tnm}}disabled{{/unless}}>
+            <span class="mdl-checkbox__label">Embellished</span>
           </label>
           <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="rt-tm-minv">
             <input type="checkbox" id="rt-tm-minv" class="inline mdl-checkbox__input" {{#if types.rt-tm.minv}}checked{{/if}} {{#unless types.rt-tm}}disabled{{/unless}}>
@@ -170,8 +218,8 @@ let score_relationship_tpl = `
     <div class="messages mdl-shadow--2dp"></div>
   </div>
   <div class="mdl-dialog__actions">
-    <button type="button" class="btn btn-primary" id="save_score_relationship">Save</button>
-    <button type="button" class="btn close" id="cancel_score_relationship">Cancel</button>
+    <button type="button" class="mdl-button mdl-button--accent" id="save_score_relationship">Save</button>
+    <button type="button" class="mdl-button close" id="cancel_score_relationship">Cancel</button>
   </div>
   <div class="score_preview_cnt mdl-shadow--2dp" style="display:none">
     <div class="score_preview"></div>
