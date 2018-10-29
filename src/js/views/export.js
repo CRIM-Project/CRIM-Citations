@@ -5,6 +5,17 @@ import export_tpl from '../templates/export-tpl';
 import dialogPolyfill from 'dialog-polyfill'
 import saveAs from 'save-as';
 
+// Converts data from the internal format into the serialization used
+// by the Django webapp.
+function internalToSerialized(internal_data) {
+  return;
+}
+
+// Converts serialized data into the internal representation.
+function serializedToInternal(serialized_data) {
+  return;
+}
+
 class Export extends Backbone.View {
 
   initialize (options) {
@@ -30,17 +41,6 @@ class Export extends Backbone.View {
           "click #expToDisk": this.expToDisk,
           "click #expToOmeka": this.expToOmeka
       }
-  }
-
-  // Converts data from the internal format into the serialization used
-  // by the Django webapp.
-  get internalToSerialized(internal_data) {
-
-  }
-
-  // Converts serialized data into the internal representation.
-  get serializedToInternal(serialized_data) {
-
   }
 
   expToDisk() {

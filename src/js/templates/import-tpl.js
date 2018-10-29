@@ -38,7 +38,7 @@ let import_tpl = `
   </div>
   <div class="mdl-dialog__actions">
     <button type="button" class="btn btn-primary" id="doImport">Import</button>
-    <button type="button" class="btn">Cancel</button>
+    <button type="button" class="btn close">Cancel</button>
   </div>
 `
 

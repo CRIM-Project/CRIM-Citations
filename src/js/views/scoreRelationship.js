@@ -141,7 +141,7 @@ class ScoreRelationship extends Backbone.View {
   }
 
   showsScoreObservation(e) {
-    let score_place = $(e.target).closest('li').data('score')
+    let score_place = $(e.target).closest('.mdl-list__item').data('score')
     let score_idx = score_place == "A" ? 0 : 1
     let score = this.scores[score_idx]
     let score_observ_id = this.model.get("score"+score_place+"observ")
@@ -204,8 +204,7 @@ class ScoreRelationship extends Backbone.View {
   }
 
   preview(e) {
-
-    let score_place = $(e.target).closest("li").data("score")
+    let score_place = $(e.target).closest(".mdl-list__item").data("score")
     let score = score_place == "A" ? this.scores[0] : this.scores[1]
     let mei_ids = this.model.get("score"+score_place+"_meiids")
 

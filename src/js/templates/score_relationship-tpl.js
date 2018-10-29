@@ -2,13 +2,13 @@ import * as Handlebars from 'handlebars';
 
 let score_relationship_tpl = `
   <h2 class="mdl-dialog__title">Editing relationship</2>
-  <h3>Observations</h3>
   <button class="btn hide_button">
     Hide
   </button>
+  <h3>Observations</h3>
   <div class="mdl-dialog__content">
-    <p class="mdl-list">
-      <div class="mdl-list__item" data-score="A">
+    <ul class="mdl-list">
+      <li class="mdl-list__item" data-score="A">
         <span class="mdl-list__item-secondary-action">
           <button class="btn btn-primary show-score-observation">
             Edit observation
@@ -18,8 +18,8 @@ let score_relationship_tpl = `
           <span class="truncate truncate_short" title="{{titleA}}">{{titleA}}</span>&nbsp;<span class="truncate truncate_short" title="{{scoreA_ema}}">{{scoreA_ema}}</span>
           <span class="truncate truncate_short observ_typesA"></span>
         </span>
-      </div>
-      <div class="mdl-list__item" data-score="B">
+      </li>
+      <li class="mdl-list__item" data-score="B">
         <span class="mdl-list__item-secondary-action">
           <button class="btn btn-primary show-score-observation">
             Edit observation
@@ -29,8 +29,8 @@ let score_relationship_tpl = `
           <span class="truncate truncate_short" title="{{titleB}}">{{titleB}}</span>&nbsp;<span class="truncate truncate_short" title="{{scoreB_ema}}">{{scoreB_ema}}</span>
           <span class="truncate truncate_short observ_typesB"></span>
         </span>
-      </div>
-    </p>
+      </li>
+    </ul>
     <h3>Direction</h3>
     <div class="direction">
       <p>
