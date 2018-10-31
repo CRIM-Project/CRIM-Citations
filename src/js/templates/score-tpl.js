@@ -2,38 +2,40 @@ import * as Handlebars from 'handlebars';
 
 let pag_tpl = `
 <div class="score_header">
-  <div class="mdl-layout__header-row">
-    <button class="mdl-button mdl-button--attention mdl-js-button mdl-button--icon close_score_button">
-      <i class="material-icons">close</i>
-    </button>
-    <button class="mdl-button mdl-js-button mdl-button--icon collapse_expand_button">
-      <i class="material-icons collapse_icon">vertical_align_center</i>
-      <i class="material-icons expand_icon" style="display:none">fullscreen</i>
-    </button>
-    <span class="mdl-layout-title">{{title}}</span>
-    <div class="mdl-layout-spacer"></div>
-    <nav class="mdl-navigation">
-      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--attention show-score-relationship" style="display:none">
-        <i class="material-icons">compare_arrows</i>
-      </button>
-      <!--<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--attention show-score-observation" style="display:none">
-        <i class="material-icons">playlist_add</i>
-      </button>-->
-      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored show-score-observations">
-        <i class="material-icons">toc</i>
-      </button>
-      <div class="score_pagination">
-        <button class="mdl-button mdl-js-button mdl-button--icon prevPage">
-          <i class="material-icons">navigate_before</i>
-        </button>
-        <button class="mdl-button mdl-js-button mdl-button--icon nextPage">
-          <i class="material-icons">navigate_next</i>
-        </button>
-      </div>
-    </nav>
-  </div>
+  <hr />
+  <h2>{{title}} <small>{{piece_id}}</small></h2>
 </div>
-<div class="score"></div>
+<h3>{{composer}}</h3>
+<div class="row-fluid">
+  <div class="span9">
+    <button type="button" class="btn mdl-button mdl-button--attention mdl-js-button btn-danger close_score_button">
+      Remove piece
+    </button>
+    <button type="button" class="btn btn-primary mdl-button mdl-js-button show-score-relationship" style="display:none">
+      New relationship
+    </button>
+    <button type="button" class="btn mdl-button mdl-js-button mdl-button--colored show-score-observations" style="display:none">
+      Show relationships
+    </button>
+  </div>
+  <div class="pull-right">
+    <button type="button" class="btn mdl-button mdl-js-button collapse_expand_button">
+      <span class="collapse">Collapse</span>
+      <span class="expand" style="display:none;">Expand</span>
+    </button>
+  </div>
+  <nav class="mdl-navigation">
+    <div class="btn-group score_pagination pull-right" role="group">
+      <button type="button" class="btn prevPage mdl-button mdl-js-button score_collapsible">
+        &lt;
+      </button>
+      <button type="button" class="btn nextPage mdl-button mdl-js-button score_collapsible">
+        &gt;
+      </button>
+    </div>
+  </nav>
+</div>
+<div class="score score_collapsible"></div>
 `
 
 export default Handlebars.compile(pag_tpl);

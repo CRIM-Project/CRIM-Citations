@@ -1,7 +1,7 @@
 import * as Handlebars from 'handlebars';
 
 let addfile_tpl = `
-  <h4 class="mdl-dialog__title">Add score</h4>
+  <h2 class="mdl-dialog__title">Add score</h2>
   <div class="mdl-dialog__content">
     <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
       <div class="mdl-tabs__panel" id="web-panel">

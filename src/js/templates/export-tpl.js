@@ -1,7 +1,7 @@
 import * as Handlebars from 'handlebars';
 
 let export_tpl = `
-  <h4 class="mdl-dialog__title">Export relationships</h4>
+  <h2 class="mdl-dialog__title">Export relationships</h2>
   <div class="mdl-dialog__content">
     <strong style="display:none">Success!</strong>
     <p>Exporting will store your current work to the CRIM databse or to a file that you will be able to open and edit later.</p>
