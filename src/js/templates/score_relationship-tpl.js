@@ -21,24 +21,13 @@ let score_relationship_tpl = `
       </li>
       <li class="mdl-list__item" data-score="B">
         <span class="mdl-list__item-secondary-action">
-          <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--attention show-score-observation">
-            <i class="material-icons">playlist_add</i>
+          <button class="btn btn-primary show-score-observation">
+            Edit observation
           </button>
-          <!--<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--accent selection_preview">
-            <i class="material-icons" title="preview first measure">remove_red_eye</i>
-          </button>-->
         </span>
         <span class="mdl-list__item-primary-content">
           <span class="truncate truncate_short" title="{{titleB}}">{{titleB}}</span>&nbsp;<span class="truncate truncate_short" title="{{scoreB_ema}}">{{scoreB_ema}}</span>
           <span class="truncate truncate_short observ_typesB"></span>
-        </span>
-        <span class="mdl-list__item-secondary-action">
-          <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--attention show-score-observation">
-            <i class="material-icons">playlist_add</i>
-          </button>
-          <!--<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--accent selection_preview">
-            <i class="material-icons" title="preview first measure">remove_red_eye</i>
-          </button>-->
         </span>
       </li>
     </ul>
