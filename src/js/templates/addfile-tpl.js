@@ -1,22 +1,5 @@
 import * as Handlebars from 'handlebars';
 
-// let addfile_tpl = `
-//   <h4 class="mdl-dialog__title">Add file</h4>
-//   <div class="mdl-dialog__content">
-//     <form action="#">
-//       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-//         <input class="mdl-textfield__input" type="text" id="url_input" value="http://www.verovio.org/examples/downloads/Schubert_Lindenbaum.mei">
-//         <label class="mdl-textfield__label" for="url_input">URL...</label>
-//       </div>
-//     </form>
-//   </div>
-//   <div class="mdl-dialog__actions">
-//     <button type="button" class="mdl-button mdl-button--accent" id="from_dropbox">Open from Dropbox</button>
-//     <button type="button" class="mdl-button mdl-button--accent" id="from_url">Load from URL</button>
-//     <button type="button" class="mdl-button close">Cancel</button>
-//   </div>
-// `
-
 let addfile_tpl = `
   <h4 class="mdl-dialog__title">Add score</h4>
   <div class="mdl-dialog__content">
@@ -44,8 +27,8 @@ let addfile_tpl = `
     </div>
   </div>
   <div class="mdl-dialog__actions">
-    <button type="button" class="mdl-button mdl-button--accent" id="openFile">Open</button>
-    <button type="button" class="mdl-button close">Cancel</button>
+    <button type="button" class="btn btn-primary mdl-button mdl-button--accent" id="openFile">Open</button>
+    <button type="button" class="btn mdl-button close">Cancel</button>
   </div>
 `
 
