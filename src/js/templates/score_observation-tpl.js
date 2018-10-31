@@ -1,13 +1,13 @@
 import * as Handlebars from 'handlebars';
 
-let score_assertion_tpl = `
-  <h4 class="mdl-dialog__title">Score assertion</h4>
+let score_observation_tpl = `
+  <h4 class="mdl-dialog__title">Score observation</h4>
   <button class="mdl-button mdl-js-button mdl-button--raised hide_button">
     Hide
   </button>
   <div class="mdl-dialog__content">
-    <div class="assert_score">{{title}}</div>
-    <div class="assert_ema">{{ema}}</div>
+    <div class="observ_score">{{title}}</div>
+    <div class="observ_ema">{{ema}}</div>
     <h4>Musical type</h4>
     <div class="mdl-shadow--2dp types">
       <label for="mt-cf" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
@@ -585,15 +585,15 @@ let score_assertion_tpl = `
     </div>
     <h3>Remarks</h3>
     <div class="mdl-textfield mdl-js-textfield">
-      <textarea class="mdl-textfield__input" type="text" rows="5" id="assert-comment">{{#if comment}}{{comment}}{{/if}}</textarea>
-      <label class="mdl-textfield__label" for="assert-comment">Comment...</label>
+      <textarea class="mdl-textfield__input" type="text" rows="5" id="observ-comment">{{#if comment}}{{comment}}{{/if}}</textarea>
+      <label class="mdl-textfield__label" for="observ-comment">Comment...</label>
     </div>
     <div class="messages mdl-shadow--2dp"></div>
   </div>
   <div class="mdl-dialog__actions">
-    <button type="button" class="mdl-button mdl-button--accent" id="save_score_assertion">Save</button>
-    <button type="button" class="mdl-button close" id="cancel_score_assertion">Cancel</button>
+    <button type="button" class="mdl-button mdl-button--accent" id="save_score_observation">Save</button>
+    <button type="button" class="mdl-button close" id="cancel_score_observation">Cancel</button>
   </div>
 `
 
-export default Handlebars.compile(score_assertion_tpl);
+export default Handlebars.compile(score_observation_tpl);

@@ -1,6 +1,6 @@
 import * as Handlebars from 'handlebars';
 
-let score_assertion_tpl = `
+let score_observation_tpl = `
   <h4 class="mdl-dialog__title">Score metadata</h4>
   <div class="mdl-dialog__content">
     <h4>Relationships</h4>
@@ -25,24 +25,24 @@ let score_assertion_tpl = `
     {{else}}
     <p>No relationships yet.</p>
     {{/if}}
-    <h4>Assertions</h4>
-    {{#if assertions.length}}
+    <h4>Observations</h4>
+    {{#if observations.length}}
     <ul class="mdl-list">
-      {{#each assertions}}
-      <li class="mdl-list__item rel_item" id="i_{{this.cid}}" data-assertionid="{{this.cid}}">
+      {{#each observations}}
+      <li class="mdl-list__item rel_item" id="i_{{this.cid}}" data-observationid="{{this.cid}}">
         <span class="mdl-list__item-primary-content">
           <i class="material-icons delete_item clickable" title="edit relationship">delete_forever</i>
           <span class="truncate" title="{{this.ema}}">{{this.ema}}</span> <span class="truncate" title="{{#each this.types}}{{label}}{{#unless @last}},{{/unless}}{{/each}}">({{#each this.types}}{{label}}{{#unless @last}},{{/unless}}{{/each}})</span>
         </span>
         <span class="mdl-list__item-secondary-action">
-          <i class="material-icons edit_assertion clickable" title="edit assertion">mode_edit</i>
+          <i class="material-icons edit_observation clickable" title="edit observation">mode_edit</i>
           <i class="material-icons selection_preview clickable" title="preview first measure">remove_red_eye</i>
         </span>
       </li>
       {{/each}}
     </ul>
     {{else}}
-    <p>No assertions yet. Assertions can be added to relationship targets.</p>
+    <p>No observations yet. Observations can be added to relationship targets.</p>
     {{/if}}
   </div>
   <div class="mdl-dialog__actions">
@@ -58,4 +58,4 @@ let score_assertion_tpl = `
   </div>
 `
 
-export default Handlebars.compile(score_assertion_tpl);
+export default Handlebars.compile(score_observation_tpl);

@@ -7,9 +7,9 @@ class Scores extends Backbone.Collection {
         this.model = Score;
     }
 
-    exportAssertions(){
+    exportObservations(){
       return this.models.reduce((acc, score)=>{
-        acc = acc.concat(score.assertions.toJSON())
+        acc = acc.concat(score.observations.toJSON())
         return acc
       }, [])
     }

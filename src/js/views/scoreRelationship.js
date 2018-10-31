@@ -11,7 +11,7 @@ class ScoreRelationship extends Backbone.View {
     this.container = options.container
 
     this.listenTo(Events, "startHideMode", this.startHideMode)
-    this.listenTo(Events, "closedAssert", this.stopHideMode)
+    this.listenTo(Events, "closedObserv", this.stopHideMode)
   }
 
   template(tpl){
@@ -35,7 +35,7 @@ class ScoreRelationship extends Backbone.View {
           "click #cancel_score_relationship": this.cancel,
           "click .selection_preview": this.preview,
           "click .score_preview_close": this.closePreview,
-          "click .show-score-assertion": this.showsScoreAssertion,
+          "click .show-score-observation": this.showsScoreObservation,
           "click .hide_button": this.hide
       }
   }
@@ -43,14 +43,14 @@ class ScoreRelationship extends Backbone.View {
   cancel() {
     if (Object.keys(this.model.get("types")).length == 0) {
         this.collection.remove(this.model.cid);
-        // Assertions belonging to this relationship must be removed as well.
-        let assertA = this.model.get("scoreAassert")
-        let assertB = this.model.get("scoreBassert")
-        if (assertA) {
-          this.scores[0].assertions.remove(assertA)
+        // Observations belonging to this relationship must be removed as well.
+        let observA = this.model.get("scoreAobserv")
+        let observB = this.model.get("scoreBobserv")
+        if (observA) {
+          this.scores[0].observations.remove(observA)
         }
-        if (assertB) {
-          this.scores[1].assertions.remove(assertB)
+        if (observB) {
+          this.scores[1].observations.remove(observB)
         }
     }
 
@@ -140,47 +140,47 @@ class ScoreRelationship extends Backbone.View {
     }
   }
 
-  showsScoreAssertion(e) {
+  showsScoreObservation(e) {
     let score_place = $(e.target).closest('li').data('score')
     let score_idx = score_place == "A" ? 0 : 1
     let score = this.scores[score_idx]
-    let score_assert_id = this.model.get("score"+score_place+"assert")
-    let score_assert = score.assertions.get(score_assert_id)
-    if (!score_assert) {
+    let score_observ_id = this.model.get("score"+score_place+"observ")
+    let score_observ = score.observations.get(score_observ_id)
+    if (!score_observ) {
       score.set("ema", this.model.get("score"+score_place+"_ema"))
       score.set("mei_ids", this.model.get("score"+score_place+"_meiids"))
-      let new_assert = score.newAssertion()
-      this.model.set("score"+score_place+"assert", new_assert.cid)
+      let new_observ = score.newObservation()
+      this.model.set("score"+score_place+"observ", new_observ.cid)
     }
     else {
-      score.trigger("edit_assertion", score_assert_id)
+      score.trigger("edit_observation", score_observ_id)
     }
   }
 
-  updateAssert(){
-    let assert_A_id = this.model.get("scoreAassert")
-    let assert_B_id = this.model.get("scoreBassert")
+  updateObserv(){
+    let observ_A_id = this.model.get("scoreAobserv")
+    let observ_B_id = this.model.get("scoreBobserv")
 
-    if (assert_A_id && this.scores[0].assertions.get(assert_A_id)) {
-      let types = this.scores[0].assertions.get(assert_A_id).get("types")
+    if (observ_A_id && this.scores[0].observations.get(observ_A_id)) {
+      let types = this.scores[0].observations.get(observ_A_id).get("types")
       if (types) {
         let labels = []
         for (let type in types){
           labels.push(types[type].label)
         }
-        this.$el.find(".assert_typesA").html("("+labels.join(", ")+")")
-        this.$el.find(".assert_typesA").attr("title", "("+labels.join(", ")+")")
+        this.$el.find(".observ_typesA").html("("+labels.join(", ")+")")
+        this.$el.find(".observ_typesA").attr("title", "("+labels.join(", ")+")")
       }
     }
-    if (assert_B_id  && this.scores[1].assertions.get(assert_B_id)) {
-      let types = this.scores[1].assertions.get(assert_B_id).get("types")
+    if (observ_B_id  && this.scores[1].observations.get(observ_B_id)) {
+      let types = this.scores[1].observations.get(observ_B_id).get("types")
       if (types) {
         let labels = []
         for (let type in types){
           labels.push(types[type].label)
         }
-        this.$el.find(".assert_typesB").html("("+labels.join(", ")+")")
-        this.$el.find(".assert_typesB").attr("title", "("+labels.join(", ")+")")
+        this.$el.find(".observ_typesB").html("("+labels.join(", ")+")")
+        this.$el.find(".observ_typesB").attr("title", "("+labels.join(", ")+")")
       }
     }
   }
@@ -253,8 +253,8 @@ class ScoreRelationship extends Backbone.View {
   render(scores, rel) {
     this.scores = scores
 
-    this.listenTo(scores[0].assertions, "savedAssert", this.updateAssert)
-    this.listenTo(scores[1].assertions, "savedAssert", this.updateAssert)
+    this.listenTo(scores[0].observations, "savedObserv", this.updateObserv)
+    this.listenTo(scores[1].observations, "savedObserv", this.updateObserv)
 
     if (rel) {
       this.model = this.collection.get(rel)
@@ -283,7 +283,7 @@ class ScoreRelationship extends Backbone.View {
         componentHandler.upgradeAllRegistered();
     }
 
-    this.updateAssert()
+    this.updateObserv()
     this.highlightNotation()
   }
 
