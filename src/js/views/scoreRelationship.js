@@ -187,6 +187,9 @@ class ScoreRelationship extends Backbone.View {
 
   showType(e) {
     $(e.target).closest('.types').find('.rest').toggle()
+    // Toggle the wording of the button between "Expand" and "Collapse".
+    $(e.target).closest('.types').find(".collapse").toggle();
+    $(e.target).closest('.types').find(".expand").toggle();
   }
 
   showTypeCh(e) {
@@ -196,9 +199,16 @@ class ScoreRelationship extends Backbone.View {
       // Assumes MDL
       rest.find("input, textarea").prop("disabled", false).parent().removeClass("is-disabled")
       rest.show()
+      // Show "Collapse".
+      $(e.target).closest('.types').find(".collapse").show();
+      $(e.target).closest('.types').find(".expand").hide();
     }
     else {
-      rest.find("input, textarea").prop("disabled", true).parent().addClass("is-disabled")
+      rest.hide();
+      rest.find("input, textarea").prop("disabled", true).parent().addClass("is-disabled");
+      // Show "Expand".
+      $(e.target).closest('.types').find(".collapse").hide();
+      $(e.target).closest('.types').find(".expand").show();
     }
   }
 

@@ -194,7 +194,7 @@ class ScoreObservation extends Backbone.View {
 
   showMusType(e) {
     $(e.target).closest('.types').find('.rest').toggle();
-    // Change the wording of the button, and add the collapsed style.
+    // Toggle the wording of the button between "Expand" and "Collapse".
     $(e.target).closest('.types').find(".collapse").toggle();
     $(e.target).closest('.types').find(".expand").toggle();
   }
@@ -206,9 +206,16 @@ class ScoreObservation extends Backbone.View {
       // Assumes MDL
       rest.find("input, textarea, select, button").prop("disabled", false).parent().removeClass("is-disabled")
       rest.show()
+      // Show "Collapse".
+      $(e.target).closest('.types').find(".collapse").show();
+      $(e.target).closest('.types').find(".expand").hide();
     }
     else {
+      rest.hide();
       rest.find("input, textarea, select, button").prop("disabled", true).parent().addClass("is-disabled")
+      // Show "Expand".
+      $(e.target).closest('.types').find(".collapse").hide();
+      $(e.target).closest('.types').find(".expand").show();
     }
   }
 
