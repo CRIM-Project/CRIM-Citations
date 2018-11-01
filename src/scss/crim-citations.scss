@@ -13,15 +13,19 @@
 }
 
 .score_collapsed {
-  height: 45px !important;
+  height: 90px !important;
 
   .score_collapsible {
     display: none;
   }
 }
 
+.mdl-cell {
+  padding-bottom: 45px;
+}
+
 .cnt-container {
-  position: relative
+  position: relative;
 }
 
 .cnt-emabox {
