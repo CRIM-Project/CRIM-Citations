@@ -51,7 +51,6 @@
     border-radius: 20px;
     padding: 2px 8px 2px 8px;
   }
-
 }
 
 /* Make sure to make responsive */
@@ -59,7 +58,8 @@
   width: 640px;
 
   .types {
-    padding: 4px;
+    margin-top: 15px;
+    margin-bottom: 4px;
   }
 
   label {
