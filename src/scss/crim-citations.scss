@@ -24,6 +24,16 @@
   padding-bottom: 45px;
 }
 
+.mdl-list {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.mdl-list li {
+  margin-bottom: 9px;
+}
+
 .cnt-container {
   position: relative;
 }
@@ -96,14 +106,15 @@ svg {
 }
 
 .truncate {
-  width: 160px;
+  width: 100%;
   white-space: nowrap;
+  display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.truncate_short {
-  width: 112px;
+.ema {
+  color: #999999;
 }
 
 // Matches h3 small of CRIM project.
@@ -111,7 +122,6 @@ svg {
   font-family: "crimson text",Georgia,serif;
   // line-height: 30px;
   margin-bottom: 9px;
-  color: #999999;
   font-size: 14px;
   white-space: nowrap;
   overflow: hidden;

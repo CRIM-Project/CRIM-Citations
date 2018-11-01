@@ -7,7 +7,7 @@ let score_observation_tpl = `
   </button>
   <div class="mdl-dialog__content">
     <h3 class="observ_score">{{title}}</h3>
-    <div class="observ_ema">{{ema}}</div>
+    <div class="ema observ_ema">{{ema}}</div>
     <h3>Musical type</h3>
     <div class="mdl-shadow--2dp types">
       <label for="mt-cf" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">

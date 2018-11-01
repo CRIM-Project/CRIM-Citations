@@ -46,7 +46,7 @@ let score_observation_tpl = `
     {{/if}}
   </div>
   <div class="mdl-dialog__actions">
-    <button type="button" class="mdl-button close">Close</button>
+    <button type="button" class="btn mdl-button close">Close</button>
   </div>
   <div class="score_preview_cnt mdl-shadow--2dp" style="display:none">
     <div class="score_preview"></div>
