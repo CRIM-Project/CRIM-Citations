@@ -1,22 +1,23 @@
 import * as Handlebars from 'handlebars';
 
 let score_observation_tpl = `
-  <h4 class="mdl-dialog__title">Score observation</h4>
-  <button class="mdl-button mdl-js-button mdl-button--raised hide_button">
+  <h2 class="mdl-dialog__title">Editing observation</h2>
+  <button class="btn mdl-button mdl-js-button mdl-button--raised hide_button">
     Hide
   </button>
   <div class="mdl-dialog__content">
-    <div class="observ_score">{{title}}</div>
+    <h3 class="observ_score">{{title}}</h3>
     <div class="observ_ema">{{ema}}</div>
-    <h4>Musical type</h4>
+    <h3>Musical type</h3>
     <div class="mdl-shadow--2dp types">
       <label for="mt-cf" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
         <input type="checkbox" id="mt-cf" class="inline mdl-checkbox__input cb" {{#if types.mt-cf}}checked{{/if}}>
         <span class="mdl-checkbox__label">Cantus firmus</span>
       </label>
-      <button class="mdl-button mdl-js-button mdl-button--icon drop">
-        <i class="material-icons clickable">arrow_drop_down</i>
-      </button>
+      <a class="drop">
+        <span class="expand">(Expand)</span>
+        <span class="collapse" style="display:none;">(Collapse)</span>
+      </a>
       <div class="rest" style="display:none">
         <label class="block select_label" for="mt-cf-voice">Voice:</label>
         <select class="dialog_select" name="mt-cf-voice" id="mt-cf-voice">
@@ -39,9 +40,10 @@ let score_observation_tpl = `
         <input type="checkbox" id="mt-sog" class="inline mdl-checkbox__input cb" {{#if types.mt-sog}}checked{{/if}}>
         <span class="mdl-checkbox__label">Soggetto</span>
       </label>
-      <button class="mdl-button mdl-js-button mdl-button--icon drop">
-        <i class="material-icons clickable">arrow_drop_down</i>
-      </button>
+      <a class="drop">
+        <span class="expand">(Expand)</span>
+        <span class="collapse" style="display:none;">(Collapse)</span>
+      </a>
       <div class="rest" style="display:none">
         <div class="selectGroup">
           <label class="block select_label" for="mt-sog-voice1">Voices:</label>
@@ -54,8 +56,8 @@ let score_observation_tpl = `
           </div>
         </div>
         <div data-for="mt-sog">
-          <button class="addVoice mdl-button mdl-js-button mdl-button--icon" {{#unless types.mt-fg}}disabled{{/unless}}>
-            <i class="material-icons">add</i>
+          <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-fg}}disabled{{/unless}}>
+            Add voice
           </button>
         </div>
         <div>
@@ -83,9 +85,10 @@ let score_observation_tpl = `
         <input type="checkbox" id="mt-csog" class="inline mdl-checkbox__input cb" {{#if types.mt-csog}}checked{{/if}}>
         <span class="mdl-checkbox__label">Counter-soggetto</span>
       </label>
-      <button class="mdl-button mdl-js-button mdl-button--icon drop">
-        <i class="material-icons clickable">arrow_drop_down</i>
-      </button>
+      <a class="drop">
+        <span class="expand">(Expand)</span>
+        <span class="collapse" style="display:none;">(Collapse)</span>
+      </a>
       <div class="rest" style="display:none">
         <div class="selectGroup">
           <label class="block select_label" for="mt-csog-voice">Voices:</label>
@@ -98,7 +101,7 @@ let score_observation_tpl = `
           </div>
         </div>
         <div data-for="mt-sog">
-          <button class="addVoice btn" {{#unless types.mt-fg}}disabled{{/unless}}>
+          <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-fg}}disabled{{/unless}}>
             Add voice
           </button>
         </div>
@@ -117,9 +120,10 @@ let score_observation_tpl = `
         <input type="checkbox" id="mt-cd" class="inline mdl-checkbox__input cb" {{#if types.mt-cd}}checked{{/if}}>
         <span class="mdl-checkbox__label">Contrapuntal duo</span>
       </label>
-      <button class="mdl-button mdl-js-button mdl-button--icon drop">
-        <i class="material-icons clickable">arrow_drop_down</i>
-      </button>
+      <a class="drop">
+        <span class="expand">(Expand)</span>
+        <span class="collapse" style="display:none;">(Collapse)</span>
+      </a>
       <div class="rest" style="display:none">
         <div class="selectGroup">
           <label class="block select_label" for="mt-cd-voice1">Voices:</label>
@@ -145,9 +149,10 @@ let score_observation_tpl = `
         <input type="checkbox" id="mt-fg" class="inline mdl-checkbox__input cb" {{#if types.mt-fg}}checked{{/if}}>
         <span class="mdl-checkbox__label">Fuga</span>
       </label>
-      <button class="mdl-button mdl-js-button mdl-button--icon drop">
-        <i class="material-icons clickable">arrow_drop_down</i>
-      </button>
+      <a class="drop">
+        <span class="expand">(Expand)</span>
+        <span class="collapse" style="display:none;">(Collapse)</span>
+      </a>
       <div class="rest" style="display:none">
         <div class="selectGroup">
           <label class="block select_label" for="mt-fg-voice1">Voices:</label>
@@ -160,8 +165,8 @@ let score_observation_tpl = `
           </div>
         </div>
         <div data-for="mt-fg">
-          <button class="addVoice mdl-button mdl-js-button mdl-button--icon" {{#unless types.mt-fg}}disabled{{/unless}}>
-            <i class="material-icons">add</i>
+          <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-fg}}disabled{{/unless}}>
+            Add voice
           </button>
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -207,9 +212,10 @@ let score_observation_tpl = `
         <input type="checkbox" id="mt-pe" class="inline mdl-checkbox__input cb" {{#if types.mt-pe}}checked{{/if}}>
         <span class="mdl-checkbox__label">Periodic entry</span>
       </label>
-      <button class="mdl-button mdl-js-button mdl-button--icon drop">
-        <i class="material-icons clickable">arrow_drop_down</i>
-      </button>
+      <a class="drop">
+        <span class="expand">(Expand)</span>
+        <span class="collapse" style="display:none;">(Collapse)</span>
+      </a>
       <div class="rest" style="display:none">
         <div class="selectGroup">
           <label class="block select_label" for="mt-pe-voice1">Voices:</label>
@@ -221,9 +227,9 @@ let score_observation_tpl = `
             </select>
           </div>
         </div>
-        <div data-pair="true" data-for="mt-id">
-          <button class="addVoice mdl-button mdl-js-button mdl-button--icon" {{#unless types.mt-id}}disabled{{/unless}}>
-            <i class="material-icons">add</i>
+        <div data-pair="true" data-for="mt-pe">
+          <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-pe}}disabled{{/unless}}>
+            Add voice
           </button>
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -269,9 +275,10 @@ let score_observation_tpl = `
         <input type="checkbox" id="mt-id" class="inline mdl-checkbox__input cb" {{#if types.mt-id}}checked{{/if}}>
         <span class="mdl-checkbox__label">Imitative duo</span>
       </label>
-      <button class="mdl-button mdl-js-button mdl-button--icon drop">
-        <i class="material-icons clickable">arrow_drop_down</i>
-      </button>
+      <a class="drop">
+        <span class="expand">(Expand)</span>
+        <span class="collapse" style="display:none;">(Collapse)</span>
+      </a>
       <div class="rest" style="display:none">
         <div class="selectGroup">
           <label class="block select_label" for="mt-id-voice1">Voices:</label>
@@ -290,9 +297,9 @@ let score_observation_tpl = `
             </select>
           </div>
         </div>
-        <div data-for="mt-pe">
-          <button class="addVoice mdl-button mdl-js-button mdl-button--icon" {{#unless types.mt-pe}}disabled{{/unless}}>
-            <i class="material-icons">add</i>
+        <div data-for="mt-id">
+          <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-id}}disabled{{/unless}}>
+            Add voice
           </button>
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -330,9 +337,10 @@ let score_observation_tpl = `
         <input type="checkbox" id="mt-nid" class="inline mdl-checkbox__input cb" {{#if types.mt-nid}}checked{{/if}}>
         <span class="mdl-checkbox__label">Non-imitative duo</span>
       </label>
-      <button class="mdl-button mdl-js-button mdl-button--icon drop">
-        <i class="material-icons clickable">arrow_drop_down</i>
-      </button>
+      <a class="drop">
+        <span class="expand">(Expand)</span>
+        <span class="collapse" style="display:none;">(Collapse)</span>
+      </a>
       <div class="rest" style="display:none">
         <div class="selectGroup">
           <label class="block select_label" for="mt-nid-voice1">Voices:</label>
@@ -352,8 +360,8 @@ let score_observation_tpl = `
           </div>
         </div>
         <div data-pair="true" data-for="mt-nid">
-          <button class="addVoice mdl-button mdl-js-button mdl-button--icon" {{#unless types.mt-nid}}disabled{{/unless}}>
-            <i class="material-icons">add</i>
+          <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-nid}}disabled{{/unless}}>
+            Add voice
           </button>
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -395,9 +403,10 @@ let score_observation_tpl = `
         <input type="checkbox" id="mt-hr" class="inline mdl-checkbox__input cb" {{#if types.mt-hr}}checked{{/if}}>
         <span class="mdl-checkbox__label">Homorhythm</span>
       </label>
-      <button class="mdl-button mdl-js-button mdl-button--icon drop">
-        <i class="material-icons clickable">arrow_drop_down</i>
-      </button>
+      <a class="drop collapsed">
+        <span class="expand">(Expand)</span>
+        <span class="collapse" style="display:none;">(Collapse)</span>
+      </a>
       <div class="rest" style="display:none">
         <div class="selectGroup">
           <label class="block select_label" for="mt-hr-voice1">Voices:</label>
@@ -410,8 +419,8 @@ let score_observation_tpl = `
           </div>
         </div>
         <div data-for="mt-hr">
-          <button class="addVoice mdl-button mdl-js-button mdl-button--icon" {{#unless types.mt-hr}}disabled{{/unless}}>
-            <i class="material-icons">add</i>
+          <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-hr}}disabled{{/unless}}>
+            Add voice
           </button>
         </div>
         <div>
@@ -439,9 +448,10 @@ let score_observation_tpl = `
         <input type="checkbox" id="mt-cad" class="inline mdl-checkbox__input cb" {{#if types.mt-cad}}checked{{/if}}>
         <span class="mdl-checkbox__label">Cadence</span>
       </label>
-      <button class="mdl-button mdl-js-button mdl-button--icon drop">
-        <i class="material-icons clickable">arrow_drop_down</i>
-      </button>
+      <a class="drop">
+        <span class="expand">(Expand)</span>
+        <span class="collapse" style="display:none;">(Collapse)</span>
+      </a>
       <div class="rest" style="display:none">
         <div class="selectGroup">
           <label class="block select_label" for="mt-cad-voice1">
@@ -515,9 +525,10 @@ let score_observation_tpl = `
         <input type="checkbox" id="mt-int" class="inline mdl-checkbox__input cb" {{#if types.mt-int}}checked{{/if}}>
         <span class="mdl-checkbox__label">Interval pattern</span>
       </label>
-      <button class="mdl-button mdl-js-button mdl-button--icon drop">
-        <i class="material-icons clickable">arrow_drop_down</i>
-      </button>
+      <a class="drop">
+        <span class="expand">(Expand)</span>
+        <span class="collapse" style="display:none;">(Collapse)</span>
+      </a>
       <div class="rest" style="display:none">
         <div class="selectGroup">
           <label class="block select_label" for="mt-int-voice1">Voices:</label>
@@ -564,9 +575,10 @@ let score_observation_tpl = `
         <input type="checkbox" id="mt-fp" class="inline mdl-checkbox__input cb" {{#if types.mt-fp}}checked{{/if}}>
         <span class="mdl-checkbox__label">Form and process</span>
       </label>
-      <button class="mdl-button mdl-js-button mdl-button--icon drop">
-        <i class="material-icons clickable">arrow_drop_down</i>
-      </button>
+      <a class="drop">
+        <span class="expand">(Expand)</span>
+        <span class="collapse" style="display:none;">(Collapse)</span>
+      </a>
       <div class="rest" style="display:none">
         <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-fp-ir">
           <input type="checkbox" id="mt-fp-ir" class="inline mdl-checkbox__input" {{#if types.mt-fp.ir}}checked{{/if}} {{#unless types.mt-fp}}disabled{{/unless}}>
@@ -585,14 +597,14 @@ let score_observation_tpl = `
     </div>
     <h3>Remarks</h3>
     <div class="mdl-textfield mdl-js-textfield">
-      <textarea class="mdl-textfield__input" type="text" rows="5" id="observ-comment">{{#if comment}}{{comment}}{{/if}}</textarea>
-      <label class="mdl-textfield__label" for="observ-comment">Comment...</label>
+      <label class="mdl-textfield__label" for="observ-comment"></label>
+      <textarea class="mdl-textfield__input" type="text" rows="5" style="width: 80%;" id="observ-comment">{{#if comment}}{{comment}}{{/if}}</textarea>
     </div>
     <div class="messages mdl-shadow--2dp"></div>
   </div>
   <div class="mdl-dialog__actions">
-    <button type="button" class="mdl-button mdl-button--accent" id="save_score_observation">Save</button>
-    <button type="button" class="mdl-button close" id="cancel_score_observation">Cancel</button>
+    <button type="button" class="btn btn-primary mdl-button mdl-button--accent" id="save_score_observation">Save</button>
+    <button type="button" class="btn mdl-button close" id="cancel_score_observation">Cancel</button>
   </div>
 `
 

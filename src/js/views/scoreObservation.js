@@ -193,7 +193,10 @@ class ScoreObservation extends Backbone.View {
   }
 
   showMusType(e) {
-    $(e.target).closest('.types').find('.rest').toggle()
+    $(e.target).closest('.types').find('.rest').toggle();
+    // Change the wording of the button, and add the collapsed style.
+    $(e.target).closest('.types').find(".collapse").toggle();
+    $(e.target).closest('.types').find(".expand").toggle();
   }
 
   showMusTypeCh(e) {

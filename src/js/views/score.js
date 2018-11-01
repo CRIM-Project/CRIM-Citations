@@ -174,17 +174,14 @@ class ScoreView extends Backbone.View {
 
   toggle() {
     // Change the wording of the button, and add the collapsed style.
-    var collapse_button = this.$el.find(".collapse");
-    var expand_button = this.$el.find(".expand");
+    this.$el.find(".collapse").toggle();
+    this.$el.find(".expand").toggle();
+
     if (this.$el.hasClass("score_collapsed")) {
       this.$el.removeClass("score_collapsed");
-      collapse_button.attr("style", "");
-      expand_button.attr("style", "display:none;");
     }
     else {
       this.$el.addClass("score_collapsed");
-      expand_button.attr("style", "");
-      collapse_button.attr("style", "display:none;");
     }
   }
 

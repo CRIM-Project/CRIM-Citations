@@ -56,11 +56,6 @@
     width: auto;
   }
 
-  .drop {
-    // float: right;
-    margin-top: -4px;
-  }
-
   a.drop:hover {
     cursor: pointer;
   }
@@ -111,19 +106,21 @@ svg {
   width: 112px;
 }
 
-.observ_ema, .observ_score {
-  text-align: right;
-  font-size: 16px;
-  font-weight: bold;
-  width: 450px;
+// Matches h3 small of CRIM project.
+.observ_ema {
+  font-family: "crimson text",Georgia,serif;
+  // line-height: 30px;
+  margin-bottom: 9px;
+  color: #999999;
+  font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
-  height: 30px;
+  // height: 30px;
   text-overflow: ellipsis;
 }
 
-.observ_ema {
-  color: rgb(68,138,255);
+.observ_score {
+  margin-bottom: 4px;
 }
 
 .hide_button{
