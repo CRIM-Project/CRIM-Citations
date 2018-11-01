@@ -2,7 +2,7 @@ import * as Handlebars from 'handlebars';
 
 let score_relationship_tpl = `
   <h4 class="mdl-dialog__title">Score relationship</h4>
-  <button class="mdl-button mdl-js-button mdl-button--raised hide_button">
+  <button class="btn mdl-button mdl-js-button mdl-button--raised hide_button">
     Hide
   </button>
   <h3>Observations</h3>
