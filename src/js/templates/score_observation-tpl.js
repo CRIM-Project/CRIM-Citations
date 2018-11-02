@@ -10,9 +10,9 @@ let score_observation_tpl = `
     <div class="ema observ_ema">{{ema}}</div>
     <h3>Musical type</h3>
     <div class="mdl-shadow--2dp types">
-      <label for="mt-cf" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" id="mt-cf" class="inline mdl-checkbox__input cb" {{#if types.mt-cf}}checked{{/if}}>
-        <span class="mdl-checkbox__label">Cantus firmus</span>
+      <label for="mt-cf" class="inline main-type mdl-radio mdl-js-radio">
+        <input type="radio" name="musical-type" id="mt-cf" class="inline mdl-radio__input cb" {{#if types.mt-cf}}checked{{/if}}>
+        <span class="mdl-radio__label">Cantus firmus</span>
       </label>
       <a class="drop">
         <span class="expand">(Expand)</span>
@@ -25,20 +25,20 @@ let score_observation_tpl = `
           <option value="{{this}}">{{this}}</option>
           {{/each}}
         </select>
-        <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-cf-dur">
+        <label class="block mdl-checkbox mdl-js-checkbox" for="mt-cf-dur">
           <input type="checkbox" id="mt-cf-dur" class="inline mdl-checkbox__input" {{#if types.mt-cf.dur}}checked{{/if}} {{#unless types.mt-cf}}checked disabled{{/unless}}>
           <span class="mdl-checkbox__label">Rhythmic durations</span>
         </label>
-        <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-cf-mel">
+        <label class="block mdl-checkbox mdl-js-checkbox" for="mt-cf-mel">
           <input type="checkbox" id="mt-cf-mel" class="inline mdl-checkbox__input" {{#if types.mt-cf.mel}}checked{{/if}} {{#unless types.mt-cf}}checked disabled{{/unless}}>
           <span class="mdl-checkbox__label">Melodic intervals</span>
         </label>
       </div>
     </div>
     <div class="mdl-shadow--2dp types">
-      <label for="mt-sog" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" id="mt-sog" class="inline mdl-checkbox__input cb" {{#if types.mt-sog}}checked{{/if}}>
-        <span class="mdl-checkbox__label">Soggetto</span>
+      <label for="mt-sog" class="inline main-type mdl-radio mdl-js-radio">
+        <input type="radio" name="musical-type" id="mt-sog" class="inline mdl-radio__input cb" {{#if types.mt-sog}}checked{{/if}}>
+        <span class="mdl-radio__label">Soggetto</span>
       </label>
       <a class="drop">
         <span class="expand">(Expand)</span>
@@ -61,19 +61,19 @@ let score_observation_tpl = `
           </button>
         </div>
         <div>
-          <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-sog-dur">
+          <label class="block mdl-checkbox mdl-js-checkbox" for="mt-sog-dur">
             <input type="checkbox" id="mt-sog-dur" class="inline mdl-checkbox__input" {{#if types.mt-sog.dur}}checked{{/if}} {{#unless types.mt-sog}}checked disabled{{/unless}}>
             <span class="mdl-checkbox__label">Rhythmic durations</span>
           </label>
-          <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-sog-mel">
+          <label class="block mdl-checkbox mdl-js-checkbox" for="mt-sog-mel">
             <input type="checkbox" id="mt-sog-mel" class="inline mdl-checkbox__input" {{#if types.mt-sog.mel}}checked{{/if}} {{#unless types.mt-sog}}checked disabled{{/unless}}>
             <span class="mdl-checkbox__label">Melodic intervals</span>
           </label>
-          <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-sog-ost">
+          <label class="block mdl-checkbox mdl-js-checkbox" for="mt-sog-ost">
             <input type="checkbox" id="mt-sog-ost" class="inline mdl-checkbox__input" {{#if types.mt-sog.ost}}checked{{/if}} {{#unless types.mt-sog}}disabled{{/unless}}>
             <span class="mdl-checkbox__label">Ostinato</span>
           </label>
-          <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-sog-per">
+          <label class="block mdl-checkbox mdl-js-checkbox" for="mt-sog-per">
             <input type="checkbox" id="mt-sog-per" class="inline mdl-checkbox__input" {{#if types.mt-sog.per}}checked{{/if}} {{#unless types.mt-sog}}disabled{{/unless}}>
             <span class="mdl-checkbox__label">Periodic</span>
           </label>
@@ -81,9 +81,9 @@ let score_observation_tpl = `
       </div>
     </div>
     <div class="mdl-shadow--2dp types">
-      <label for="mt-csog" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" id="mt-csog" class="inline mdl-checkbox__input cb" {{#if types.mt-csog}}checked{{/if}}>
-        <span class="mdl-checkbox__label">Counter-soggetto</span>
+      <label for="mt-csog" class="inline main-type mdl-radio mdl-js-radio">
+        <input type="radio" name="musical-type" id="mt-csog" class="inline mdl-radio__input cb" {{#if types.mt-csog}}checked{{/if}}>
+        <span class="mdl-radio__label">Counter-soggetto</span>
       </label>
       <a class="drop">
         <span class="expand">(Expand)</span>
@@ -105,20 +105,20 @@ let score_observation_tpl = `
             Add voice
           </button>
         </div>
-        <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-csog-dur">
+        <label class="block mdl-checkbox mdl-js-checkbox" for="mt-csog-dur">
           <input type="checkbox" id="mt-csog-dur" class="inline mdl-checkbox__input" {{#if types.mt-csog.dur}}checked{{/if}} {{#unless types.mt-csog}}checked disabled{{/unless}}>
           <span class="mdl-checkbox__label">Rhythmic durations</span>
         </label>
-        <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-cs-mel">
+        <label class="block mdl-checkbox mdl-js-checkbox" for="mt-cs-mel">
           <input type="checkbox" id="mt-csog-mel" class="inline mdl-checkbox__input" {{#if types.mt-csog.mel}}checked{{/if}} {{#unless types.mt-csog}}checked disabled{{/unless}}>
           <span class="mdl-checkbox__label">Melodic intervals</span>
         </label>
       </div>
     </div>
     <div class="mdl-shadow--2dp types">
-      <label for="mt-cd" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" id="mt-cd" class="inline mdl-checkbox__input cb" {{#if types.mt-cd}}checked{{/if}}>
-        <span class="mdl-checkbox__label">Contrapuntal duo</span>
+      <label for="mt-cd" class="inline main-type mdl-radio mdl-js-radio">
+        <input type="radio" name="musical-type" id="mt-cd" class="inline mdl-radio__input cb" {{#if types.mt-cd}}checked{{/if}}>
+        <span class="mdl-radio__label">Contrapuntal duo</span>
       </label>
       <a class="drop">
         <span class="expand">(Expand)</span>
@@ -145,9 +145,9 @@ let score_observation_tpl = `
       </div>
     </div>
     <div class="mdl-shadow--2dp types">
-      <label for="mt-fg" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" id="mt-fg" class="inline mdl-checkbox__input cb" {{#if types.mt-fg}}checked{{/if}}>
-        <span class="mdl-checkbox__label">Fuga</span>
+      <label for="mt-fg" class="inline main-type mdl-radio mdl-js-radio">
+        <input type="radio" name="musical-type" id="mt-fg" class="inline mdl-radio__input cb" {{#if types.mt-fg}}checked{{/if}}>
+        <span class="mdl-radio__label">Fuga</span>
       </label>
       <a class="drop">
         <span class="expand">(Expand)</span>
@@ -180,27 +180,27 @@ let score_observation_tpl = `
           <span class="mdl-textfield__error">Input is not a series of time intervals</span>
         </div>
         <div>
-          <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect for="mt-fg-pe">
+          <label class="block mdl-radio mdl-js-radio for="mt-fg-pe">
             <input type="radio" name="mt-fg-options" id="mt-fg-pe" class="inline mdl-radio__button" {{#unless types.mt-fg}}disabled{{/unless}} {{#if types.mt-fg.pe}}checked{{/if}}>
             <span class="mdl-radio__label">Periodic entry</span>
           </label>
-          <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-fg-ste">
+          <label class="block mdl-radio mdl-js-radio" for="mt-fg-ste">
             <input type="radio" name="mt-fg-options" id="mt-fg-ste" class="inline mdl-radio__button" {{#unless types.mt-fg}}disabled{{/unless}} {{#if types.mt-fg.ste}}checked{{/if}}>
             <span class="mdl-radio__label">Strict</span>
           </label>
-          <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-fg-fe">
+          <label class="block mdl-radio mdl-js-radio" for="mt-fg-fe">
             <input type="radio" name="mt-fg-options" id="mt-fg-fe" class="inline mdl-radio__button" {{#unless types.mt-fg}}disabled{{/unless}} {{#if types.mt-fg.fe}}checked{{/if}}>
             <span class="mdl-radio__label">Flexed</span>
           </label>
-          <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-fg-se">
+          <label class="block mdl-checkbox mdl-js-checkbox" for="mt-fg-se">
             <input type="checkbox" id="mt-fg-se" class="inline mdl-checkbox__input" {{#unless types.mt-fg}}disabled{{/unless}} {{#if types.mt-fg.se}}checked{{/if}}>
             <span class="mdl-checkbox__label">Sequential</span>
           </label>
-          <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-fg-ie">
+          <label class="block mdl-checkbox mdl-js-checkbox" for="mt-fg-ie">
             <input type="checkbox" id="mt-fg-ie" class="inline mdl-checkbox__input" {{#unless types.mt-fg}}disabled{{/unless}} {{#if types.mt-fg.ie}}checked{{/if}}>
             <span class="mdl-checkbox__label">Inverted</span>
           </label>
-          <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-fg-re">
+          <label class="block mdl-checkbox mdl-js-checkbox" for="mt-fg-re">
             <input type="checkbox" id="mt-fg-re" class="inline mdl-checkbox__input" {{#unless types.mt-fg}}disabled{{/unless}} {{#if types.mt-fg.re}}checked{{/if}}>
             <span class="mdl-checkbox__label">Retrograde</span>
           </label>
@@ -208,9 +208,9 @@ let score_observation_tpl = `
       </div>
     </div>
     <div class="mdl-shadow--2dp types">
-      <label for="mt-pe" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" id="mt-pe" class="inline mdl-checkbox__input cb" {{#if types.mt-pe}}checked{{/if}}>
-        <span class="mdl-checkbox__label">Periodic entry</span>
+      <label for="mt-pe" class="inline main-type mdl-radio mdl-js-radio">
+        <input type="radio" name="musical-type" id="mt-pe" class="inline mdl-radio__button cb" {{#if types.mt-pe}}checked{{/if}}>
+        <span class="mdl-radio__label">Periodic entry</span>
       </label>
       <a class="drop">
         <span class="expand">(Expand)</span>
@@ -243,27 +243,27 @@ let score_observation_tpl = `
           <span class="mdl-textfield__error">Input is not a series of time intervals</span>
         </div>
         <div>
-          <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-pe-ste">
+          <label class="block mdl-radio mdl-js-radio" for="mt-pe-ste">
             <input type="radio" name="mt-pe-options" id="mt-pe-ste" class="inline mdl-radio__button" {{#if types.mt-pe.ste}}checked{{/if}} {{#unless types.mt-pe}}disable{{/unless}}>
             <span class="mdl-radio__label">Strict</span>
           </label>
-          <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-pe-fe">
+          <label class="block mdl-radio mdl-js-radio" for="mt-pe-fe">
             <input type="radio" name="mt-pe-options" id="mt-pe-fe" class="inline mdl-radio__button" {{#if types.mt-pe.fe}}checked{{/if}} {{#unless types.mt-pe}}disable{{/unless}}>
             <span class="mdl-radio__label">Flexed</span>
           </label>
-          <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-pe-fte">
+          <label class="block mdl-radio mdl-js-radio" for="mt-pe-fte">
             <input type="radio" name="mt-pe-options" id="mt-pe-fte" class="inline mdl-radio__button" {{#if types.mt-pe.fte}}checked{{/if}} {{#unless types.mt-pe}}disable{{/unless}}>
             <span class="mdl-radio__label">Flexed, tonal</span>
           </label>
-          <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-pe-se">
+          <label class="block mdl-checkbox mdl-js-checkbox" for="mt-pe-se">
             <input type="checkbox" id="mt-pe-se" class="inline mdl-checkbox__input" {{#if types.mt-pe.se}}checked{{/if}} {{#unless types.mt-pe}}disable{{/unless}}>
             <span class="mdl-checkbox__label">Sequential</span>
           </label>
-          <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-pe-ae">
+          <label class="block mdl-checkbox mdl-js-checkbox" for="mt-pe-ae">
             <input type="checkbox" id="mt-pe-ae" class="inline mdl-checkbox__input" {{#if types.mt-pe.ae}}checked{{/if}} {{#unless types.mt-pe}}disable{{/unless}}>
             <span class="mdl-checkbox__label">Added</span>
           </label>
-          <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-pe-ic">
+          <label class="block mdl-checkbox mdl-js-checkbox" for="mt-pe-ic">
             <input type="checkbox" id="mt-pe-ic" class="inline mdl-checkbox__input" {{#if types.mt-pe.ic}}checked{{/if}} {{#unless types.mt-pe}}disable{{/unless}}>
             <span class="mdl-checkbox__label">Invertible</span>
           </label>
@@ -271,9 +271,9 @@ let score_observation_tpl = `
       </div>
     </div>
     <div class="mdl-shadow--2dp types">
-      <label for="mt-id" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" id="mt-id" class="inline mdl-checkbox__input cb" {{#if types.mt-id}}checked{{/if}}>
-        <span class="mdl-checkbox__label">Imitative duo</span>
+      <label for="mt-id" class="inline main-type mdl-radio mdl-js-radio">
+        <input type="radio" name="musical-type" id="mt-id" class="inline mdl-radio__input cb" {{#if types.mt-id}}checked{{/if}}>
+        <span class="mdl-radio__label">Imitative duo</span>
       </label>
       <a class="drop">
         <span class="expand">(Expand)</span>
@@ -313,19 +313,19 @@ let score_observation_tpl = `
           <span class="mdl-textfield__error">Input is not a series of time intervals</span>
         </div>
         <div>
-          <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-id-ste">
+          <label class="block mdl-radio mdl-js-radio" for="mt-id-ste">
             <input type="radio" name="mt-id-options" id="mt-id-ste" class="inline mdl-radio__button" {{#if types.mt-id.ste}}checked{{/if}} {{#unless types.mt-id}}disabled{{/unless}}>
             <span class="mdl-radio__label">Strict</span>
           </label>
-          <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-id-fe">
+          <label class="block mdl-radio mdl-js-radio" for="mt-id-fe">
             <input type="radio" name="mt-id-options" id="mt-id-fe" class="inline mdl-radio__button" {{#if types.mt-id.fe}}checked{{/if}} {{#unless types.mt-id}}disabled{{/unless}}>
             <span class="mdl-radio__label">Flexed</span>
           </label>
-          <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-id-fte">
+          <label class="block mdl-radio mdl-js-radio" for="mt-id-fte">
             <input type="radio" name="mt-id-options" id="mt-id-fte" class="inline mdl-radio__button" {{#if types.mt-id.fte}}checked{{/if}} {{#unless types.mt-id}}disabled{{/unless}}>
             <span class="mdl-radio__label">Flexed, tonal</span>
           </label>
-          <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-id-ic">
+          <label class="block mdl-checkbox mdl-js-checkbox" for="mt-id-ic">
             <input type="checkbox" id="mt-id-ic" class="inline mdl-checkbox__input" {{#if types.mt-id.ic}}checked{{/if}} {{#unless types.mt-id}}disabled{{/unless}}>
             <span class="mdl-checkbox__label">Invertible</span>
           </label>
@@ -333,9 +333,9 @@ let score_observation_tpl = `
       </div>
     </div>
     <div class="mdl-shadow--2dp types">
-      <label for="mt-nid" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" id="mt-nid" class="inline mdl-checkbox__input cb" {{#if types.mt-nid}}checked{{/if}}>
-        <span class="mdl-checkbox__label">Non-imitative duo</span>
+      <label for="mt-nid" class="inline main-type mdl-radio mdl-js-radio">
+        <input type="radio" name="musical-type" id="mt-nid" class="inline mdl-radio__input cb" {{#if types.mt-nid}}checked{{/if}}>
+        <span class="mdl-radio__label">Non-imitative duo</span>
       </label>
       <a class="drop">
         <span class="expand">(Expand)</span>
@@ -375,23 +375,23 @@ let score_observation_tpl = `
           <span class="mdl-textfield__error">Input is not a series of time intervals</span>
         </div>
         <div>
-          <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-nid-ste">
+          <label class="block mdl-radio mdl-js-radio" for="mt-nid-ste">
             <input type="radio" name="mt-nid-options" id="mt-nid-ste" class="inline mdl-radio__button" {{#if types.mt-nid.ste}}checked{{/if}} {{#unless types.mt-nid}}disabled{{/unless}}>
             <span class="mdl-radio__label">Strict</span>
           </label>
-          <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-nid-fe">
+          <label class="block mdl-radio mdl-js-radio" for="mt-nid-fe">
             <input type="radio" name="mt-nid-options" id="mt-nid-fe" class="inline mdl-radio__button" {{#if types.mt-nid.fe}}checked{{/if}} {{#unless types.mt-nid}}disabled{{/unless}}>
             <span class="mdl-radio__label">Flexed</span>
           </label>
-          <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-nid-fte">
+          <label class="block mdl-radio mdl-js-radio" for="mt-nid-fte">
             <input type="radio" name="mt-nid-options" id="mt-nid-fte" class="inline mdl-radio__button" {{#if types.mt-nid.fte}}checked{{/if}} {{#unless types.mt-nid}}disabled{{/unless}}>
             <span class="mdl-radio__label">Flexed, tonal</span>
           </label>
-          <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-nid-se">
+          <label class="block mdl-checkbox mdl-js-checkbox" for="mt-nid-se">
             <input type="checkbox" id="mt-nid-se" class="inline mdl-checkbox__input" {{#if types.mt-nid.se}}checked{{/if}} {{#unless types.mt-nid}}disabled{{/unless}}>
             <span class="mdl-checkbox__label">Sequential</span>
           </label>
-          <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-nid-ic">
+          <label class="block mdl-checkbox mdl-js-checkbox" for="mt-nid-ic">
             <input type="checkbox" id="mt-nid-ic" class="inline mdl-checkbox__input" {{#if types.mt-nid.ic}}checked{{/if}} {{#unless types.mt-nid}}disabled{{/unless}}>
             <span class="mdl-checkbox__label">Invertible</span>
           </label>
@@ -399,9 +399,9 @@ let score_observation_tpl = `
       </div>
     </div>
     <div class="mdl-shadow--2dp types">
-      <label for="mt-hr" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" id="mt-hr" class="inline mdl-checkbox__input cb" {{#if types.mt-hr}}checked{{/if}}>
-        <span class="mdl-checkbox__label">Homorhythm</span>
+      <label for="mt-hr" class="inline main-type mdl-radio mdl-js-radio">
+        <input type="radio" name="musical-type" id="mt-hr" class="inline mdl-radio__input cb" {{#if types.mt-hr}}checked{{/if}}>
+        <span class="mdl-radio__label">Homorhythm</span>
       </label>
       <a class="drop collapsed">
         <span class="expand">(Expand)</span>
@@ -424,19 +424,19 @@ let score_observation_tpl = `
           </button>
         </div>
         <div>
-          <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-hr-s">
+          <label class="block mdl-radio mdl-js-radio" for="mt-hr-s">
             <input type="radio" name="mt-hr-options" id="mt-hr-s" class="inline mdl-radio__button" {{#if types.mt-hr.s}}checked{{/if}} {{#unless types.mt-hr}}checked disabled{{/unless}}>
             <span class="mdl-radio__label">Simple</span>
           </label>
-          <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-hr-st">
+          <label class="block mdl-radio mdl-js-radio" for="mt-hr-st">
             <input type="radio" name="mt-hr-options" id="mt-hr-st" class="inline mdl-radio__button" {{#if types.mt-hr.st}}checked{{/if}} {{#unless types.mt-hr}}disabled{{/unless}}>
             <span class="mdl-radio__label">Staggered</span>
           </label>
-          <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-hr-se">
+          <label class="block mdl-radio mdl-js-radio" for="mt-hr-se">
             <input type="radio" name="mt-hr-options" id="mt-hr-se" class="inline mdl-radio__button" {{#if types.mt-hr.se}}checked{{/if}} {{#unless types.mt-hr}}disabled{{/unless}}>
             <span class="mdl-radio__label">Sequential</span>
           </label>
-          <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-hr-fa">
+          <label class="block mdl-radio mdl-js-radio" for="mt-hr-fa">
             <input type="radio" name="mt-hr-options" id="mt-hr-fa" class="inline mdl-radio__button" {{#if types.mt-hr.fa}}checked{{/if}} {{#unless types.mt-hr}}disabled{{/unless}}>
             <span class="mdl-radio__label">Fauxbourdon</span>
           </label>
@@ -444,9 +444,9 @@ let score_observation_tpl = `
       </div>
     </div>
     <div class="mdl-shadow--2dp types">
-      <label for="mt-cad" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" id="mt-cad" class="inline mdl-checkbox__input cb" {{#if types.mt-cad}}checked{{/if}}>
-        <span class="mdl-checkbox__label">Cadence</span>
+      <label for="mt-cad" class="inline main-type mdl-radio mdl-js-radio">
+        <input type="radio" name="musical-type" id="mt-cad" class="inline mdl-radio__input cb" {{#if types.mt-cad}}checked{{/if}}>
+        <span class="mdl-radio__label">Cadence</span>
       </label>
       <a class="drop">
         <span class="expand">(Expand)</span>
@@ -521,9 +521,9 @@ let score_observation_tpl = `
       </div>
     </div>
     <div class="mdl-shadow--2dp types">
-      <label for="mt-int" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" id="mt-int" class="inline mdl-checkbox__input cb" {{#if types.mt-int}}checked{{/if}}>
-        <span class="mdl-checkbox__label">Interval pattern</span>
+      <label for="mt-int" class="inline main-type mdl-radio mdl-js-radio">
+        <input type="radio" name="musical-type" id="mt-int" class="inline mdl-radio__input cb" {{#if types.mt-int}}checked{{/if}}>
+        <span class="mdl-radio__label">Interval pattern</span>
       </label>
       <a class="drop">
         <span class="expand">(Expand)</span>
@@ -548,39 +548,39 @@ let score_observation_tpl = `
           </div>
         </div>
 
-        <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-int-p6">
+        <label class="block mdl-radio mdl-js-radio" for="mt-int-p6">
           <input type="radio" name="mt-int-options" id="mt-int-p6" class="inline mdl-radio__button" {{#if types.mt-int.p6}}checked{{/if}} {{#unless types.mt-int}}disabled{{/unless}}>
           <span class="mdl-radio__label">Parallel 6</span>
         </label>
-        <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-int-p3">
+        <label class="block mdl-radio mdl-js-radio" for="mt-int-p3">
           <input type="radio" name="mt-int-options" id="mt-int-p3" class="inline mdl-radio__button" {{#if types.mt-int.p3}}checked{{/if}} {{#unless types.mt-int}}disabled{{/unless}}>
           <span class="mdl-radio__label">Parallel 3 (or 10)</span>
         </label>
-        <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-int-c35">
+        <label class="block mdl-radio mdl-js-radio" for="mt-int-c35">
           <input type="radio" name="mt-int-options" id="mt-int-c35" class="inline mdl-radio__button" {{#if types.mt-int.c35}}checked{{/if}} {{#unless types.mt-int}}disabled{{/unless}}>
           <span class="mdl-radio__label">Chained 3 and 5</span>
         </label>
-        <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-int-c83">
+        <label class="block mdl-radio mdl-js-radio" for="mt-int-c83">
           <input type="radio" name="mt-int-options" id="mt-int-c83" class="inline mdl-radio__button" {{#if types.mt-int.c83}}checked{{/if}} {{#unless types.mt-int}}disabled{{/unless}}>
           <span class="mdl-radio__label">Chained 8 and 3</span>
         </label>
-        <label class="block mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mt-int-c65">
+        <label class="block mdl-radio mdl-js-radio" for="mt-int-c65">
           <input type="radio" name="mt-int-options" id="mt-int-c65" class="inline mdl-radio__button" {{#if types.mt-int.c65}}checked{{/if}} {{#unless types.mt-int}}disabled{{/unless}}>
           <span class="mdl-radio__label">Chained 6 and 5</span>
         </label>
       </div>
     </div>
     <div class="mdl-shadow--2dp types">
-      <label for="mt-fp" class="inline main-type mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" id="mt-fp" class="inline mdl-checkbox__input cb" {{#if types.mt-fp}}checked{{/if}}>
-        <span class="mdl-checkbox__label">Form and process</span>
+      <label for="mt-fp" class="inline main-type mdl-radio mdl-js-radio">
+        <input type="radio" name="musical-type" id="mt-fp" class="inline mdl-radio__input cb" {{#if types.mt-fp}}checked{{/if}}>
+        <span class="mdl-radio__label">Form and process</span>
       </label>
       <a class="drop">
         <span class="expand">(Expand)</span>
         <span class="collapse" style="display:none;">(Collapse)</span>
       </a>
       <div class="rest" style="display:none">
-        <label class="block mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mt-fp-ir">
+        <label class="block mdl-checkbox mdl-js-checkbox" for="mt-fp-ir">
           <input type="checkbox" id="mt-fp-ir" class="inline mdl-checkbox__input" {{#if types.mt-fp.ir}}checked{{/if}} {{#unless types.mt-fp}}disabled{{/unless}}>
           <span class="mdl-checkbox__label">Internal repetition</span>
         </label>

@@ -200,23 +200,26 @@ class ScoreObservation extends Backbone.View {
   }
 
   showMusTypeCh(e) {
-    let box = $(e.target)
-    let rest = box.closest('.types').find('.rest')
-    if (box.prop("checked")) {
-      // Assumes MDL
-      rest.find("input, textarea, select, button").prop("disabled", false).parent().removeClass("is-disabled")
-      rest.show()
-      // Show "Collapse".
-      $(e.target).closest('.types').find(".collapse").show();
-      $(e.target).closest('.types').find(".expand").hide();
-    }
-    else {
-      rest.hide();
-      rest.find("input, textarea, select, button").prop("disabled", true).parent().addClass("is-disabled")
-      // Show "Expand".
-      $(e.target).closest('.types').find(".collapse").hide();
-      $(e.target).closest('.types').find(".expand").show();
-    }
+    var box = $(e.target)
+    // `rest` is the collapsible information containing the subtypes
+    // of the clicked type. It should be expanded and enabled on the selected
+    // item, while being collapsed and disabled on the others.
+    this.$el.find('.main-type').each(function() {
+      var rest = $(this).closest('.types').find('.rest');
+      if ($(this).find("input").prop("checked")) {
+        rest.find("input, textarea").prop("disabled", false).parent().removeClass("is-disabled");
+        rest.show();
+        // Display "Collapse" instead of "Expand" on the link.
+        $(e.target).closest('.types').find(".collapse").show();
+        $(e.target).closest('.types').find(".expand").hide();
+      }
+      else {
+        // Don't collapse unselected types because that could be annoying,
+        // in case the user wants to compare two types. The user can always
+        // manually collapse types.
+        rest.find("input, textarea").prop("disabled", true).parent().addClass("is-disabled");
+      }
+    })
   }
 
   show() {
