@@ -9,7 +9,7 @@ let export_tpl = `
   </div>
   <div class="mdl-dialog__actions">
     <button type="button" class="btn btn-info mdl-button mdl-button--accent" id="expToDisk">Download JSON</button>
-    <button type="button" class="btn btn-info mdl-button mdl-button--attention" id="expToOmeka">Send to CRIM online</button>
+    <button type="button" class="btn btn-info mdl-button mdl-button--attention" id="expToCRIMOnline">Send to CRIM online</button>
     <button type="button" class="btn mdl-button close">Cancel</button>
   </div>
 `

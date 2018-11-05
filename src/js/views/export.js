@@ -249,7 +249,7 @@ class Export extends Backbone.View {
       return {
           "click .close": this.close,
           "click #expToDisk": this.expToDisk,
-          "click #expToOmeka": this.expToOmeka
+          "click #expToCRIMOnline": this.expToCRIMOnline
       }
   }
 
@@ -259,38 +259,34 @@ class Export extends Backbone.View {
     let filename = this.data.user ? "user"+this.data.user : "anonymous";
     filename = filename + "_" + this.data.created_at + ".json";
     saveAs(bb, filename);
-    Events.trigger("resetData");
-    this.close();
+    this.$el.find("#expToDisk").hide();
   }
 
-  expToOmeka() {
+  expToCRIMOnline() {
     var target_url;
     let processed_data = internalToSerialized(this.data);
+    processed_data['csrfmiddlewaretoken'] = csrftoken;
 
     if (this.citation) {
-      target_url = 'http://127.0.0.1:8000/data/relationship/'+this.citation;
+      target_url = '/data/relationship/'+this.citation;
     }
     else {
-      target_url = 'http://127.0.0.1:8000/data/relationship/new/';
+      target_url = '/data/relationship/new/';
     }
     let r = confirm("This will send the data directly to the CRIM online database. Continue?")
+
     if (r) {
       $.ajax({
         url: target_url,
         type: 'POST',
         data: processed_data,
+        withCredentials: true,
         success: () => {
           // Events.trigger("resetData");
-          this.$el.find(".mdl-dialog__content p").hide();
-          this.$el.find(".mdl-dialog__content strong").show();
-          setTimeout(()=>{
-            this.$el.find(".mdl-dialog__content p").show();
-            this.$el.find(".mdl-dialog__content strong").hide();
-            this.close();
-          }, '1100');
+          this.$el.find("#expToCRIMOnline").hide();
         },
         error: (err) => {
-          this.$el.find(".mdl-dialog__content p").html("<strong>An error occured</strong>");
+          this.$el.find(".mdl-dialog__content p").html("<strong>An error occured.</strong> Please make sure that you are logged in and try again. In the meantime, you may wish to save your analyses locally.");
           console.log(err);
         }
       });

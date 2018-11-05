@@ -50,7 +50,8 @@ class AppView extends Backbone.View {
       return {
         "click #add_btn": this.showAddFileDialog,
         "click #export_btn": this.export,
-        "click #import_btn": this.import
+        "click #import_btn": this.import,
+        "click #clear_btn": this.resetData
       }
   }
 
