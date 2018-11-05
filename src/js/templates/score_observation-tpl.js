@@ -19,12 +19,16 @@ let score_observation_tpl = `
         <span class="collapse" style="display:none;">(Collapse)</span>
       </a>
       <div class="rest" style="display:none">
-        <label class="block select_label" for="mt-cf-voice">Voice:</label>
-        <select class="dialog_select" name="mt-cf-voice" id="mt-cf-voice">
-          {{#each voices}}
-          <option value="{{this}}">{{this}}</option>
-          {{/each}}
-        </select>
+        <div class="selectGroup">
+          <label class="block select_label" for="mt-cf-voice">Voice:</label>
+          <div class="group block">
+            <select class="dialog_select" name="mt-cf-voice" id="mt-cf-voice">
+              {{#each voices}}
+              <option value="{{this}}">{{this}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
         <label class="block mdl-checkbox mdl-js-checkbox" for="mt-cf-dur">
           <input type="checkbox" id="mt-cf-dur" class="inline mdl-checkbox__input" {{#if types.mt-cf.dur}}checked{{/if}} {{#unless types.mt-cf}}checked disabled{{/unless}}>
           <span class="mdl-checkbox__label">Rhythmic durations</span>

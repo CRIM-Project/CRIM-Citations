@@ -161,8 +161,8 @@ class ScoreObservation extends Backbone.View {
   }
 
   addRemoveVoice(div){
-    let removebtn = $(`<button class="voiceremove mdl-button mdl-js-button mdl-button--icon">
-      <i class="material-icons">close</i>
+    let removebtn = $(`<button class="voiceremove btn btn-danger mdl-button mdl-js-button">
+      Remove voice
     </button>`)
     div.append(removebtn)
     removebtn.click(()=>{
@@ -207,7 +207,7 @@ class ScoreObservation extends Backbone.View {
     this.$el.find('.main-type').each(function() {
       var rest = $(this).closest('.types').find('.rest');
       if ($(this).find("input").prop("checked")) {
-        rest.find("input, textarea").prop("disabled", false).parent().removeClass("is-disabled");
+        rest.find("input, textarea, select, button").prop("disabled", false).parent().removeClass("is-disabled");
         rest.show();
         // Display "Collapse" instead of "Expand" on the link.
         $(e.target).closest('.types').find(".collapse").show();
@@ -217,7 +217,7 @@ class ScoreObservation extends Backbone.View {
         // Don't collapse unselected types because that could be annoying,
         // in case the user wants to compare two types. The user can always
         // manually collapse types.
-        rest.find("input, textarea").prop("disabled", true).parent().addClass("is-disabled");
+        rest.find("input, textarea, select, button").prop("disabled", true).parent().addClass("is-disabled");
       }
     })
   }
