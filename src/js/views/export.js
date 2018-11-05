@@ -32,118 +32,126 @@ function internalToSerialized(internal_data) {
     }
     return voices;
   }
-  function getObservationFields(this_cid) {
-    var old_observation;
+  function getObservationFields(observation_cid, score_cid) {
+    var old_observation = null;
     var new_observation = {};
     for (var obs of internal_data.observations) {
-      if (obs.cid == this_cid) {
+      if (obs.cid == observation_cid) {
         old_observation = obs;
       }
     }
-    new_observation['piece'] = getPieceID(old_observation.score);
-    if (old_observation.types['mt-cf']) {
-      new_observation['mt_cf'] = true;
-      new_observation['mt_cf_voices'] = getVoices(old_observation.types['mt-cf']['options']);
-      new_observation['mt_cf_dur'] = old_observation.types['mt-cf']['dur'];
-      new_observation['mt_cf_mel'] = old_observation.types['mt-cf']['mel'];
+    // If no observation type was selected, it may be that there is no
+    // observation object in the original; in such a case, all the information
+    // we have is the piece, which we can get from the relationship's score.
+    if (old_observation === null) {
+      new_observation['piece'] = getPieceID(score_cid);
     }
-    if (old_observation.types['mt-sog']) {
-      new_observation['mt_sog'] = true;
-      new_observation['mt_sog_voices'] = getVoices(old_observation.types['mt-sog']['options']);
-      new_observation['mt_sog_dur'] = old_observation.types['mt-sog']['dur'];
-      new_observation['mt_sog_mel'] = old_observation.types['mt-sog']['mel'];
-      new_observation['mt_sog_ostinato'] = old_observation.types['mt-sog']['ost'];
-      new_observation['mt_sog_periodic'] = old_observation.types['mt-sog']['per'];
-    }
-    if (old_observation.types['mt-csog']) {
-      new_observation['mt_csog'] = true;
-      new_observation['mt_csog_voices'] = getVoices(old_observation.types['mt-csog']['options']);
-      new_observation['mt_csog_dur'] = old_observation.types['mt-csog']['dur'];
-      new_observation['mt_csog_mel'] = old_observation.types['mt-csog']['mel'];
-    }
-    if (old_observation.types['mt-cd']) {
-      new_observation['mt_cd'] = true;
-      new_observation['mt_cd_voices'] = getVoices(old_observation.types['mt-cd']['options']);
-    }
-    if (old_observation.types['mt-fg']) {
-      new_observation['mt_fg'] = true;
-      new_observation['mt_fg_voices'] = getVoices(old_observation.types['mt-fg']['options']);
-      new_observation['mt_fg_int'] = old_observation.types['mt-fg']['int'];
-      new_observation['mt_fg_tint'] = old_observation.types['mt-fg']['tint'];
-      new_observation['mt_fg_periodic'] = old_observation.types['mt-fg']['pe'];
-      new_observation['mt_fg_strict'] = old_observation.types['mt-fg']['ste'];
-      new_observation['mt_fg_flexed'] = old_observation.types['mt-fg']['fe'];
-      new_observation['mt_fg_sequential'] = old_observation.types['mt-fg']['se'];
-      new_observation['mt_fg_inverted'] = old_observation.types['mt-fg']['ie'];
-      new_observation['mt_fg_retrograde'] = old_observation.types['mt-fg']['re'];
-    }
-    if (old_observation.types['mt-pe']) {
-      new_observation['mt_pe'] = true;
-      new_observation['mt_pe_voices'] = getVoices(old_observation.types['mt-pe']['options']);
-      new_observation['mt_pe_int'] = old_observation.types['mt-pe']['int'];
-      new_observation['mt_pe_tint'] = old_observation.types['mt-pe']['tint'];
-      new_observation['mt_pe_strict'] = old_observation.types['mt-pe']['ste'];
-      new_observation['mt_pe_flexed'] = old_observation.types['mt-pe']['fe'];
-      new_observation['mt_pe_flt'] = old_observation.types['mt-pe']['fte'];
-      new_observation['mt_pe_sequential'] = old_observation.types['mt-pe']['se'];
-      new_observation['mt_pe_added'] = old_observation.types['mt-pe']['ae'];
-      new_observation['mt_pe_invertible'] = old_observation.types['mt-pe']['ic'];
-    }
-    if (old_observation.types['mt-id']) {
-      new_observation['mt_id'] = true;
-      new_observation['mt_id_voices'] = getVoices(old_observation.types['mt-id']['options']);
-      new_observation['mt_id_int'] = old_observation.types['mt-id']['int'];
-      new_observation['mt_id_tint'] = old_observation.types['mt-id']['tint'];
-      new_observation['mt_id_strict'] = old_observation.types['mt-id']['ste'];
-      new_observation['mt_id_flexed'] = old_observation.types['mt-id']['fe'];
-      new_observation['mt_id_flt'] = old_observation.types['mt-id']['fte'];
-      new_observation['mt_id_invertible'] = old_observation.types['mt-id']['ic'];
-    }
-    if (old_observation.types['mt-nid']) {
-      new_observation['mt_nid'] = true;
-      new_observation['mt_nid_voices'] = getVoices(old_observation.types['mt-nid']['options']);
-      new_observation['mt_nid_int'] = old_observation.types['mt-nid']['int'];
-      new_observation['mt_nid_tint'] = old_observation.types['mt-nid']['tint'];
-      new_observation['mt_nid_strict'] = old_observation.types['mt-nid']['ste'];
-      new_observation['mt_nid_flexed'] = old_observation.types['mt-nid']['fe'];
-      new_observation['mt_nid_flt'] = old_observation.types['mt-nid']['fte'];
-      new_observation['mt_nid_sequential'] = old_observation.types['mt-nid']['se'];
-      new_observation['mt_nid_invertible'] = old_observation.types['mt-nid']['ic'];
-    }
-    if (old_observation.types['mt-hr']) {
-      new_observation['mt_hr'] = true;
-      new_observation['mt_hr_voices'] = getVoices(old_observation.types['mt-hr']['options']);
-      new_observation['mt_hr_simple'] = old_observation.types['mt-hr']['s'];
-      new_observation['mt_hr_staggered'] = old_observation.types['mt-hr']['st'];
-      new_observation['mt_hr_sequential'] = old_observation.types['mt-hr']['se'];
-      new_observation['mt_hr_fauxbourdon'] = old_observation.types['mt-hr']['fa'];
-    }
-    if (old_observation.types['mt-cad']) {
-      new_observation['mt_cad'] = true;
-      new_observation['mt_cad_cantizans'] = old_observation.types['mt-cad']['options']['voice1'];
-      new_observation['mt_cad_tenorizans'] = old_observation.types['mt-cad']['options']['voice2'];
-      new_observation['mt_cad_type'] = old_observation.types['mt-cad']['options']['type'];
-      new_observation['mt_cad_tone'] = old_observation.types['mt-cad']['tone'];
-      new_observation['mt_cad_dtv'] = old_observation.types['mt-cad']['options']['dove_voice1'];
-      new_observation['mt_cad_dti'] = old_observation.types['mt-cad']['dove'];
-    }
-    if (old_observation.types['mt-int']) {
-      new_observation['mt_int'] = true;
-      new_observation['mt_int_voices'] = getVoices(old_observation.types['mt-int']['options']);
-      new_observation['mt_int_p6'] = old_observation.types['mt-int']['p6'];
-      new_observation['mt_int_p3'] = old_observation.types['mt-int']['p3'];
-      new_observation['mt_int_c35'] = old_observation.types['mt-int']['c35'];
-      new_observation['mt_int_c83'] = old_observation.types['mt-int']['c83'];
-      new_observation['mt_int_c65'] = old_observation.types['mt-int']['c65'];
-    }
-    if (old_observation.types['mt-fp']) {
-      new_observation['mt_fp'] = true;
-      new_observation['mt_fp_ir'] = old_observation.types['mt-fp']['ir'];
-      new_observation['mt_fp_range'] = old_observation.types['mt-fp']['r'];
-      new_observation['mt_fp_comment'] = old_observation.types['mt-fp']['text'];
-    }
-    if (old_observation.comment) {
-      new_observation['remarks'] = old_observation.comment;
+    else {
+      new_observation['piece'] = getPieceID(old_observation.score);
+      if (old_observation.types['mt-cf']) {
+        new_observation['mt_cf'] = true;
+        new_observation['mt_cf_voices'] = getVoices(old_observation.types['mt-cf']['options']);
+        new_observation['mt_cf_dur'] = old_observation.types['mt-cf']['dur'];
+        new_observation['mt_cf_mel'] = old_observation.types['mt-cf']['mel'];
+      }
+      if (old_observation.types['mt-sog']) {
+        new_observation['mt_sog'] = true;
+        new_observation['mt_sog_voices'] = getVoices(old_observation.types['mt-sog']['options']);
+        new_observation['mt_sog_dur'] = old_observation.types['mt-sog']['dur'];
+        new_observation['mt_sog_mel'] = old_observation.types['mt-sog']['mel'];
+        new_observation['mt_sog_ostinato'] = old_observation.types['mt-sog']['ost'];
+        new_observation['mt_sog_periodic'] = old_observation.types['mt-sog']['per'];
+      }
+      if (old_observation.types['mt-csog']) {
+        new_observation['mt_csog'] = true;
+        new_observation['mt_csog_voices'] = getVoices(old_observation.types['mt-csog']['options']);
+        new_observation['mt_csog_dur'] = old_observation.types['mt-csog']['dur'];
+        new_observation['mt_csog_mel'] = old_observation.types['mt-csog']['mel'];
+      }
+      if (old_observation.types['mt-cd']) {
+        new_observation['mt_cd'] = true;
+        new_observation['mt_cd_voices'] = getVoices(old_observation.types['mt-cd']['options']);
+      }
+      if (old_observation.types['mt-fg']) {
+        new_observation['mt_fg'] = true;
+        new_observation['mt_fg_voices'] = getVoices(old_observation.types['mt-fg']['options']);
+        new_observation['mt_fg_int'] = old_observation.types['mt-fg']['int'];
+        new_observation['mt_fg_tint'] = old_observation.types['mt-fg']['tint'];
+        new_observation['mt_fg_periodic'] = old_observation.types['mt-fg']['pe'];
+        new_observation['mt_fg_strict'] = old_observation.types['mt-fg']['ste'];
+        new_observation['mt_fg_flexed'] = old_observation.types['mt-fg']['fe'];
+        new_observation['mt_fg_sequential'] = old_observation.types['mt-fg']['se'];
+        new_observation['mt_fg_inverted'] = old_observation.types['mt-fg']['ie'];
+        new_observation['mt_fg_retrograde'] = old_observation.types['mt-fg']['re'];
+      }
+      if (old_observation.types['mt-pe']) {
+        new_observation['mt_pe'] = true;
+        new_observation['mt_pe_voices'] = getVoices(old_observation.types['mt-pe']['options']);
+        new_observation['mt_pe_int'] = old_observation.types['mt-pe']['int'];
+        new_observation['mt_pe_tint'] = old_observation.types['mt-pe']['tint'];
+        new_observation['mt_pe_strict'] = old_observation.types['mt-pe']['ste'];
+        new_observation['mt_pe_flexed'] = old_observation.types['mt-pe']['fe'];
+        new_observation['mt_pe_flt'] = old_observation.types['mt-pe']['fte'];
+        new_observation['mt_pe_sequential'] = old_observation.types['mt-pe']['se'];
+        new_observation['mt_pe_added'] = old_observation.types['mt-pe']['ae'];
+        new_observation['mt_pe_invertible'] = old_observation.types['mt-pe']['ic'];
+      }
+      if (old_observation.types['mt-id']) {
+        new_observation['mt_id'] = true;
+        new_observation['mt_id_voices'] = getVoices(old_observation.types['mt-id']['options']);
+        new_observation['mt_id_int'] = old_observation.types['mt-id']['int'];
+        new_observation['mt_id_tint'] = old_observation.types['mt-id']['tint'];
+        new_observation['mt_id_strict'] = old_observation.types['mt-id']['ste'];
+        new_observation['mt_id_flexed'] = old_observation.types['mt-id']['fe'];
+        new_observation['mt_id_flt'] = old_observation.types['mt-id']['fte'];
+        new_observation['mt_id_invertible'] = old_observation.types['mt-id']['ic'];
+      }
+      if (old_observation.types['mt-nid']) {
+        new_observation['mt_nid'] = true;
+        new_observation['mt_nid_voices'] = getVoices(old_observation.types['mt-nid']['options']);
+        new_observation['mt_nid_int'] = old_observation.types['mt-nid']['int'];
+        new_observation['mt_nid_tint'] = old_observation.types['mt-nid']['tint'];
+        new_observation['mt_nid_strict'] = old_observation.types['mt-nid']['ste'];
+        new_observation['mt_nid_flexed'] = old_observation.types['mt-nid']['fe'];
+        new_observation['mt_nid_flt'] = old_observation.types['mt-nid']['fte'];
+        new_observation['mt_nid_sequential'] = old_observation.types['mt-nid']['se'];
+        new_observation['mt_nid_invertible'] = old_observation.types['mt-nid']['ic'];
+      }
+      if (old_observation.types['mt-hr']) {
+        new_observation['mt_hr'] = true;
+        new_observation['mt_hr_voices'] = getVoices(old_observation.types['mt-hr']['options']);
+        new_observation['mt_hr_simple'] = old_observation.types['mt-hr']['s'];
+        new_observation['mt_hr_staggered'] = old_observation.types['mt-hr']['st'];
+        new_observation['mt_hr_sequential'] = old_observation.types['mt-hr']['se'];
+        new_observation['mt_hr_fauxbourdon'] = old_observation.types['mt-hr']['fa'];
+      }
+      if (old_observation.types['mt-cad']) {
+        new_observation['mt_cad'] = true;
+        new_observation['mt_cad_cantizans'] = old_observation.types['mt-cad']['options']['voice1'];
+        new_observation['mt_cad_tenorizans'] = old_observation.types['mt-cad']['options']['voice2'];
+        new_observation['mt_cad_type'] = old_observation.types['mt-cad']['options']['type'];
+        new_observation['mt_cad_tone'] = old_observation.types['mt-cad']['tone'];
+        new_observation['mt_cad_dtv'] = old_observation.types['mt-cad']['options']['dove_voice1'];
+        new_observation['mt_cad_dti'] = old_observation.types['mt-cad']['dove'];
+      }
+      if (old_observation.types['mt-int']) {
+        new_observation['mt_int'] = true;
+        new_observation['mt_int_voices'] = getVoices(old_observation.types['mt-int']['options']);
+        new_observation['mt_int_p6'] = old_observation.types['mt-int']['p6'];
+        new_observation['mt_int_p3'] = old_observation.types['mt-int']['p3'];
+        new_observation['mt_int_c35'] = old_observation.types['mt-int']['c35'];
+        new_observation['mt_int_c83'] = old_observation.types['mt-int']['c83'];
+        new_observation['mt_int_c65'] = old_observation.types['mt-int']['c65'];
+      }
+      if (old_observation.types['mt-fp']) {
+        new_observation['mt_fp'] = true;
+        new_observation['mt_fp_ir'] = old_observation.types['mt-fp']['ir'];
+        new_observation['mt_fp_range'] = old_observation.types['mt-fp']['r'];
+        new_observation['mt_fp_comment'] = old_observation.types['mt-fp']['text'];
+      }
+      if (old_observation.comment) {
+        new_observation['remarks'] = old_observation.comment;
+      }
     }
     return new_observation;
   }
@@ -187,8 +195,8 @@ function internalToSerialized(internal_data) {
     }
     // Create fields prefixed with `model_` or `relationship_` and add them
     // to the new relationship.
-    let scoreA_observation = getObservationFields(old_relationship.scoreAobserv);
-    let scoreB_observation = getObservationFields(old_relationship.scoreBobserv);
+    let scoreA_observation = getObservationFields(old_relationship.scoreAobserv, old_relationship.scoreA);
+    let scoreB_observation = getObservationFields(old_relationship.scoreBobserv, old_relationship.scoreB);
     if (old_relationship.direction == "b2a") {
       new_relationship['model_ema'] = old_relationship.scoreB_ema;
       for (let field in scoreB_observation) {
