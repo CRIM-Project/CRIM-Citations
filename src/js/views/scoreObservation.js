@@ -162,7 +162,7 @@ class ScoreObservation extends Backbone.View {
 
   addRemoveVoice(div){
     let removebtn = $(`<button class="voiceremove btn btn-danger mdl-button mdl-js-button">
-      Remove voice
+      Remove
     </button>`)
     div.append(removebtn)
     removebtn.click(()=>{

@@ -20,7 +20,7 @@ let score_observation_tpl = `
       </a>
       <div class="rest" style="display:none">
         <div class="selectGroup">
-          <label class="block select_label" for="mt-cf-voice">Voice:</label>
+          <label class="block select_label" for="mt-cf-voice">Voices:</label>
           <div class="group block">
             <select class="dialog_select" name="mt-cf-voice" id="mt-cf-voice">
               {{#each voices}}
@@ -28,6 +28,11 @@ let score_observation_tpl = `
               {{/each}}
             </select>
           </div>
+        </div>
+        <div data-for="mt-cf">
+          <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-cf}}disabled{{/unless}}>
+            Add voice
+          </button>
         </div>
         <label class="block mdl-checkbox mdl-js-checkbox" for="mt-cf-dur">
           <input type="checkbox" id="mt-cf-dur" class="inline mdl-checkbox__input" {{#if types.mt-cf.dur}}checked{{/if}} {{#unless types.mt-cf}}checked disabled{{/unless}}>
@@ -60,7 +65,7 @@ let score_observation_tpl = `
           </div>
         </div>
         <div data-for="mt-sog">
-          <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-fg}}disabled{{/unless}}>
+          <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-sog}}disabled{{/unless}}>
             Add voice
           </button>
         </div>
@@ -105,7 +110,7 @@ let score_observation_tpl = `
           </div>
         </div>
         <div data-for="mt-sog">
-          <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-fg}}disabled{{/unless}}>
+          <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-sog}}disabled{{/unless}}>
             Add voice
           </button>
         </div>
@@ -130,21 +135,24 @@ let score_observation_tpl = `
       </a>
       <div class="rest" style="display:none">
         <div class="selectGroup">
-          <label class="block select_label" for="mt-cd-voice1">Voices:</label>
+          <label class="block select_label" for="mt-cd-voice1">Voice pairs:</label>
           <div class="group block">
             <select class="dialog_select" name="mt-cd-voice1" id="mt-cd-voice1">
               {{#each voices}}
               <option value="{{this}}">{{this}}</option>
               {{/each}}
             </select>
-          </div>
-          <div class="group block">
             <select class="dialog_select" name="mt-cd-voice2" id="mt-cd-voice2">
               {{#each voices}}
               <option value="{{this}}">{{this}}</option>
               {{/each}}
             </select>
           </div>
+        </div>
+        <div data-pair="true" data-for="mt-cd">
+          <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-cd}}disabled{{/unless}}>
+            Add voice pair
+          </button>
         </div>
       </div>
     </div>
@@ -231,7 +239,7 @@ let score_observation_tpl = `
             </select>
           </div>
         </div>
-        <div data-pair="true" data-for="mt-pe">
+        <div data-for="mt-pe">
           <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-pe}}disabled{{/unless}}>
             Add voice
           </button>
@@ -285,15 +293,13 @@ let score_observation_tpl = `
       </a>
       <div class="rest" style="display:none">
         <div class="selectGroup">
-          <label class="block select_label" for="mt-id-voice1">Voices:</label>
+          <label class="block select_label" for="mt-id-voice1">Voice pairs:</label>
           <div class="group block">
             <select class="dialog_select" name="mt-id-voice1" id="mt-id-voice1">
               {{#each voices}}
               <option value="{{this}}">{{this}}</option>
               {{/each}}
             </select>
-          </div>
-          <div class="group block">
             <select class="dialog_select" name="mt-id-voice2" id="mt-id-voice2">
               {{#each voices}}
               <option value="{{this}}">{{this}}</option>
@@ -301,9 +307,9 @@ let score_observation_tpl = `
             </select>
           </div>
         </div>
-        <div data-for="mt-id">
+        <div data-pair="true" data-for="mt-id">
           <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-id}}disabled{{/unless}}>
-            Add voice
+            Add voice pair
           </button>
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -347,15 +353,13 @@ let score_observation_tpl = `
       </a>
       <div class="rest" style="display:none">
         <div class="selectGroup">
-          <label class="block select_label" for="mt-nid-voice1">Voices:</label>
+          <label class="block select_label" for="mt-nid-voice1">Voice pairs:</label>
           <div class="group block">
             <select class="dialog_select" name="mt-nid-voice1" id="mt-nid-voice1">
               {{#each voices}}
               <option value="{{this}}">{{this}}</option>
               {{/each}}
             </select>
-          </div>
-          <div class="group block">
             <select class="dialog_select" name="mt-nid-voice2" id="mt-nid-voice2">
               {{#each voices}}
               <option value="{{this}}">{{this}}</option>
@@ -365,7 +369,7 @@ let score_observation_tpl = `
         </div>
         <div data-pair="true" data-for="mt-nid">
           <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-nid}}disabled{{/unless}}>
-            Add voice
+            Add voice pair
           </button>
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -535,15 +539,13 @@ let score_observation_tpl = `
       </a>
       <div class="rest" style="display:none">
         <div class="selectGroup">
-          <label class="block select_label" for="mt-int-voice1">Voices:</label>
+          <label class="block select_label" for="mt-int-voice1">Voice pairs:</label>
           <div class="group block">
             <select class="dialog_select" name="mt-int-voice1" id="mt-int-voice1">
               {{#each voices}}
               <option value="{{this}}">{{this}}</option>
               {{/each}}
             </select>
-          </div>
-          <div class="group block">
             <select class="dialog_select" name="mt-int-voice2" id="mt-int-voice2">
               {{#each voices}}
               <option value="{{this}}">{{this}}</option>
@@ -551,7 +553,11 @@ let score_observation_tpl = `
             </select>
           </div>
         </div>
-
+        <div data-pair="true" data-for="mt-int">
+          <button class="addVoice btn mdl-button mdl-js-button" {{#unless types.mt-int}}disabled{{/unless}}>
+            Add voice pair
+          </button>
+        </div>
         <label class="block mdl-radio mdl-js-radio" for="mt-int-p6">
           <input type="radio" name="mt-int-options" id="mt-int-p6" class="inline mdl-radio__button" {{#if types.mt-int.p6}}checked{{/if}} {{#unless types.mt-int}}disabled{{/unless}}>
           <span class="mdl-radio__label">Parallel 6</span>
