@@ -256,7 +256,7 @@ class Export extends Backbone.View {
   expToDisk() {
     let string = JSON.stringify(this.data);
     let bb = new Blob([string], {"type":"application\/json"});
-    let filename = this.data.user ? "user"+this.data.user : "anonymous";
+    let filename = this.data.user ? ("user" + this.data.user) : "anonymous";
     filename = filename + "_" + this.data.created_at + ".json";
     saveAs(bb, filename);
     this.$el.find("#expToDisk").hide();
@@ -286,7 +286,7 @@ class Export extends Backbone.View {
           this.$el.find("#expToCRIMOnline").hide();
         },
         error: (err) => {
-          this.$el.find(".mdl-dialog__content p").html("<strong>An error occured.</strong> Please make sure that you are logged in and try again. In the meantime, you may wish to save your analyses locally.");
+          this.$el.find(".mdl-dialog__content p").html("<strong>An error occured.</strong> Please make sure that you are logged in and try again. You must have a user account associated with a <a href="/people/">person in the CRIM database</a>. In the meantime, you may wish to save your analyses locally.");
           console.log(err);
         }
       });
