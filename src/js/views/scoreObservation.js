@@ -100,13 +100,8 @@ class ScoreObservation extends Backbone.View {
         this.model.get("types")[DOMid] = type_data
       }
     })
-    if (Object.keys(this.model.get("types")).length == 0) {
-      let msg = this.$el.find(".messages").show().text("Please choose a musical type.")
-    }
-    else {
-      this.close()
-      this.model.collection.trigger("savedObserv")
-    }
+    this.close();
+    this.model.collection.trigger("savedObserv");
   }
 
   // Voice handling is ugly, but needed to be done hastily.
