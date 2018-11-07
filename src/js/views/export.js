@@ -8,6 +8,8 @@ import saveAs from 'save-as';
 // Converts data from the internal format into the fields of a POST request
 // that can add the data directly to the Django webapp.
 function internalToSerialized(internal_data) {
+  var all_relationships = [];
+  // Subfunctions for helping conversion process.
   function getPieceID(this_score_cid) {
     for (var score of internal_data.scores) {
       if (score.cid == this_score_cid) {
@@ -155,6 +157,7 @@ function internalToSerialized(internal_data) {
     }
     return new_observation;
   }
+  // Beginning of conversion process.
   var serialized_data = {};
   for (var old_relationship of internal_data.relationships) {
     var new_relationship = {};
@@ -217,8 +220,9 @@ function internalToSerialized(internal_data) {
         new_relationship['derivative_' + field] = scoreB_observation[field];
       }
     }
+    all_relationships.push(new_relationship);
   }
-  return new_relationship;
+  return all_relationships;
 }
 
 // Converts serialized data into the internal representation.
@@ -264,43 +268,43 @@ class Export extends Backbone.View {
 
   expToCRIMOnline() {
     var target_url;
-    let processed_data = internalToSerialized(this.data);
-    processed_data['csrfmiddlewaretoken'] = csrftoken;
-
-    if (this.citation) {
-      target_url = '/data/relationship/'+this.citation;
-    }
-    else {
-      target_url = '/data/relationship/new/';
-    }
-    let r = confirm("This will send the data directly to the CRIM online database. Continue?")
-
+    var processed_relationships = internalToSerialized(this.data);
+    let r = confirm("This will send the data directly to the CRIM online database. Continue?");
     if (r) {
-      $.ajax({
-        url: target_url,
-        type: 'POST',
-        data: processed_data,
-        withCredentials: true,
-        success: () => {
-          // Events.trigger("resetData");
-          this.$el.find("#expToCRIMOnline").hide();
-        },
-        error: (err) => {
-          this.$el.find(".mdl-dialog__content p").html("<strong>An error occured.</strong> Please make sure that you are logged in and try again. You must have a user account associated with a <a href="/people/">person in the CRIM database</a>. In the meantime, you may wish to save your analyses locally.");
-          console.log(err);
+      for (var relationship of processed_relationships) {
+        relationship['csrfmiddlewaretoken'] = csrftoken;
+        if (this.citation) {
+          target_url = '/data/relationship/'+this.citation;
         }
-      });
+        else {
+          target_url = '/data/relationship/new/';
+        }
+        $.ajax({
+          url: target_url,
+          type: 'POST',
+          data: relationship,
+          withCredentials: true,
+          success: () => {
+            // Events.trigger("resetData");
+            this.$el.find("#expToCRIMOnline").hide();
+          },
+          error: (err) => {
+            this.$el.find(".mdl-dialog__content p").html("<strong>An error occured.</strong> Please make sure that you are logged in and try again. You must have a user account associated with a <a href="/people/">person in the CRIM database</a>. In the meantime, you may wish to save your analyses locally.");
+            console.log(err);
+          }
+        });
+      }
     }
   }
 
   show(data) {
-    this.data = data
+    this.data = data;
     // it it's detached, render.
     if (this.$el.parent().length == 0) {
-      this.render()
+      this.render();
       // Assumes MDL JS
-      if(!(typeof(componentHandler) == 'undefined')){
-          componentHandler.upgradeAllRegistered();
+      if (!(typeof(componentHandler) == 'undefined')) {
+        componentHandler.upgradeAllRegistered();
       }
     }
 
@@ -312,7 +316,7 @@ class Export extends Backbone.View {
   }
 
   render() {
-    this.container.append(this.$el.html(this.template()))
+    this.container.append(this.$el.html(this.template()));
     if (! this.el.showModal) {
       dialogPolyfill.registerDialog(this.el);
     }
