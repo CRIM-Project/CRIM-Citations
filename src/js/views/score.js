@@ -277,6 +277,7 @@ class ScoreView extends Backbone.View {
           r = confirm("Are you sure you want to close this score?")
         }
         if (r || force) {
+          this.continuo.clearSelection()
           this.remove()
           this.$el.detach()
           this.$el.remove()
