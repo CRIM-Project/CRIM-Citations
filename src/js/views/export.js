@@ -258,12 +258,15 @@ class Export extends Backbone.View {
   }
 
   expToDisk() {
+    // let string = JSON.stringify(internalToSerialized(this.data));
     let string = JSON.stringify(this.data);
     let bb = new Blob([string], {"type":"application\/json"});
     let filename = this.data.user ? ("user" + this.data.user) : "anonymous";
     filename = filename + "_" + this.data.created_at + ".json";
     saveAs(bb, filename);
-    this.$el.find("#expToDisk").hide();
+    this.$el.find("#expToDisk").addClass("btn-warning");
+    this.$el.find("#expToDisk").removeClass("btn-info");
+    this.$el.find("#expDialogText").html("Your analyses have been downloaded. You may wish to clear your analyses before creating new ones and downloading again.");
   }
 
   expToCRIMOnline() {
@@ -285,11 +288,15 @@ class Export extends Backbone.View {
           data: relationship,
           withCredentials: true,
           success: () => {
-            // Events.trigger("resetData");
-            this.$el.find("#expToCRIMOnline").hide();
+            // Change color of download buttons to indicate that the action
+            // has already been performed. Users should think twice about
+            // exporting or downloading the same relationships twice.
+            this.$el.find("#expToCRIMOnline").addClass("btn-warning");
+            this.$el.find("#expToCRIMOnline").removeClass("btn-info");
+            this.$el.find("#expDialogText").html("Your analyses have been successfully exported to the CRIM online database. You may wish to clear your analyses before creating new ones and exporting again.");
           },
           error: (err) => {
-            this.$el.find(".mdl-dialog__content p").html("<strong>An error occured.</strong> Please make sure that you are logged in and try again. You must have a user account associated with a <a href="/people/">person in the CRIM database</a>. In the meantime, you may wish to save your analyses locally.");
+            this.$el.find("#expDialogText").html("<strong>An error occured.</strong> Please make sure that you are logged in and try again. You must have a user account associated with a <a href='/people/'>person in the CRIM database</a>. In the meantime, you may wish to save your work by downloading your analyses to disk.");
             console.log(err);
           }
         });

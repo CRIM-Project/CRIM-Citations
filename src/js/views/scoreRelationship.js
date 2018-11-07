@@ -92,11 +92,11 @@ class ScoreRelationship extends Backbone.View {
     })
 
     if (Object.keys(this.model.get("types")).length == 0) {
-      let msg = this.$el.find(".messages").show().text("Please choose a relationship type.")
+      let msg = this.$el.find(".messages").show().text("Please choose a relationship type.");
     }
     else {
-      this.scores[0].collection.trigger("clearScoreSelections")
-      this.close()
+      this.scores[0].collection.trigger("clearScoreSelections");
+      this.close();
     }
   }
 

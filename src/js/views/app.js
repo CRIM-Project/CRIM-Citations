@@ -164,14 +164,21 @@ class AppView extends Backbone.View {
     else alert("Please create a relationship before exporting.")
   }
 
-  resetData() {
+  resetData () {
     let r = confirm("Are you sure you want to clear all selections, relationships, and observations from these scores?");
     if (r) {
       this.relationships.reset();
       this.scores.each((s)=>{
         s.observations.reset();
         s.collection.trigger("clearScoreSelections");
-      })
+      });
+      // Restore download and export buttons to their original color
+      this.$el.find("#expToCRIMOnline").addClass("btn-info");
+      this.$el.find("#expToCRIMOnline").removeClass("btn-warning");
+      this.$el.find("#expToDisk").addClass("btn-info");
+      this.$el.find("#expToDisk").removeClass("btn-warning");
+      // Restore dialog text
+      this.$el.find("#expDialogText").html("Exporting will store your current work to the CRIM database, or to a file that you will be able to open and edit later.");
       if (history.pushState) {
         var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
         if (this.user) {
