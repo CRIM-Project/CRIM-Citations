@@ -165,16 +165,20 @@ class AppView extends Backbone.View {
   }
 
   resetData() {
-    this.relationships.reset()
-    this.scores.each((s)=>{
-      s.observations.reset()
-    })
-    if (history.pushState) {
-      var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-      if (this.user) {
-        newurl = newurl + "?userId="+this.user
+    let r = confirm("Are you sure you want to clear all selections, relationships, and observations from these scores?");
+    if (r) {
+      this.relationships.reset();
+      this.scores.each((s)=>{
+        s.observations.reset();
+        s.collection.trigger("clearScoreSelections");
+      })
+      if (history.pushState) {
+        var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        if (this.user) {
+          newurl = newurl + "?userId="+this.user;
+        }
+        window.history.pushState({path:newurl},'',newurl);
       }
-      window.history.pushState({path:newurl},'',newurl);
     }
   }
 
