@@ -2,7 +2,7 @@ import * as Handlebars from 'handlebars';
 
 let score_observation_tpl = `
   <h2 class="mdl-dialog__title">Editing observation</h2>
-  <button class="btn mdl-button mdl-js-button mdl-button--raised hide_button">
+  <button class="btn btn-warning mdl-button mdl-js-button mdl-button--raised hide_button">
     Hide
   </button>
   <div class="mdl-dialog__content">

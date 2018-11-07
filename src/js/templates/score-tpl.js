@@ -10,11 +10,11 @@ let pag_tpl = `
       <button type="button" class="btn mdl-button mdl-button--attention mdl-js-button btn-danger close_score_button">
         Remove piece
       </button>
+      <button type="button" class="btn mdl-button mdl-js-button mdl-button--colored show-score-observations">
+        Show analyses
+      </button>
       <button type="button" class="btn btn-primary mdl-button mdl-js-button show-score-relationship" style="display:none">
         New relationship
-      </button>
-      <button type="button" class="btn mdl-button mdl-js-button mdl-button--colored show-score-observations" style="display:none">
-        Show relationships
       </button>
     </div>
     <div class="pull-right">

@@ -9,7 +9,7 @@ class HideModeComponent extends Backbone.View {
   }
 
   get className() {
-    return "btn mdl-button mdl-js-button mdl-button--raised hide_mode mdl-button--attention"
+    return "btn btn-warning mdl-button mdl-js-button mdl-button--raised hide_mode mdl-button--attention"
   }
 
   get events() {
@@ -30,7 +30,6 @@ class HideModeComponent extends Backbone.View {
     this.$el.text("Return to editing")
     return this.el
   }
-
 }
 
 export default HideModeComponent
