@@ -8,16 +8,14 @@ let score_observation_tpl = `
       <ul class="mdl-list">
       {{#each relationships}}
         <li class="mdl-list__item rel_item" id="i_{{this.cid}}" data-relid="{{this.cid}}">
-          <span class="mdl-list__item-primary-content">
-            <i class="material-icons delete_item clickable" title="edit relationship">delete_forever</i>
-            <span class="truncate truncate_short" title="{{this.titleA}}">{{this.titleA}}</span>
-            <i class="material-icons">{{#if this.boolDir}}&rarr;{{else}}&larr;{{/if}}</i>
-            <span class="truncate truncate_short" title="{{this.titleB}}">{{this.titleB}}</span>
-            <span class="truncate truncate_short" title="{{#each this.types}}{{label}}{{#unless @last}},{{/unless}}{{/each}}">({{#each this.types}}{{label}}{{#unless @last}},{{/unless}}{{/each}})</span>
+          <span class="block mdl-list__item-primary-content">
+            {{this.titleA}} &rarr; {{this.titleB}}
+            ({{#each this.types}}{{label}}{{#unless @last}},{{/unless}}{{/each}})
           </span>
-          <span class="mdl-list__item-secondary-action">
-            <i class="material-icons edit_relationship clickable" title="edit relationship">mode_edit</i>
-            <i class="material-icons rel_preview" title="preview first measure on this score">remove_red_eye</i>
+          <span class="block mdl-list__item-secondary-action">
+            <button class="btn btn-danger delete_item">Delete</button>
+            <button class="btn btn-primary edit_relationship">Edit</button>
+            <button class="btn rel_preview">Preview</button>
           </span>
         </li>
        {{/each}}
@@ -30,13 +28,15 @@ let score_observation_tpl = `
     <ul class="mdl-list">
       {{#each observations}}
       <li class="mdl-list__item rel_item" id="i_{{this.cid}}" data-observationid="{{this.cid}}">
-        <span class="mdl-list__item-primary-content">
-          <i class="material-icons delete_item clickable" title="edit relationship">delete_forever</i>
-          <span class="truncate" title="{{this.ema}}">{{this.ema}}</span> <span class="truncate" title="{{#each this.types}}{{label}}{{#unless @last}},{{/unless}}{{/each}}">({{#each this.types}}{{label}}{{#unless @last}},{{/unless}}{{/each}})</span>
+        <span class="block mdl-list__item-primary-content">
+          <span title="{{this.title}}">{{this.title}}</span>
+          ({{#each this.types}}{{label}}{{#unless @last}},{{/unless}}{{/each}})
+          <span class="ema truncate" title="{{this.ema}}">{{this.ema}}</span>
         </span>
-        <span class="mdl-list__item-secondary-action">
-          <i class="material-icons edit_observation clickable" title="edit observation">mode_edit</i>
-          <i class="material-icons selection_preview clickable" title="preview first measure">remove_red_eye</i>
+        <span class="block mdl-list__item-secondary-action">
+          <button class="btn btn-danger delete_item">Delete</button>
+          <button class="btn btn-primary edit_observation">Edit</button>
+          <button class="btn selection_preview">Preview</button>
         </span>
       </li>
       {{/each}}
