@@ -7,7 +7,7 @@ let export_tpl = `
   </div>
   <div class="mdl-dialog__actions">
     <button type="button" class="btn btn-info mdl-button mdl-button--attention" id="expToCRIMOnline">Send to CRIM online</button>
-    <button type="button" class="btn btn-info mdl-button mdl-button--accent" id="expToDisk">Download analyses</button>
+    <button type="button" class="btn btn-info mdl-button mdl-button--accent" id="expToDisk">Download</button>
     <button type="button" class="btn mdl-button close">Close</button>
   </div>
 `
