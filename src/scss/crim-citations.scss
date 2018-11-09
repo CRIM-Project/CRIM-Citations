@@ -34,6 +34,15 @@
   margin-bottom: 9px;
 }
 
+.form-horizontal, .input-append {
+  margin-top: 4px;
+  margin-bottom: 4px;
+
+  button {
+    margin: 0;
+  }
+}
+
 .cnt-container {
   position: relative;
 }

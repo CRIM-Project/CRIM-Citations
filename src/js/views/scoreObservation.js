@@ -170,7 +170,7 @@ class ScoreObservation extends Backbone.View {
     let $a = $(e.target).closest("div")
     let $div = $a.prev("div")
     let type = $a.data("for")
-    let $cnt = $("<div class='group block'></div>")
+    let $cnt = $("<div class='group block form-horizontal'></div>")
     $div.append($cnt)
     this.addVoiceTpl($cnt, type)
     if ($a.data("pair")) {
