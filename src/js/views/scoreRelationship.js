@@ -60,6 +60,9 @@ class ScoreRelationship extends Backbone.View {
   }
 
   save(){
+    $("#import_btn").hide();
+    $("#export_btn").show();
+    $("#clear_btn").show();
     this.model.set("direction", this.$el.find("input[name=rel-dir]:checked").attr("id").split("-").pop())
     this.model.set("comment", this.$el.find("#rel-comment").val())
     this.$el.find(".types").each((i, type) => {

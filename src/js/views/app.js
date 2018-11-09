@@ -177,6 +177,9 @@ class AppView extends Backbone.View {
       this.$el.find("#expToCRIMOnline").removeClass("btn-warning");
       this.$el.find("#expToDisk").addClass("btn-info");
       this.$el.find("#expToDisk").removeClass("btn-warning");
+      this.$el.find("#import_btn").show();
+      this.$el.find("#export_btn").hide();
+      this.$el.find("#clear_btn").hide();
       // Restore dialog text
       this.$el.find("#expDialogText").html("Exporting will store your current work to the CRIM database, or to a file that you will be able to open and edit later.");
       if (history.pushState) {

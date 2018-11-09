@@ -266,7 +266,7 @@ class Export extends Backbone.View {
     saveAs(bb, filename);
     this.$el.find("#expToDisk").addClass("btn-warning");
     this.$el.find("#expToDisk").removeClass("btn-info");
-    this.$el.find("#expDialogText").html("Your analyses have been downloaded. You may wish to clear your analyses before creating new ones and downloading again.");
+    this.$el.find("#expDialogText").html("Your session has been downloaded. You may wish to clear your session before creating new analyses and downloading again.");
   }
 
   expToCRIMOnline() {
@@ -293,7 +293,7 @@ class Export extends Backbone.View {
             // exporting or downloading the same relationships twice.
             this.$el.find("#expToCRIMOnline").addClass("btn-warning");
             this.$el.find("#expToCRIMOnline").removeClass("btn-info");
-            this.$el.find("#expDialogText").html("Your analyses have been successfully exported to the CRIM online database. You may wish to clear your analyses before creating new ones and exporting again.");
+            this.$el.find("#expDialogText").html("Your analyses have been successfully exported to the CRIM online database. You may wish to clear your session before creating new analyses and exporting again.");
           },
           error: (err) => {
             this.$el.find("#expDialogText").html("<strong>An error occured.</strong> Please make sure that you are logged in and try again. You must have a user account associated with a <a href='/people/'>person in the CRIM database</a>. In the meantime, you may wish to save your work by downloading your analyses to disk.");
