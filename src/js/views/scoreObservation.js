@@ -52,56 +52,66 @@ class ScoreObservation extends Backbone.View {
   }
 
   save(){
-    // Now "set" all the things on this.model.
-    if (this.ema){
-      this.model.set("ema", this.ema)
-    }
-    if (this.title){
-      this.model.set("title", this.title)
-    }
-    if (this.mei_ids){
-      this.model.set("mei_ids", this.mei_ids)
-    }
-    // reset types
-    this.model.set("types", {})
-    this.model.set("comment", this.$el.find("#observ-comment").val())
-    this.$el.find(".types").each((i, type) => {
-      let $type = $(type)
-      let $cb = $type.find(".cb")
-      let DOMid = $cb.attr("id")
-      if ($cb.prop("checked")) {
-        let type_data = {
-          "label" : $cb.next().text()
-        }
-        $type.find(".rest input, .rest textarea").each((j, input)=>{
-          let $input = $(input)
-          let key = $input.attr("id").split("-").pop()
-          switch ($input.attr("type")) {
-              case "text":
-                type_data[key] = $input.val()
-                break;
-              case "radio":
-              case "checkbox":
-                type_data[key] = $input.prop("checked")
-                break;
-          }
-        })
-        type_data.options = []
-        $type.find(".rest .group").each((j, group)=>{
-          type_data.isSelect = true
-          let grp = {}
-          $(group).find("select option:selected").each((j, option)=>{
-            let $option = $(option)
-            let key = $option.parent().attr("id").split("-").pop()
-            grp[key] = $option.val()
-          })
-          type_data.options.push(grp)
-        })
-        this.model.get("types")[DOMid] = type_data
+    var enabled_pattern_fields = this.$el.find(".pattern-checked:enabled");
+    var no_errors = true;
+    for (let field of enabled_pattern_fields) {
+      if (!field.checkValidity()) {
+        this.$el.find("#" + field.id + "-error").show();
+        no_errors = false;
       }
-    })
-    this.close();
-    this.model.collection.trigger("savedObserv");
+    }
+    if (no_errors) {
+      // Now "set" all the things on this.model.
+      if (this.ema){
+        this.model.set("ema", this.ema)
+      }
+      if (this.title){
+        this.model.set("title", this.title)
+      }
+      if (this.mei_ids){
+        this.model.set("mei_ids", this.mei_ids)
+      }
+      // reset types
+      this.model.set("types", {})
+      this.model.set("comment", this.$el.find("#observ-comment").val())
+      this.$el.find(".types").each((i, type) => {
+        let $type = $(type)
+        let $cb = $type.find(".cb")
+        let DOMid = $cb.attr("id")
+        if ($cb.prop("checked")) {
+          let type_data = {
+            "label" : $cb.next().text()
+          }
+          $type.find(".rest input, .rest textarea").each((j, input)=>{
+            let $input = $(input)
+            let key = $input.attr("id").split("-").pop()
+            switch ($input.attr("type")) {
+                case "text":
+                  type_data[key] = $input.val()
+                  break;
+                case "radio":
+                case "checkbox":
+                  type_data[key] = $input.prop("checked")
+                  break;
+            }
+          })
+          type_data.options = []
+          $type.find(".rest .group").each((j, group)=>{
+            type_data.isSelect = true
+            let grp = {}
+            $(group).find("select option:selected").each((j, option)=>{
+              let $option = $(option)
+              let key = $option.parent().attr("id").split("-").pop()
+              grp[key] = $option.val()
+            })
+            type_data.options.push(grp)
+          })
+          this.model.get("types")[DOMid] = type_data
+        }
+      })
+      this.close();
+      this.model.collection.trigger("savedObserv");
+    }
   }
 
   // Voice handling is ugly, but needed to be done hastily.
