@@ -8,46 +8,46 @@ import '../../../lib/dropbox/dropins';
 class Import extends Backbone.View {
 
   initialize (options) {
-    Dropbox.appKey = "gwuog2373cwj45g";
+    // Dropbox.appKey = "gwuog2373cwj45g";
     this.container = options.container;
   }
 
   get tagName(){
-    return "dialog"
+    return "dialog";
   }
 
   get className() {
-    return "mdl-dialog import"
+    return "mdl-dialog import";
   }
 
   template(tpl){
-      return import_tpl(tpl);
+    return import_tpl(tpl);
   }
 
   get events() {
-      return {
-          "click .close": this.close,
-          "click #doImport": this.import,
-          "click #from_dropbox": this.fromDropbox,
-          "change #uploadBtn": (e)=>{this.$el.find("#uploadFile").val(e.target.files[0].name)}
-      }
+    return {
+      "click .close": this.close,
+      "click #doImport": this.import,
+      // "click #from_dropbox": this.fromDropbox,
+      "change #uploadBtn": (e)=>{this.$el.find("#uploadFile").val(e.target.files[0].name)}
+    }
   }
 
   doImport(data){
-    Events.trigger("import", data)
+    Events.trigger("import", data);
   }
 
   import(e){
-    $("#loader").show()
-    let tab = this.$el.find("div.mdl-tabs__panel.is-active").attr("id")
+    $("#loader").show();
+    let tab = this.$el.find("div.mdl-tabs__panel.is-active").attr("id");
     if (tab == "local-panel"){
-      this.fromLocal()
+      this.fromLocal();
     }
     else if (tab == "url-panel"){
-      this.fromUrl()
+      this.fromUrl();
     }
     else {
-      //no-op
+      // no-op
     }
   }
 
@@ -64,10 +64,10 @@ class Import extends Backbone.View {
       let reader = new FileReader()
       reader.onload = (e) => {
         let text = e.target.result;
-        let json = JSON.parse(text)
-        this.doImport(json)
+        let json = JSON.parse(text);
+        this.doImport(json);
       }
-      reader.readAsText(file)
+      reader.readAsText(file);
     }
 
   }
@@ -79,38 +79,37 @@ class Import extends Backbone.View {
     let url = this.$el.find("#url_input").val().trim();
 
     $.get(url, (data) => {
-      this.doImport(data)
+      this.doImport(data);
     }, 'json')
       .fail((msg)=>{
-          console.log(msg);
-
+        console.log(msg);
       })
   }
 
-  fromDropbox() {
-    this.close()
-    let options = {
-        // Required. Called when a user selects an item in the Chooser.
-        success: function(files) {
-            $.get(files[0].link, (data) => {
-              this.doImport(data)
-            }, 'json').fail((msg)=>{
-                console.log(msg);
-            })
-        },
-
-        // Optional. Called when the user closes the dialog without selecting a file
-        // and does not include any parameters.
-        cancel: function() {
-
-        },
-        linkType: "direct",
-        multiselect: false,
-        extensions: ['.json'],
-    };
-
-    Dropbox.choose(options);
-  }
+  // fromDropbox() {
+  //   this.close()
+  //   let options = {
+  //       // Required. Called when a user selects an item in the Chooser.
+  //       success: function(files) {
+  //           $.get(files[0].link, (data) => {
+  //             this.doImport(data)
+  //           }, 'json').fail((msg)=>{
+  //               console.log(msg);
+  //           })
+  //       },
+  //
+  //       // Optional. Called when the user closes the dialog without selecting a file
+  //       // and does not include any parameters.
+  //       cancel: function() {
+  //
+  //       },
+  //       linkType: "direct",
+  //       multiselect: false,
+  //       extensions: ['.json'],
+  //   };
+  //
+  //   Dropbox.choose(options);
+  // }
 
   show() {
     // it it's detached, render.
