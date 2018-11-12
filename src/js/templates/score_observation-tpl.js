@@ -182,12 +182,12 @@ let score_observation_tpl = `
           </button>
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <label class="block mdl-textfield__label" for="mt-fg-int">Melodic interval of entry (e.g. <span class="quoted-expression">4+2+5-</span>):</label>
+          <label class="block mdl-textfield__label" for="mt-fg-int">Melodic interval of entry (e.g. <span class="quoted-expression">5+8-</span>):</label>
           <input class="pattern-checked mdl-textfield__input" type="text" pattern="(\\d{1,2}[\+-])*" id="mt-fg-int" {{#unless types.mt-fg}}disabled{{/unless}} {{#if types.mt-fg}}value="{{types.mt-fg.int}}"{{/if}}>
           <span class="error mdl-textfield__error" id="mt-fg-int-error" style="display:none;">Input is not a series of melodic intervals</span>
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <label class="block mdl-textfield__label" for="mt-fg-tint">Time interval of entry (e.g. <span class="quoted-expression">B4</span>, <span class="quoted-expression">S1/1</span>; L&nbsp;=&nbsp;longa, B&nbsp;=&nbsp;brevis, S&nbsp;=&nbsp;semibrevis, M&nbsp;=&nbsp;minima):</label>
+          <label class="block mdl-textfield__label" for="mt-fg-tint">Time interval of entry (e.g. <span class="quoted-expression">B4</span>, <span class="quoted-expression">S1/2/1</span>; L&nbsp;=&nbsp;longa, B&nbsp;=&nbsp;brevis, S&nbsp;=&nbsp;semibrevis, M&nbsp;=&nbsp;minima):</label>
           <input class="pattern-checked mdl-textfield__input" type="text" pattern="([LBSM]\\d{1,2}(\\/\\d{1,2})*)?" id="mt-fg-tint" {{#unless types.mt-fg}}disabled{{/unless}} {{#if types.mt-fg}}value="{{types.mt-fg.tint}}"{{/if}}>
           <span class="error mdl-textfield__error" id="mt-fg-tint-error" style="display:none;">Input is not a series of time intervals</span>
         </div>
@@ -245,12 +245,12 @@ let score_observation_tpl = `
           </button>
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <label class="block mdl-textfield__label" for="mt-pe-int">Melodic interval of entry (e.g. <span class="quoted-expression">4+2+5-</span>):</label>
+          <label class="block mdl-textfield__label" for="mt-pe-int">Melodic interval of entry (e.g. <span class="quoted-expression">5+8-</span>):</label>
           <input class="pattern-checked mdl-textfield__input" type="text" pattern="(\\d{1,2}[\+-])*" id="mt-pe-int" {{#if types.mt-pe.int}}value="{{types.mt-pe.int}}"{{/if}} {{#unless types.mt-pe}}disable{{/unless}}>
           <span class="error mdl-textfield__error" id="mt-pe-int-error" style="display:none;">Input is not a series of melodic intervals</span>
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <label class="block mdl-textfield__label" for="mt-pe-tint">Time interval of entry (e.g. <span class="quoted-expression">B4</span>, <span class="quoted-expression">S1/1</span>; L&nbsp;=&nbsp;longa, B&nbsp;=&nbsp;brevis, S&nbsp;=&nbsp;semibrevis, M&nbsp;=&nbsp;minima):</label>
+          <label class="block mdl-textfield__label" for="mt-pe-tint">Time interval of entry (e.g. <span class="quoted-expression">B4</span>, <span class="quoted-expression">S1/2/1</span>; L&nbsp;=&nbsp;longa, B&nbsp;=&nbsp;brevis, S&nbsp;=&nbsp;semibrevis, M&nbsp;=&nbsp;minima):</label>
           <input class="pattern-checked mdl-textfield__input" type="text" pattern="([LBSM]\\d{1,2}(\\/\\d{1,2})*)?" id="mt-pe-tint" {{#if types.mt-pe.tint}}value="{{types.mt-pe.tint}}"{{/if}} {{#unless types.mt-pe}}disable{{/unless}}>
           <span class="error mdl-textfield__error" id="mt-pe-tint-error" style="display:none;">Input is not a series of time intervals</span>
         </div>
@@ -313,12 +313,12 @@ let score_observation_tpl = `
           </button>
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <label class="block mdl-textfield__label" for="mt-id-int">Melodic interval of entry (e.g. <span class="quoted-expression">4+2+5-</span>):</label>
+          <label class="block mdl-textfield__label" for="mt-id-int">Melodic interval of entry (e.g. <span class="quoted-expression">5+8-</span>):</label>
           <input class="pattern-checked mdl-textfield__input" type="text" pattern="(\\d{1,2}[\+-])*" id="mt-id-int" {{#if types.mt-id.int}}value="{{types.mt-id.int}}"{{/if}} {{#unless types.mt-id}}disabled{{/unless}}>
           <span class="error mdl-textfield__error" id="mt-id-int-error" style="display:none;">Input is not a series of melodic intervals</span>
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <label class="block mdl-textfield__label" for="mt-id-tint">Time interval of entry (e.g. <span class="quoted-expression">B4</span>, <span class="quoted-expression">S1/1</span>; L&nbsp;=&nbsp;longa, B&nbsp;=&nbsp;brevis, S&nbsp;=&nbsp;semibrevis, M&nbsp;=&nbsp;minima):</label>
+          <label class="block mdl-textfield__label" for="mt-id-tint">Time interval of entry (e.g. <span class="quoted-expression">B4</span>, <span class="quoted-expression">S1/2/1</span>; L&nbsp;=&nbsp;longa, B&nbsp;=&nbsp;brevis, S&nbsp;=&nbsp;semibrevis, M&nbsp;=&nbsp;minima):</label>
           <input class="pattern-checked mdl-textfield__input" type="text" pattern="([LBSM]\\d{1,2}(\\/\\d{1,2})*)?" id="mt-id-tint" {{#if types.mt-id.tint}}value="{{types.mt-id.tint}}"{{/if}} {{#unless types.mt-id}}disabled{{/unless}}>
           <span class="error mdl-textfield__error" id="mt-id-tint-error" style="display:none;">Input is not a series of time intervals</span>
         </div>
@@ -373,12 +373,12 @@ let score_observation_tpl = `
           </button>
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <label class="block mdl-textfield__label" for="mt-nid-int">Melodic interval of entry (e.g. <span class="quoted-expression">4+2+5-</span>):</label>
+          <label class="block mdl-textfield__label" for="mt-nid-int">Melodic interval of entry (e.g. <span class="quoted-expression">5+8-</span>):</label>
           <input class="pattern-checked mdl-textfield__input" type="text" pattern="(\\d{1,2}[\+-])*" id="mt-nid-int" {{#if types.mt-nid.int}}value="{{types.mt-nid.int}}"{{/if}} {{#unless types.mt-nid}}disabled{{/unless}}>
           <span class="error mdl-textfield__error" id="mt-nid-int-error" style="display:none;">Input is not a series of melodic intervals</span>
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <label class="block mdl-textfield__label" for="mt-nid-tint">Time interval of entry (e.g. <span class="quoted-expression">B4</span>, <span class="quoted-expression">S1/1</span>; L&nbsp;=&nbsp;longa, B&nbsp;=&nbsp;brevis, S&nbsp;=&nbsp;semibrevis, M&nbsp;=&nbsp;minima):</label>
+          <label class="block mdl-textfield__label" for="mt-nid-tint">Time interval of entry (e.g. <span class="quoted-expression">B4</span>, <span class="quoted-expression">S1/2/1</span>; L&nbsp;=&nbsp;longa, B&nbsp;=&nbsp;brevis, S&nbsp;=&nbsp;semibrevis, M&nbsp;=&nbsp;minima):</label>
           <input class="pattern-checked mdl-textfield__input" type="text" pattern="([LBSM]\\d{1,2}(\\/\\d{1,2})*)?" id="mt-nid-tint" {{#if types.mt-nid.tint}}value="{{types.mt-nid.tint}}"{{/if}} {{#unless types.mt-nid}}disabled{{/unless}}>
           <span class="error mdl-textfield__error" id="mt-nid-tint-error" style="display:none;">Input is not a series of time intervals</span>
         </div>

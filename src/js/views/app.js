@@ -258,24 +258,26 @@ class AppView extends Backbone.View {
   }
 
   doImport(){
-    this.relationships.reset()
+    this.relationships.reset();
     this.scores.each((s)=>{
-      s.observations.reset()
-      s.trigger("close", true)
+      s.observations.reset();
+      s.trigger("close", true);
     })
-    this.scores.reset()
-    this.importDialog.show()
+    this.scores.reset();
+    this.importDialog.show();
   }
 
   import() {
     // if a relationship exists, warn that it will be lost
-    if (this.relationships.models.length > 0){
-      let r = confirm("All open scores will be closed and unsaved relationships will be lost. Continue?")
-      if (r){
-        this.doImport()
+    if (this.relationships.models.length > 0 || this.scores.models.length > 0) {
+      let r = confirm("All open scores will be closed and unsaved relationships will be lost. Continue?");
+      if (r) {
+        this.doImport();
       }
     }
-    else this.doImport()
+    else {
+      this.doImport();
+    }
   }
 
   removeRel(relid){
