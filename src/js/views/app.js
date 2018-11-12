@@ -270,7 +270,7 @@ class AppView extends Backbone.View {
   import() {
     // if a relationship exists, warn that it will be lost
     if (this.relationships.models.length > 0){
-      let r = confirm("All open scores will be clsoed and unsaved relationships will be lost: continue?")
+      let r = confirm("All open scores will be closed and unsaved relationships will be lost. Continue?")
       if (r){
         this.doImport()
       }

@@ -6,10 +6,9 @@ let import_tpl = `
     <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
       <div class="mdl-tabs__panel is-active" id="local-panel">
         <div class="form-horizontal mdl-textfield mdl-js-textfield mdl-textfield--file">
-          <input class="mdl-textfield__input" style="width:60%;margin-right:0;" placeholder="File" type="text" id="uploadFile" readonly/>
-          <button class="btn btn-info mdl-button mdl-button--primary mdl-button--file">
-            Select file
-          </button>
+          <button id="uploadUi" class="btn btn-info" onclick="document.getElementById('uploadBtn').click();">Select file</button>
+          <input id="uploadBtn" type="file" name="analyses" class="inputfile" accept=".json" onchange="document.getElementById('uploadFilename').innerHTML = document.getElementById('uploadBtn').files[0].name;" />
+          <p id="uploadFilename"></p>
         </div>
       </div>
     </div>
