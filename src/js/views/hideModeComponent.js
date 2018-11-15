@@ -27,7 +27,7 @@ class HideModeComponent extends Backbone.View {
   }
 
   render(){
-    this.$el.text("Return to editing")
+    this.$el.text("Return to analysis")
     return this.el
   }
 }

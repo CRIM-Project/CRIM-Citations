@@ -200,6 +200,7 @@ class ScoreView extends Backbone.View {
   }
 
   showObservation(observ) {
+    this.scoreObservationDialog.ema = this.$el.find(".cnt-emaexpr-expr").text();
     if (!this.scoreObservationDialog.voices){
       this.scoreObservationDialog.voices = this.model.get("voices")
     }
@@ -212,20 +213,19 @@ class ScoreView extends Backbone.View {
   }
 
   newObservation(new_observ){
-    this.scoreObservationDialog.ema = this.$el.find(".cnt-emaexpr-expr").text()
+    this.scoreObservationDialog.ema = this.$el.find(".cnt-emaexpr-expr").text();
     if (!this.scoreObservationDialog.ema) {
-      this.scoreObservationDialog.ema = this.model.get("ema")
+      this.scoreObservationDialog.ema = this.model.get("ema");
     }
-    // this.scoreObservationDialog.score = this.model
-    this.scoreObservationDialog.title = this.model.get("title")
-    this.scoreObservationDialog.voices = this.model.get("voices")
-    this.scoreObservationDialog.mei_ids = this.continuo.selectedElements
+    this.scoreObservationDialog.mei_ids = this.continuo.selectedElements;
     if (this.scoreObservationDialog.mei_ids.length == 0) {
-      this.scoreObservationDialog.mei_ids = this.model.get("mei_ids")
+      this.scoreObservationDialog.mei_ids = this.model.get("mei_ids");
     }
-    this.showObservation(new_observ)
-    // this.continuo.clearSelection()
-    // this.$el.find(".show-score-observation").hide()
+    this.scoreObservationDialog.title = this.model.get("title");
+    this.scoreObservationDialog.voices = this.model.get("voices");
+    this.showObservation(new_observ);
+    // this.continuo.clearSelection();
+    // this.$el.find(".show-score-observation").hide();
   }
 
   getSelections(){
@@ -236,33 +236,37 @@ class ScoreView extends Backbone.View {
   }
 
   showRelationship() {
-    this.model.collection.trigger("storeSelections")
+    this.model.collection.trigger("storeSelections");
     this.getSelections().then((sel)=>{
-      Events.trigger("relDialog:open", sel)
+      Events.trigger("relDialog:open", sel);
     })
-    // this.model.collection.trigger("clearScoreSelections")
+    // this.model.collection.trigger("clearScoreSelections");
   }
 
   storeSelection(){
-    this.model.set("ema", this.$el.find(".cnt-emaexpr-expr").text())
-    this.model.set("mei_ids", this.continuo.selectedElements)
+    this.model.set("ema", this.$el.find(".cnt-emaexpr-expr").text());
+    this.model.set("mei_ids", this.continuo.selectedElements);
   }
 
   disableButtons(){
-    this.$el.find(".show-score-relationship").attr("disabled", true)
-    this.$el.find(".show-score-observations").attr("disabled", true)
-    // find a way to cover .cnt-container to stop click events on it
-    let $score = this.$el.find(".score")
-    let $mask = $("<div class='mask'></div>")
-    $mask.width($score.width())
-    $mask.height($score.height()-45)
-    $score.prepend($mask)
+    this.$el.find(".show-score-relationship").attr("disabled", true);
+    this.$el.find(".show-score-observations").attr("disabled", true);
+    this.$el.find(".close_score_button").attr("disabled", true);
+    $(document).find("#add_btn").attr("disabled", true);
+    $(document).find("#import_btn").attr("disabled", true);
+    $(document).find("#export_btn").attr("disabled", true);
+    $(document).find("#clear_btn").attr("disabled", true);
   }
 
   renableButtons(){
-    this.$el.find(".show-score-relationship").attr("disabled", false)
-    this.$el.find(".show-score-observations").attr("disabled", false)
-    this.$el.find(".mask").remove()
+    this.$el.find(".show-score-relationship").attr("disabled", false);
+    this.$el.find(".show-score-observations").attr("disabled", false);
+    this.$el.find(".close_score_button").attr("disabled", false);
+    $(document).find("#add_btn").attr("disabled", false);
+    $(document).find("#import_btn").attr("disabled", false);
+    $(document).find("#export_btn").attr("disabled", false);
+    $(document).find("#clear_btn").attr("disabled", false);
+    // this.$el.find(".mask").remove();
   }
 
   close(force=false){
@@ -288,7 +292,6 @@ class ScoreView extends Backbone.View {
       }
     })
   }
-
 }
 
 // Class-level shared verovio data info

@@ -25,7 +25,7 @@ class AppView extends Backbone.View {
     this.listenTo(Events, "relDialog:open", this.openRelDialog)
     this.listenTo(Events, "edit_relationship", (relid)=>{this.openRelDialog(undefined, relid)})
     this.listenTo(Events, "delete_relationship", this.removeRel)
-    this.listenTo(this.scores, "change", this.hasDoubleSection)
+    this.listenTo(this.scores, "change", this.hasDoubleSelection)
 
     this.listenTo(Events, "request:selections", ()=>{Events.trigger("response:selections", this.requestSelections())})
     this.listenTo(Events, "request:relationshipsFor", (score)=>{Events.trigger("response:relationships", this.requestRelationshipsFor(score))})
@@ -95,12 +95,13 @@ class AppView extends Backbone.View {
   }
 
   startHideMode() {
-    this.scores.trigger("disableButtons")
-    this.$el.find(".crim_header").prepend(this.hideModeComponent.render())
+    this.scores.trigger("disableButtons");
+    this.$el.find(".crim_header").prepend(this.hideModeComponent.render());
+    // this.scores.trigger("restoreSelections");
   }
 
   stopHideMode() {
-    this.scores.trigger("renableButtons")
+    this.scores.trigger("renableButtons");
   }
 
   requestSelections(){
@@ -115,7 +116,7 @@ class AppView extends Backbone.View {
     })
   }
 
-  hasDoubleSection(changed_score) {
+  hasDoubleSelection(changed_score) {
     let scores_with_selection = this.scores.filter((score)=>{
       return score.get("hasSelection")
     })
@@ -179,7 +180,6 @@ class AppView extends Backbone.View {
       this.$el.find("#expToDisk").removeClass("btn-warning");
       this.$el.find("#import_btn").show();
       this.$el.find("#export_btn").hide();
-      this.$el.find("#clear_btn").hide();
       // Restore dialog text
       this.$el.find("#expDialogText").html("Exporting will store your current work to the CRIM database, or to a file that you will be able to open and edit later.");
       if (history.pushState) {

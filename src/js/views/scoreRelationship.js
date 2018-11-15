@@ -11,7 +11,7 @@ class ScoreRelationship extends Backbone.View {
     this.container = options.container
 
     this.listenTo(Events, "startHideMode", this.startHideMode)
-    this.listenTo(Events, "closedObserv", this.stopHideMode)
+    this.listenTo(Events, "stopHideMode", this.stopHideMode)
   }
 
   template(tpl){
@@ -62,7 +62,6 @@ class ScoreRelationship extends Backbone.View {
   save(){
     $("#import_btn").hide();
     $("#export_btn").show();
-    $("#clear_btn").show();
     this.model.set("direction", this.$el.find("input[name=rel-dir]:checked").attr("id").split("-").pop())
     this.model.set("comment", this.$el.find("#rel-comment").val())
     this.$el.find(".types").each((i, type) => {
@@ -133,13 +132,45 @@ class ScoreRelationship extends Backbone.View {
         this.$el.data("hiding", "true")
         this.el.close()
         this.scores[0].trigger("redoVerovioLayout")
+        // this.scores[1].trigger("redoVerovioLayout")
     }
   }
 
+  updateEma() {
+    this.scores[0].collection.trigger("storeSelections");
+    this.model.set("scoreA_ema", this.scores[0].get("ema"));
+    this.model.set("scoreB_ema", this.scores[1].get("ema"));
+    this.model.set("scoreA_meiids", this.scores[0].get("mei_ids"));
+    this.model.set("scoreB_meiids", this.scores[1].get("mei_ids"));
+
+    // Update observations
+    let observ_A_id = this.model.get("scoreAobserv");
+    let observ_B_id = this.model.get("scoreBobserv");
+    let observA = this.scores[0].observations.get(observ_A_id);
+    let observB = this.scores[1].observations.get(observ_B_id);
+    if (observA) {
+      observA.set("ema", this.scores[0].get("ema"));
+    }
+    if (observB) {
+      observB.set("ema", this.scores[1].get("ema"));
+    }
+
+    // Update listing of EMA in dialog boxes
+    this.$el.find(".scoreA_ema").html(this.scores[0].get("ema"));
+    this.$el.find(".scoreA_ema").attr("title", this.scores[0].get("ema"));
+    this.$el.find(".scoreB_ema").html(this.scores[1].get("ema"));
+    this.$el.find(".scoreB_ema").attr("title", this.scores[1].get("ema"));
+  }
+
   stopHideMode() {
+    // Since the selection can be altered during Hide Mode,
+    // we need to update the model as well as the displayed EMA in the
+    // relationship dialog box.
+    this.updateEma();
+    // Now show the modal again
     if (this.$el.parent() == length >0 && !this.$el.attr("open")) {
-      this.$el.data("hiding", "false")
-      this.el.showModal()
+      this.$el.data("hiding", "false");
+      this.el.showModal();
     }
   }
 

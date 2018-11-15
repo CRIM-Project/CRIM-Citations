@@ -11,7 +11,7 @@ class ScoreObservation extends Backbone.View {
     this.container = options.container
     this.score = options.score
 
-    this.listenTo(Events, "closedObserv", this.stopHideMode)
+    this.listenTo(Events, "stopHideMode", this.stopHideMode)
   }
 
   template(tpl){

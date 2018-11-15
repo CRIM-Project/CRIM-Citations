@@ -3,7 +3,7 @@ import * as Handlebars from 'handlebars';
 let score_relationship_tpl = `
   <h2 class="mdl-dialog__title">Editing relationship</h2>
   <button class="btn btn-warning mdl-button mdl-js-button mdl-button--raised hide_button">
-    Hide
+    Edit selection
   </button>
   <h3>Observations</h3>
   <div class="mdl-dialog__content">
@@ -12,7 +12,7 @@ let score_relationship_tpl = `
         <span class="mdl-list__item-primary-content">
           <span title="{{titleA}}">{{titleA}}</span>
           <span class="observ_typesA"></span>
-          <span class="ema truncate" title="{{scoreA_ema}}">{{scoreA_ema}}</span>
+          <span class="ema truncate scoreA_ema" title="{{scoreA_ema}}">{{scoreA_ema}}</span>
         </span>
         <span class="mdl-list__item-secondary-action">
           <button class="btn btn-primary show-score-observation">
@@ -24,7 +24,7 @@ let score_relationship_tpl = `
         <span class="mdl-list__item-primary-content">
           <span title="{{titleB}}">{{titleB}}</span>
           <span class="observ_typesB"></span>
-          <span class="ema truncate" title="{{scoreB_ema}}">{{scoreB_ema}}</span>
+          <span class="ema truncate scoreB_ema" title="{{scoreB_ema}}">{{scoreB_ema}}</span>
         </span>
         <span class="mdl-list__item-secondary-action">
           <button class="btn btn-primary show-score-observation">
