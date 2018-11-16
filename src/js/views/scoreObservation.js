@@ -248,7 +248,10 @@ class ScoreObservation extends Backbone.View {
   }
 
   stopHideMode() {
-    this.$el.data("hiding", "false")
+    console.log(this.$el.find(".observ_ema"));
+    console.log(this.score.get("ema"));
+    this.$el.find(".observ_ema").text(this.score.get("ema"));
+    this.$el.data("hiding", "false");
   }
 
   render(observ) {
