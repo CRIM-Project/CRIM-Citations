@@ -23,7 +23,7 @@ class ScoreView extends Backbone.View {
     this.listenTo(this.scoreObservationsDialog, "redoVerovioLayout", this.doVerovioLayout)
     this.listenTo(this.model, "redoVerovioLayout", this.doVerovioLayout)
     this.listenTo(this.model, "highlight", this.highlight)
-    this.listenTo(this.model, "clearHighlight", ()=>{this.setData(); this.continuo.clearHighlight()})
+    this.listenTo(this.model, "clearHighlight", this.clearScoreSelections)
     this.listenTo(this.model, "showRelationshipButtons", ()=>{this.$el.find(".show-score-relationship").show()})
     this.listenTo(this.model.collection, "hideRelationshipButtons", ()=>{this.$el.find(".show-score-relationship").hide()})
     this.listenTo(this.model.collection, "clearScoreSelections", this.clearScoreSelections)
@@ -135,8 +135,8 @@ class ScoreView extends Backbone.View {
 
   setData(){
     if (ScoreView.verovioData != this.model.cid) {
-        verovioToolkit.loadData(this.model.get("mei"))
-        ScoreView.verovioData = this.model.cid
+      verovioToolkit.loadData(this.model.get("mei"));
+      ScoreView.verovioData = this.model.cid;
     }
   }
 
@@ -146,8 +146,11 @@ class ScoreView extends Backbone.View {
   }
 
   highlight(ids){
-    this.setData()
-    this.continuo.highlight(ids)
+    this.setData();
+    for (let id of ids) {
+      console.log(id);
+      this.continuo.interView.addMusEvent(this.$el.find('#' + id).find('.cnt-selectable'));
+    }
   }
 
   nextPage() {
