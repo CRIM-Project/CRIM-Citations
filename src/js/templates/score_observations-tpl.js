@@ -3,46 +3,34 @@ import * as Handlebars from 'handlebars';
 let score_observation_tpl = `
   <h2 class="mdl-dialog__title">Edit relationships</h2>
   <div class="mdl-dialog__content">
-    <h3>Relationships</h3>
     {{#if relationships}}
       <ul class="mdl-list">
-      {{#each relationships}}
-        <li class="mdl-list__item rel_item" id="i_{{this.cid}}" data-relid="{{this.cid}}">
-          <span class="block mdl-list__item-primary-content">
-            {{this.titleA}} &rarr; {{this.titleB}}
-            ({{#each this.types}}{{label}}{{#unless @last}},{{/unless}}{{/each}})
-          </span>
-          <span class="block mdl-list__item-secondary-action">
-            <button class="btn btn-danger delete_item">Delete</button>
-            <button class="btn btn-primary edit_relationship">Edit</button>
-            <button class="btn rel_preview">Preview</button>
-          </span>
-        </li>
+        {{#each relationships}}
+          <li class="mdl-list__item rel_item" id="i_{{this.cid}}" data-relid="{{this.cid}}">
+            <h3>{{#each this.types}}{{label}}{{#unless @last}},{{/unless}}{{/each}}</h3>
+            <div class="row-fluid block mdl-list__item-primary-content">
+              <div class="span5">
+                {{this.titleA}}
+                <span class="ema truncate scoreA_ema" title="{{this.scoreA_ema}}">{{this.scoreA_ema}}</span>
+              </div>
+              <div class="span2 centeralign">
+                &rarr;
+              </div>
+              <div class="span5">
+                {{this.titleB}}
+                <span class="ema truncate scoreB_ema" title="{{this.scoreB_ema}}">{{this.scoreB_ema}}</span>
+              </div>
+            </div>
+            <span class="block mdl-list__item-secondary-action">
+              <button class="btn btn-danger delete_item">Delete</button>
+              <button class="btn btn-primary edit_relationship">Edit</button>
+              <button class="btn rel_preview">Preview</button>
+            </span>
+          </li>
        {{/each}}
       </ul>
     {{else}}
-    <p>No relationships yet.</p>
-    {{/if}}
-    <h3>Observations</h3>
-    {{#if observations.length}}
-    <ul class="mdl-list">
-      {{#each observations}}
-      <li class="mdl-list__item rel_item" id="i_{{this.cid}}" data-observationid="{{this.cid}}">
-        <span class="block mdl-list__item-primary-content">
-          <span title="{{this.title}}">{{this.title}}</span>
-          ({{#each this.types}}{{label}}{{#unless @last}},{{/unless}}{{/each}})
-          <span class="ema truncate" title="{{this.ema}}">{{this.ema}}</span>
-        </span>
-        <span class="block mdl-list__item-secondary-action">
-          <button class="btn btn-danger delete_item">Delete</button>
-          <button class="btn btn-primary edit_observation">Edit</button>
-          <button class="btn selection_preview">Preview</button>
-        </span>
-      </li>
-      {{/each}}
-    </ul>
-    {{else}}
-    <p>No observations yet. Observations can be added to relationship targets.</p>
+      <p>No relationships yet.</p>
     {{/if}}
   </div>
   <div class="mdl-dialog__actions">

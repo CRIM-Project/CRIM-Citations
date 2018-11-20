@@ -43,6 +43,10 @@
   }
 }
 
+.centeralign {
+  text-align: center;
+}
+
 .inputfile {
   visibility: hidden;
   height:0px;
@@ -156,7 +160,7 @@ svg {
   color: #2650a7;
 }
 
-.hide_button{
+.hide_button {
   position:absolute !important;
   top:10px;
   right:10px;

@@ -135,8 +135,12 @@ class ScoreRelationship extends Backbone.View {
     }
   }
 
-  updateEma() {
-    this.scores[0].collection.trigger("storeSelections");
+  stopHideMode() {
+    // Since the selection can be altered during Hide Mode,
+    // we need to update the model as well as the displayed EMA in the
+    // relationship dialog box.
+    this.scores[0].trigger("storeSelections");
+    this.scores[1].trigger("storeSelections");
     this.model.set("scoreA_ema", this.scores[0].get("ema"));
     this.model.set("scoreB_ema", this.scores[1].get("ema"));
     this.model.set("scoreA_meiids", this.scores[0].get("mei_ids"));
@@ -159,13 +163,7 @@ class ScoreRelationship extends Backbone.View {
     this.$el.find(".scoreA_ema").attr("title", this.scores[0].get("ema"));
     this.$el.find(".scoreB_ema").html(this.scores[1].get("ema"));
     this.$el.find(".scoreB_ema").attr("title", this.scores[1].get("ema"));
-  }
 
-  stopHideMode() {
-    // Since the selection can be altered during Hide Mode,
-    // we need to update the model as well as the displayed EMA in the
-    // relationship dialog box.
-    this.updateEma();
     // Now show the modal again
     if (this.$el.parent() == length >0 && !this.$el.attr("open")) {
       this.$el.data("hiding", "false");
@@ -201,8 +199,10 @@ class ScoreRelationship extends Backbone.View {
         for (let type in types){
           labels.push(types[type].label)
         }
-        this.$el.find(".observ_typesA").html("("+labels.join(", ")+")")
-        this.$el.find(".observ_typesA").attr("title", "("+labels.join(", ")+")")
+        if (labels.length > 0) {
+          this.$el.find(".observ_typesA").html("("+labels.join(", ")+")")
+          this.$el.find(".observ_typesA").attr("title", "("+labels.join(", ")+")")
+        }
       }
     }
     if (observ_B_id  && this.scores[1].observations.get(observ_B_id)) {
@@ -212,8 +212,10 @@ class ScoreRelationship extends Backbone.View {
         for (let type in types){
           labels.push(types[type].label)
         }
-        this.$el.find(".observ_typesB").html("("+labels.join(", ")+")")
-        this.$el.find(".observ_typesB").attr("title", "("+labels.join(", ")+")")
+        if (labels.length > 0) {
+          this.$el.find(".observ_typesB").html("("+labels.join(", ")+")")
+          this.$el.find(".observ_typesB").attr("title", "("+labels.join(", ")+")")
+        }
       }
     }
   }

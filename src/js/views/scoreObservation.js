@@ -10,8 +10,6 @@ class ScoreObservation extends Backbone.View {
   initialize(options){
     this.container = options.container
     this.score = options.score
-
-    this.listenTo(Events, "stopHideMode", this.stopHideMode)
   }
 
   template(tpl){
@@ -27,28 +25,27 @@ class ScoreObservation extends Backbone.View {
   }
 
   get events() {
-      return {
-          "click .close": this.close,
-          "click .drop": this.showMusType,
-          "change .cb": this.showMusTypeCh,
-          "click #save_score_observation": this.save,
-          "click #cancel_score_observation": this.cancel,
-          "click .hide_button": this.hide,
-          "click .addVoice": this.addVoice
-      }
+    return {
+      "click .close": this.close,
+      "click .drop": this.showMusType,
+      "change .cb": this.showMusTypeCh,
+      "click #save_score_observation": this.save,
+      "click #cancel_score_observation": this.cancel,
+      "click .hide_button": this.hide,
+      "click .addVoice": this.addVoice
+    }
   }
 
   cancel() {
     if (Object.keys(this.model.get("types")).length == 0) {
-        this.collection.remove(this.model.cid);
+      this.collection.remove(this.model.cid);
     }
-    this.score.trigger("clearHighlight")
   }
 
   hide() {
-    this.$el.data("hiding", "true")
-    this.el.close()
-    Events.trigger("startHideMode")
+    this.$el.data("hiding", "true");
+    this.el.close();
+    Events.trigger("startHideMode");
   }
 
   save(){
@@ -189,14 +186,6 @@ class ScoreObservation extends Backbone.View {
     this.addRemoveVoice($cnt)
   }
 
-  highlightNotation() {
-    if (!this.score.get("hasSelection")){
-      let mei_ids = this.model.get("mei_ids")
-      mei_ids = mei_ids ? mei_ids : this.mei_ids
-      this.score.trigger("highlight", mei_ids);
-    }
-  }
-
   showMusType(e) {
     $(e.target).closest('.types').find('.rest').toggle();
     // Toggle the wording of the button between "Expand" and "Collapse".
@@ -241,46 +230,34 @@ class ScoreObservation extends Backbone.View {
   }
 
   close() {
-    this.score.trigger("clearHighlight")
     this.el.close();
-    Events.trigger("closedObserv")
+    Events.trigger("stopHideMode");
     this.$el.detach();
-  }
-
-  stopHideMode() {
-    console.log(this.$el.find(".observ_ema"));
-    console.log(this.score.get("ema"));
-    this.$el.find(".observ_ema").text(this.score.get("ema"));
-    this.$el.data("hiding", "false");
   }
 
   render(observ) {
     if (observ) {
-      this.model = this.collection.get(observ)
+      this.model = this.collection.get(observ);
     }
     else {
-      this.model = this.collection.add({})
+      this.model = this.collection.add({});
     }
-    let jmodel = this.model.toJSON()
+    let jmodel = this.model.toJSON();
     if (!this.model.get("ema")) {
-      jmodel.ema = this.ema
+      jmodel.ema = this.ema;
     }
     if (!this.model.get("title")) {
-      jmodel.title = this.title
+      jmodel.title = this.title;
     }
-    jmodel.voices = this.voices
-    this.container.append(this.$el.html(this.template(jmodel)))
+    jmodel.voices = this.voices;
+    this.container.append(this.$el.html(this.template(jmodel)));
 
-    this.setDropdowns()
+    this.setDropdowns();
 
     if (! this.el.showModal) {
       dialogPolyfill.registerDialog(this.el);
     }
-
-    this.highlightNotation()
-
   }
-
 }
 
 export default ScoreObservation

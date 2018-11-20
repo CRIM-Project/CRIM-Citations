@@ -20,15 +20,15 @@ class HideModeComponent extends Backbone.View {
 
   close() {
     $("dialog").filter((i, d)=>{return $(d).data("hiding") === "true"}).each((i, d)=>{
-      d.showModal()
+      d.showModal();
     })
-    Events.trigger("stopHideMode")
+    Events.trigger("stopHideMode");
     this.$el.detach();
   }
 
   render(){
-    this.$el.text("Return to analysis")
-    return this.el
+    this.$el.text("Return to analysis");
+    return this.el;
   }
 }
 
