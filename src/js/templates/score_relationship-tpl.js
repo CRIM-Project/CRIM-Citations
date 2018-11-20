@@ -168,7 +168,7 @@ let score_relationship_tpl = `
   </div>
   <div class="mdl-dialog__actions">
     <button type="button" class="btn btn-primary mdl-button mdl-button--accent" id="save_score_relationship">Save</button>
-    <button type="button" class="btn mdl-button close" id="cancel_score_relationship">Cancel</button>
+    <button type="button" class="btn mdl-button close" id="cancel_score_relationship">Close</button>
   </div>
 `
 

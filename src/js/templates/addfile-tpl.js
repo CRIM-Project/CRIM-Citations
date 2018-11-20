@@ -16,7 +16,7 @@ let addfile_tpl = `
   </div>
   <div class="mdl-dialog__actions">
     <button type="button" class="btn btn-primary mdl-button mdl-button--accent" id="openFile">Open</button>
-    <button type="button" class="btn mdl-button close">Cancel</button>
+    <button type="button" class="btn mdl-button close">Close</button>
   </div>
 `
 

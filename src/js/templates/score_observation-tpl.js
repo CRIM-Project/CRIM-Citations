@@ -615,7 +615,7 @@ let score_observation_tpl = `
   </div>
   <div class="mdl-dialog__actions">
     <button type="button" class="btn btn-primary mdl-button mdl-button--accent" id="save_score_observation">Save</button>
-    <button type="button" class="btn mdl-button close" id="cancel_score_observation">Cancel</button>
+    <button type="button" class="btn mdl-button close" id="cancel_score_observation">Close</button>
   </div>
 `
 

@@ -1,7 +1,7 @@
 import * as Handlebars from 'handlebars';
 
 let score_observation_tpl = `
-  <h2 class="mdl-dialog__title">Edit analyses</h2>
+  <h2 class="mdl-dialog__title">Edit relationships</h2>
   <div class="mdl-dialog__content">
     <h3>Relationships</h3>
     {{#if relationships}}

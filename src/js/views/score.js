@@ -215,7 +215,7 @@ class ScoreView extends Backbone.View {
     this.scoreObservationDialog.show()
   }
 
-  newObservation(new_observ){
+  newObservation(new_observ) {
     this.scoreObservationDialog.ema = this.$el.find(".cnt-emaexpr-expr").text();
     if (!this.scoreObservationDialog.ema) {
       this.scoreObservationDialog.ema = this.model.get("ema");
@@ -231,7 +231,7 @@ class ScoreView extends Backbone.View {
     // this.$el.find(".show-score-observation").hide();
   }
 
-  getSelections(){
+  getSelections() {
     return new Promise((res, rej)=> {
       this.listenTo(Events, "response:selections", (sel) => res(sel))
       Events.trigger("request:selections")
@@ -251,7 +251,7 @@ class ScoreView extends Backbone.View {
     this.model.set("mei_ids", this.continuo.selectedElements);
   }
 
-  disableButtons(){
+  disableButtons() {
     this.$el.find(".show-score-relationship").attr("disabled", true);
     this.$el.find(".show-score-observations").attr("disabled", true);
     this.$el.find(".close_score_button").attr("disabled", true);
@@ -261,7 +261,7 @@ class ScoreView extends Backbone.View {
     $(document).find("#clear_btn").attr("disabled", true);
   }
 
-  renableButtons(){
+  renableButtons() {
     this.$el.find(".show-score-relationship").attr("disabled", false);
     this.$el.find(".show-score-observations").attr("disabled", false);
     this.$el.find(".close_score_button").attr("disabled", false);
@@ -272,7 +272,7 @@ class ScoreView extends Backbone.View {
     // this.$el.find(".mask").remove();
   }
 
-  close(force=false){
+  close(force=false) {
     // only close if it's not a target of a relationship or observation
     new Promise((res, rej)=>{
       this.listenTo(Events, "response:relationships", (rels) => res(rels))

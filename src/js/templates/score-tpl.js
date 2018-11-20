@@ -11,7 +11,7 @@ let pag_tpl = `
         Remove piece
       </button>
       <button type="button" class="btn mdl-button mdl-js-button mdl-button--colored show-score-observations">
-        Show analyses
+        Show relationships
       </button>
       <button type="button" class="btn btn-primary mdl-button mdl-js-button show-score-relationship" style="display:none">
         New relationship

@@ -169,7 +169,6 @@ class ScoreObservations extends Backbone.View {
       })
     })
   }
-
 }
 
 export default ScoreObservations
