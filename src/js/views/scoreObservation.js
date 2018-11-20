@@ -10,6 +10,8 @@ class ScoreObservation extends Backbone.View {
   initialize(options){
     this.container = options.container
     this.score = options.score
+
+    this.listenTo(Events, "stopHideMode", this.stopHideMode)
   }
 
   template(tpl){
@@ -233,6 +235,10 @@ class ScoreObservation extends Backbone.View {
     this.el.close();
     Events.trigger("stopHideMode");
     this.$el.detach();
+  }
+
+  stopHideMode() {
+    this.$el.find(".observ_ema").text(this.score.get("ema"));
   }
 
   render(observ) {
