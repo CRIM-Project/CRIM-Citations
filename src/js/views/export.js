@@ -277,10 +277,10 @@ class Export extends Backbone.View {
       for (var relationship of processed_relationships) {
         relationship['csrfmiddlewaretoken'] = csrftoken;
         if (this.citation) {
-          target_url = '/data/relationship/'+this.citation;
+          target_url = '/data/relationships/'+this.citation;
         }
         else {
-          target_url = '/data/relationship/new/';
+          target_url = '/data/relationships/new/';
         }
         $.ajax({
           url: target_url,
