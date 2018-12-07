@@ -13,8 +13,7 @@ function internalToSerialized(internal_data) {
   function getPieceID(this_score_cid) {
     for (var score of internal_data.scores) {
       if (score.cid == this_score_cid) {
-        // Remove square brackets from piece id
-        return score.piece_id.replace(/[\[\]]/g, '')
+        return score.piece_id
       }
     }
   }

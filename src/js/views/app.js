@@ -63,7 +63,7 @@ class AppView extends Backbone.View {
       title = fileInfo.title;
     }
     if (fileInfo.piece_id) {
-      piece_id = '[' + fileInfo.piece_id + ']';
+      piece_id = fileInfo.piece_id;
     }
     if (fileInfo.composer) {
       composer = 'Composer: ' + fileInfo.composer;

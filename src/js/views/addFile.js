@@ -74,7 +74,7 @@ class AddFile extends Backbone.View {
 
     let fileInfo = {
         "filename": url.replace(/^.*[\\\/]/, ''),
-        "piece_id": piece_id,
+        "piece_id": piece_id.replace(/[\[\]]/g, ''),
         "title": title,
         "composer": composer,
         "url": url

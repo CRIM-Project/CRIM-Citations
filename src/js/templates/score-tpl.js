@@ -3,7 +3,7 @@ import * as Handlebars from 'handlebars';
 let pag_tpl = `
 <div class="score_header">
   <hr />
-  <h2>{{title}} <small>{{piece_id}}</small></h2>
+  <h2>{{title}} <small>[{{piece_id}}]</small></h2>
   <h3>{{composer}}</h3>
   <div class="row-fluid">
     <div class="span9">
