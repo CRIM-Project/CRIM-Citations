@@ -209,7 +209,7 @@ class AppView extends Backbone.View {
 
   importMeiData(url){
       // Go via Omas to bypass CORS
-      let omas_url = "http://mith.umd.edu/ema/"+encodeURIComponent(url)+"/all/all/@all"
+      let omas_url = "http://159.65.177.99:5000/"+encodeURIComponent(url)+"/all/all/@all"
 
       return (new Promise((res, rej)=>{
         $.get(omas_url, (data) => {
