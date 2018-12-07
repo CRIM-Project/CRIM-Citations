@@ -41,9 +41,13 @@ class Import extends Backbone.View {
     let tab = this.$el.find("div.mdl-tabs__panel.is-active").attr("id");
     if (tab == "local-panel"){
       this.fromLocal();
+      $("#import_btn").hide();
+      $("#export_btn").show();
     }
     else if (tab == "url-panel"){
       this.fromUrl();
+      $("#import_btn").hide();
+      $("#export_btn").show();
     }
     else {
       // no-op
