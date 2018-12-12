@@ -7,59 +7,59 @@ import verovioToolkit from '../utils/verovioInstance';
 
 class ScoreRelationship extends Backbone.View {
 
-  initialize(options){
-    this.container = options.container
+  initialize(options) {
+    this.container = options.container;
 
-    this.listenTo(Events, "startHideMode", this.startHideMode)
-    this.listenTo(Events, "stopHideMode", this.stopHideMode)
+    this.listenTo(Events, "startHideMode", this.startHideMode);
+    this.listenTo(Events, "stopHideMode", this.stopHideMode);
   }
 
-  template(tpl){
-      return score_relationship_tpl(tpl);
+  template(tpl) {
+    return score_relationship_tpl(tpl);
   }
 
-  get tagName(){
-    return "dialog"
+  get tagName() {
+    return "dialog";
   }
 
   get className() {
-    return "mdl-dialog score_relationship_dialog"
+    return "mdl-dialog score_relationship_dialog";
   }
 
   get events() {
-      return {
-          "click .close": this.close,
-          "click .drop": this.showType,
-          "change .cb": this.showTypeCh,
-          "click #save_score_relationship": this.save,
-          "click #cancel_score_relationship": this.cancel,
-          "click .selection_preview": this.preview,
-          "click .score_preview_close": this.closePreview,
-          "click .show-score-observation": this.showsScoreObservation,
-          "click .hide_button": this.hide
-      }
+    return {
+      "click .close": this.close,
+      "click .drop": this.showType,
+      "change .cb": this.showTypeCh,
+      "click #save_score_relationship": this.save,
+      "click #cancel_score_relationship": this.cancel,
+      "click .selection_preview": this.preview,
+      "click .score_preview_close": this.closePreview,
+      "click .show-score-observation": this.showsScoreObservation,
+      "click .hide_button": this.hide
+    };
   }
 
   cancel() {
     if (Object.keys(this.model.get("types")).length == 0) {
-        this.collection.remove(this.model.cid);
-        // Observations belonging to this relationship must be removed as well.
-        let observA = this.model.get("scoreAobserv")
-        let observB = this.model.get("scoreBobserv")
-        if (observA) {
-          this.scores[0].observations.remove(observA)
-        }
-        if (observB) {
-          this.scores[1].observations.remove(observB)
-        }
+      this.collection.remove(this.model.cid);
+      // Observations belonging to this relationship must be removed as well.
+      let observA = this.model.get("scoreAobserv");
+      let observB = this.model.get("scoreBobserv");
+      if (observA) {
+        this.scores[0].observations.remove(observA);
+      }
+      if (observB) {
+        this.scores[1].observations.remove(observB);
+      }
     }
 
-    this.scores[0].trigger("clearHighlight")
-    this.scores[1].trigger("clearHighlight")
-    this.scores[0].trigger("redoVerovioLayout")
+    this.scores[0].trigger("clearHighlight");
+    this.scores[1].trigger("clearHighlight");
+    this.scores[0].trigger("redoVerovioLayout");
   }
 
-  save(){
+  save() {
     $("#import_btn").hide();
     $("#export_btn").show();
     this.model.set("direction", this.$el.find("input[name=rel-dir]:checked").attr("id").split("-").pop())
@@ -304,14 +304,16 @@ class ScoreRelationship extends Backbone.View {
       this.model = this.collection.add({})
     }
 
-    if (!this.model.get("scoreA")){
+    if (!this.model.get("scoreA")) {
       this.model.set("scoreA", scores[0].cid);
-      this.model.set("scoreB", scores[1].cid);
       this.model.set("scoreA_ema", scores[0].get("ema"));
-      this.model.set("scoreB_ema", scores[1].get("ema"));
       this.model.set("scoreA_meiids", scores[0].get("mei_ids"));
-      this.model.set("scoreB_meiids", scores[1].get("mei_ids"));
       this.model.set("titleA", scores[0].get("title"));
+    }
+    if (!this.model.get("scoreB")) {
+      this.model.set("scoreB", scores[1].cid);
+      this.model.set("scoreB_ema", scores[1].get("ema"));
+      this.model.set("scoreB_meiids", scores[1].get("mei_ids"));
       this.model.set("titleB", scores[1].get("title"));
     }
 

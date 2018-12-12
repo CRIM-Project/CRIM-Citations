@@ -4,11 +4,11 @@ import ScoreObservations from './coll-score-observations'
 
 class Score extends Backbone.Model {
   initialize() {
-      this.observations = new ScoreObservations
-      this.observations.score = this.cid
-      if (!this.get("voices")){
-        this.storeVoices()        
-      }
+    this.observations = new ScoreObservations;
+    this.observations.score = this.cid;
+    if (!this.get("voices")) {
+      this.storeVoices();
+    }
   }
 
   toJSON() {

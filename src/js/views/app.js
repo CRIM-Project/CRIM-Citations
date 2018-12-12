@@ -9,7 +9,8 @@ import ScoreView from './score';
 import Relationships from '../data/coll-relationships';
 import RelationshipView from './scoreRelationship';
 import HideModeComponent from './hideModeComponent';
-import getParameterByName from '../utils/paras'
+import getParameterByName from '../utils/paras';
+
 
 class AppView extends Backbone.View {
 

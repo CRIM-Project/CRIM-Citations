@@ -57,19 +57,19 @@ class Import extends Backbone.View {
   fromLocal() {
     this.close()
 
-    let file = this.$el.find("#uploadBtn").get(0).files[0]
+    let file = this.$el.find("#uploadBtn").get(0).files[0];
 
     // Only process json files.
     if (file.name.split(".").pop() != "json") {
-        $status.text("Wrong file type");
+      $status.text("Wrong file type");
     }
     else {
-      let reader = new FileReader()
+      let reader = new FileReader();
       reader.onload = (e) => {
         let text = e.target.result;
         let json = JSON.parse(text);
         this.doImport(json);
-      }
+      };
       reader.readAsText(file);
     }
 

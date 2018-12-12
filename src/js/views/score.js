@@ -46,21 +46,20 @@ class ScoreView extends Backbone.View {
   }
 
   get events() {
-      return {
-          "click .nextPage": this.nextPage,
-          "click .prevPage": this.prevPage,
-          "click .collapse_expand_button": this.toggle,
-          "click .show-score-observations": this.showObservations,
-          // "click .show-score-observation": this.newObservation,
-          "click .show-score-relationship": this.showRelationship,
-          "click .close_score_button": this.close
-      }
+    return {
+      "click .nextPage": this.nextPage,
+      "click .prevPage": this.prevPage,
+      "click .collapse_expand_button": this.toggle,
+      "click .show-score-observations": this.showObservations,
+      // "click .show-score-observation": this.newObservation,
+      "click .show-score-relationship": this.showRelationship,
+      "click .close_score_button": this.close
+    }
   }
 
   render() {
-
     // Update id from model
-    let score_id = 'score-' + this.model.cid
+    let score_id = 'score-' + this.model.cid;
     this.$el.prop("id", score_id);
 
     this.$el.html(this.template({
@@ -69,11 +68,9 @@ class ScoreView extends Backbone.View {
       composer: this.model.get("composer")
     }));
 
-    Events.trigger("scoreRendered")
+    Events.trigger("scoreRendered");
 
-    $("#loader").hide()
-
-    return this.$el
+    $("#loader").hide();
 
   }
 
@@ -82,12 +79,12 @@ class ScoreView extends Backbone.View {
     let border = 20;
 
     return {
-        pageWidth: this.$el.width() * 100 / scale,
-        pageHeight: 250 * 100 / scale,
-        ignoreLayout: 1,
-        adjustPageHeight: 1,
-        border: border,
-        scale: scale
+      pageWidth: this.$el.width() * 100 / scale,
+      pageHeight: 250 * 100 / scale,
+      ignoreLayout: 1,
+      adjustPageHeight: 1,
+      border: border,
+      scale: scale
     };
   }
 
@@ -130,7 +127,6 @@ class ScoreView extends Backbone.View {
       // this.$el.find(".show-score-observation").hide()
       this.model.set("hasSelection", false)
     })
-
   }
 
   setData(){
@@ -145,22 +141,21 @@ class ScoreView extends Backbone.View {
     this.$el.find(".show-score-relationship").hide()
   }
 
-  highlight(ids){
+  highlight(ids) {
     this.setData();
     for (let id of ids) {
-      console.log(id);
       this.continuo.interView.addMusEvent(this.$el.find('#' + id).find('.cnt-selectable'));
     }
   }
 
   nextPage() {
     if (ScoreView.verovioData != this.model.cid) {
-        verovioToolkit.loadData(this.model.get("mei"))
-        ScoreView.verovioData = this.model.cid
+      verovioToolkit.loadData(this.model.get("mei"))
+      ScoreView.verovioData = this.model.cid;
     }
     if (this.page + 1 <= verovioToolkit.getPageCount()) {
-        this.page = this.page +1;
-        this.continuo.renderPage(this.page)
+      this.page = this.page + 1;
+      this.continuo.renderPage(this.page);
     }
   }
 

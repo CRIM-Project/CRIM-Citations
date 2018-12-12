@@ -6,10 +6,11 @@ class Relationship extends Backbone.Model {
       types : {}
     }
   }
+
   toJSON() {
     var json = Backbone.Model.prototype.toJSON.apply(this, arguments);
     json.cid = this.cid;
-    json.boolDir = this.get("direction") == "a2b" ? true : false
+    json.boolDir = this.get("direction") == "a2b" ? true : false;
     return json;
   }
 }
