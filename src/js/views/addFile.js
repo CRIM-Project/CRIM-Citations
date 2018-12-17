@@ -3,7 +3,6 @@ import * as Backbone from 'backbone';
 import Events from '../utils/backbone-events';
 import addfile_tpl from '../templates/addfile-tpl';
 import dialogPolyfill from 'dialog-polyfill'
-import '../../../lib/dropbox/dropins';
 
 
 function printComposers(piece) {
@@ -22,10 +21,10 @@ function printComposers(piece) {
   return printed_role_list.join(", ");
 }
 
+
 class AddFile extends Backbone.View {
 
   initialize (options) {
-    Dropbox.appKey = "gwuog2373cwj45g";
     this.container = options.container;
     this.scores = [];
   }
@@ -47,7 +46,6 @@ class AddFile extends Backbone.View {
           "click .close": this.close,
           "click #openFile": this.open
           // "click #from_url": this.fromUrl,
-          // "click #from_dropbox": this.fromDropbox,
       }
   }
 
@@ -87,36 +85,6 @@ class AddFile extends Backbone.View {
       .fail((msg)=>{
           console.log(msg);
       })
-  }
-
-  fromDropbox() {
-    this.close()
-    let options = {
-        // Required. Called when a user selects an item in the Chooser.
-        success: function(files) {
-            let fileInfo = {
-                "filename": files[0].name,
-                "url": files[0].link
-            };
-            $.get(files[0].link, (data) => {
-              fileInfo["string"] = data;
-              Events.trigger('addScore', fileInfo);
-            }, 'text').fail((msg)=>{
-                console.log(msg);
-            })
-        },
-
-        // Optional. Called when the user closes the dialog without selecting a file
-        // and does not include any parameters.
-        cancel: function() {
-
-        },
-        linkType: "direct",
-        multiselect: false,
-        extensions: ['.xml', '.mei'],
-    };
-
-    Dropbox.choose(options);
   }
 
   show() {
