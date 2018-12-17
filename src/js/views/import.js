@@ -5,6 +5,7 @@ import import_tpl from '../templates/import-tpl';
 import dialogPolyfill from 'dialog-polyfill'
 import '../../../lib/dropbox/dropins';
 
+
 class Import extends Backbone.View {
 
   initialize (options) {

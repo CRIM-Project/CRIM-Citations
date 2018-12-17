@@ -72,6 +72,7 @@ class ScoreView extends Backbone.View {
 
     $("#loader").hide();
 
+    return this.$el;
   }
 
   get verovioOpts() {

@@ -9,7 +9,347 @@ import ScoreView from './score';
 import Relationships from '../data/coll-relationships';
 import RelationshipView from './scoreRelationship';
 import HideModeComponent from './hideModeComponent';
+import printComposers from './addFile';
 import getParameterByName from '../utils/paras';
+import voicesFromMei from '../data/model-score';
+
+
+var OMAS = "https://ema.crimproject.org/";
+
+
+function getMeiIds(url, ema) {
+  return $.get(OMAS+encodeURIComponent(url)+"/"+ema+"/highlight", (data)=>{
+    let parser = new window.DOMParser();
+    let meiDoc = parser.parseFromString(data, 'text/xml');
+    return meiDoc.querySelector("annot[type='ema_highlight']").getAttribute('plist').split(' ');
+  });
+}
+
+function getVoicesList(voices_string, first_voice_name) {
+  var voice_list = voices_string.split("\n");
+  var options = []
+  if ($.IsEmptyObject(voice_list)) {
+    return options;
+  }
+  // First add the first voice with its special name;
+  // then add the other voices
+  let first_voice = {};
+  first_voice[first_voice_name] = voice_list[0]
+  options.push(first_voice);
+  for (let i=1, size=voice_list.length; i<size; i++) {
+    let new_voice = {};
+    new_voice["voice"+String(i+1)] = voice_list[i];
+    options.push(new_voice);
+  }
+  return options;
+}
+
+function getVoicePairsList(voices_string) {
+  var voice_list = voices_string.split("\n");
+  var options = [];
+  if ($.IsEmptyObject(voice_list)) {
+    return options;
+  }
+  for (let i=0,size=voice_list.length; i<size; i=i+2) {
+    let new_voice_pair = {};
+    new_voice_pair["voice"+String(i+1)] = voice_list[i];
+    new_voice_pair["voice"+String(i+2)] = voice_list[i+1];
+    options.push(new_voice_pair);
+  }
+  return options;
+}
+
+function addObservationFields(serialized_observation, new_observation) {
+  if (serialized_observation["mt_cf"]) {
+    new_observation["types"]["mt-cf"] = {
+      "label": "Cantus firmus",
+      "dur": serialized_observation["mt_cf_dur"],
+      "mel": serialized_observation["mt_cf_mel"],
+      "options": getVoicesList(serialized_observation["mt_cf_voices"], "voice"),
+      "isSelect": true
+    }
+  }
+  if (serialized_observation["mt_sog"]) {
+    new_observation["types"]["mt-sog"] = {
+			"label": "Soggetto",
+			"dur": serialized_observation["mt_sog_dur"],
+			"mel": serialized_observation["mt_sog_mel"],
+			"ost": serialized_observation["mt_sog_ostinato"],
+			"per": serialized_observation["mt_sog_periodic"],
+			"options": getVoicesList(serialized_observation["mt_sog_voices"], "voice1"),
+			"isSelect": true
+		}
+  }
+  if (serialized_observation["mt_csog"]) {
+    new_observation["types"]["mt-csog"] = {
+			"label": "Counter-soggetto",
+			"dur": serialized_observation["mt_csog_dur"],
+			"mel": serialized_observation["mt_csog_mel"],
+			"options": getVoicesList(serialized_observation["mt_csog_voices"], "voice"),
+			"isSelect": true
+		}
+  }
+  if (serialized_observation["mt_cd"]) {
+    new_observation["types"]["mt-cd"] = {
+			"label": "Contrapuntal duo",
+			"options": getVoicePairsList(serialized_observation["mt_cd_voices"]),
+			"isSelect": true
+		}
+  }
+  if (serialized_observation["mt_fg"]) {
+    new_observation["types"]["mt-fg"] = {
+			"label": "Fuga",
+			"int": serialized_observation["mt_fg_int"],
+			"tint": serialized_observation["mt_fg_tint"],
+			"pe": serialized_observation["mt_fg_periodic"],
+			"ste": serialized_observation["mt_fg_strict"],
+			"fe": serialized_observation["mt_fg_flexed"],
+			"se": serialized_observation["mt_fg_sequential"],
+			"ie": serialized_observation["mt_fg_inverted"],
+			"re": serialized_observation["mt_fg_retrograde"],
+			"options": getVoicesList(serialized_observation["mt_fg_voices"], "voice1"),
+			"isSelect": true
+		}
+  }
+  if (serialized_observation["mt_pe"]) {
+    new_observation["types"]["mt-pe"] = {
+			"label": "Periodic entry",
+			"int": serialized_observation["mt_pe_int"],
+			"tint": serialized_observation["mt_pe_tint"],
+			"ste": serialized_observation["mt_pe_strict"],
+			"fe": serialized_observation["mt_pe_flexed"],
+			"fte": serialized_observation["mt_pe_flt"],
+			"se": serialized_observation["mt_pe_sequential"],
+			"ae": serialized_observation["mt_pe_added"],
+			"ic": serialized_observation["mt_pe_invertible"],
+			"options": getVoicesList(serialized_observation["mt_pe_voices"], "voice1"),
+			"isSelect": true
+		}
+  }
+  if (serialized_observation["mt_id"]) {
+    new_observation["types"]["mt-id"] = {
+			"label": "Imitative duo",
+			"int": serialized_observation["mt_id_int"],
+			"tint": serialized_observation["mt_id_tint"],
+			"ste": serialized_observation["mt_id_strict"],
+			"fe": serialized_observation["mt_id_flexed"],
+			"fte": serialized_observation["mt_id_flt"],
+			"ic": serialized_observation["mt_id_invertible"],
+			"options": getVoicePairsList(serialized_observation["mt_id_voices"]),
+			"isSelect": true
+		}
+  }
+  if (serialized_observation["mt_nid"]) {
+    new_observation["types"]["mt-nid"] = {
+			"label": "Non-imitative duo",
+			"int": serialized_observation["mt_nid_int"],
+			"tint": serialized_observation["mt_nid_tint"],
+			"ste": serialized_observation["mt_nid_strict"],
+			"fe": serialized_observation["mt_nid_flexed"],
+			"fte": serialized_observation["mt_nid_flt"],
+			"se": serialized_observation["mt_nid_sequential"],
+			"ic": serialized_observation["mt_nid_invertible"],
+			"options": getVoicePairsList(serialized_observation["mt_nid_voices"]),
+			"isSelect": true
+		}
+  }
+  if (serialized_observation["mt_hr"]) {
+    new_observation["types"]["mt-hr"] = {
+			"label": "Homorhythm",
+			"s": serialized_observation["mt_hr_simple"],
+			"st": serialized_observation["mt_hr_staggered"],
+			"se": serialized_observation["mt_hr_sequential"],
+			"fa": serialized_observation["mt_hr_fauxbourdon"],
+			"options": getVoicesList(serialized_observation["mt_hr_voices"], "voice1"),
+			"isSelect": true
+		}
+  }
+  if (serialized_observation["mt_cad"]) {
+    new_observation["types"]["mt-cad"] = {
+			"label": "Cadence",
+			"tone": serialized_observation["mt_cad_tone"],
+			"dove": serialized_observation["mt_cad_dti"],
+			"options": [{
+				"voice1": serialized_observation["mt_cad_cantizans"]
+			}, {
+				"voice2": serialized_observation["mt_cad_tenorizans"]
+			}, {
+				"type": serialized_observation["mt_cad_type"]
+			}, {
+				"dove_voice1": serialized_observation["mt_cad_dtv"]
+			}],
+			"isSelect": true
+		}
+  }
+  if (serialized_observation["mt_int"]) {
+    new_observation["types"]["mt-int"] = {
+			"label": "Interval pattern",
+			"p6": serialized_observation["mt_int_p6"],
+			"p3": serialized_observation["mt_int_p3"],
+			"c35": serialized_observation["mt_int_c35"],
+			"c83": serialized_observation["mt_int_c83"],
+			"c65": serialized_observation["mt_int_c65"],
+			"options": getVoicePairsList(serialized_observation["mt_int_voices"]),
+			"isSelect": true
+		}
+  }
+  if (serialized_observation["mt_fp"]) {
+    new_observation["types"]["mt-fp"] = {
+			"label": "Form and process",
+			"ir": serialized_observation["mt_fp_ir"],
+			"r": serialized_observation["mt_fp_range"],
+			"text": serialized_observation["mt_fp_comment"],
+			"options": []
+		}
+  }
+  // Add the observation comment, if it is not blank.
+  if (serialized_observation["remarks"].length) {
+    new_observation["comment"] = serialized_observation["remarks"];
+  }
+  return new_observation;
+}
+
+// Converts data from the Django JSON format for relationships to the internal
+// format required by the Citations JavaScript app.
+function serializedToInternal(serialized_data) {
+  var relationship = {};
+  var observationA = {};
+  var observationB = {};
+  var observations = [];
+  var scoreA = {};
+  var scoreB = {};
+
+  var relationship_cid = "c_R"+serialized_data["id"];
+  var scoreA_cid = "c_"+serialized_data["model_observation"]["piece"]["piece_id"];
+  var scoreA_ema = serialized_data["model_observation"]["ema"];
+  var scoreA_url = serialized_data["model_observation"]["piece"]["url"];
+  var scoreB_cid = "c_"+serialized_data["derivative_observation"]["piece"]["piece_id"];
+  var scoreB_ema = serialized_data["derivative_observation"]["ema"];
+  var scoreB_url = serialized_data["derivative_observation"]["piece"]["url"];
+  if (serialized_data["model_observation"]["piece"]["mass"]) {
+    var scoreA_title = serialized_data["model_observation"]["piece"]["mass"]["title"]+": "+serialized_data["model_observation"]["piece"]["title"];
+  }
+  else {
+    var scoreA_title = serialized_data["model_observation"]["piece"]["title"];
+  }
+  if (serialized_data["derivative_observation"]["piece"]["mass"]) {
+    var scoreB_title = serialized_data["derivative_observation"]["piece"]["mass"]["title"]+": "+serialized_data["derivative_observation"]["piece"]["title"];
+  }
+  else {
+    var scoreB_title = serialized_data["derivative_observation"]["piece"]["title"];
+  }
+  var scoreAobserv_cid = "c_"+serialized_data["model_observation"]["id"];
+  var scoreBobserv_cid = "c_"+serialized_data["derivative_observation"]["id"];
+
+  relationship["types"] = {}
+  if (serialized_data["rt_q"]) {
+    relationship["types"]["rt-q"] = {
+			"label": "Quotation",
+			"ex": Boolean(serialized_data["rt_q_x"]),
+			"mo": Boolean(serialized_data["rt_q_monnayage"])
+  	};
+  }
+  if (serialized_data['rt_tm']) {
+    relationship["types"]["rt-tm"] = {
+			"label": "Mechanical transformation",
+			"snd": Boolean(serialized_data["rt_tm_snd"]),
+			"minv": Boolean(serialized_data["rt_tm_minv"]),
+			"r": Boolean(serialized_data["rt_tm_retrograde"]),
+			"ms": Boolean(serialized_data["rt_tm_ms"]),
+			"t": Boolean(serialized_data["rt_tm_transposed"]),
+			"td": Boolean(serialized_data["rt_tm_invertible"])
+		};
+  }
+  if (serialized_data['rt_tnm']) {
+    relationship["types"]["rt-tnm"] = {
+			"label": "Non-mechanical transformation",
+			"em": Boolean(serialized_data["rt_tnm_embellished"]),
+			"re": Boolean(serialized_data["rt_tnm_reduced"]),
+			"am": Boolean(serialized_data["rt_tnm_amplified"]),
+			"tr": Boolean(serialized_data["rt_tnm_truncated"]),
+			"ncs": Boolean(serialized_data["rt_tnm_ncs"]),
+			"ocs": Boolean(serialized_data["rt_tnm_ocs"]),
+			"ocst": Boolean(serialized_data["rt_tnm_ocst"]),
+			"nc": Boolean(serialized_data["rt_tnm_nc"])
+		};
+  }
+  if (serialized_data['rt_nm']) {
+    relationship["types"]["rt-nm"] = {
+			"label": "New material"
+		};
+  }
+  if (serialized_data['rt_om']) {
+    relationship["types"]["rt-om"] = {
+			"label": "Omission"
+		};
+  }
+
+  relationship["scoreA"] = scoreA_cid;
+  relationship["scoreA_ema"] = scoreA_ema;
+  relationship["scoreA_meiids"] = getMeiIds(scoreA_url, scoreA_ema);
+  relationship["titleA"] = scoreA_title;
+  relationship["scoreB"] = scoreB_cid;
+  relationship["scoreB_ema"] = scoreB_ema;
+  relationship["scoreB_meiids"] = getMeiIds(scoreB_url, scoreB_ema);
+  relationship["titleB"] = scoreB_title;
+  relationship["direction"] = "a2b";
+  relationship["comment"] = serialized_data["remarks"];
+  relationship["cid"] = relationship_cid;
+  relationship["boolDir"] = true;
+  relationship["id"] = relationship_cid;
+  relationship["scoreAobserv"] = scoreAobserv_cid;
+  relationship["scoreBobserv"] = scoreBobserv_cid;
+
+  scoreA["url"] = scoreA_url;
+  scoreA["title"] = scoreA_title;
+  scoreA["piece_id"] = serialized_data["model_observation"]["piece"]["piece_id"];
+  scoreA["composer"] = printComposers(serialized_data["model_observation"]["piece"]);
+  $.get(scoreA_url, (scoreA_mei)=>{
+    scoreA["voices"] = voicesFromMei(scoreA_mei);
+  });
+  scoreA["cid"] = scoreA_cid;
+  scoreA["id"] = scoreA_cid;
+
+  scoreB["url"] = scoreB_url;
+  scoreB["title"] = scoreB_title;
+  scoreB["piece_id"] = serialized_data["derivative_observation"]["piece"]["piece_id"];
+  scoreB["composer"] = printComposers(serialized_data["derivative_observation"]["piece"]);
+  $.get(scoreB_url, (scoreB_mei)=>{
+    scoreB["voices"] = voicesFromMei(scoreB_mei);
+  });
+  scoreB["cid"] = scoreB_cid;
+  scoreB["id"] = scoreB_cid;
+
+  addObservationFields(serialized_data["model_observation"], observationA);
+  addObservationFields(serialized_data["derivative_observation"], observationB);
+
+  // Only fill out the observation if it is not empty, i.e. it has
+  // a musical type and/or remarks; then add to `observations` list.
+  if (!$.IsEmptyObject(observationA)) {
+    observationA["ema"] = scoreA_ema;
+    observationA["title"] = scoreA_title;
+    observationA["mei_ids"] = scoreA_meiids;
+    observationA["cid"] = observationA_cid;
+    observationA["score"] = scoreA_cid;
+    observations.push(observationA);
+  }
+  if (!$.IsEmptyObject(observationB)) {
+    observationB["ema"] = scoreB_ema;
+    observationB["title"] = scoreB_title;
+    observationB["mei_ids"] = scoreB_meiids;
+    observationB["cid"] = observationB_cid;
+    observationB["score"] = scoreB_cid;
+    observations.push(observationB);
+  }
+
+  // observations might have 0, 1, or 2 depending on how many are empty.
+  var internal = {
+    'relationships': [relationship],
+    'scores': [scoreA, scoreB],
+    'observations': observations
+  }
+  return internal;
+}
 
 
 class AppView extends Backbone.View {
@@ -38,9 +378,10 @@ class AppView extends Backbone.View {
     this.listenTo(Events, "resetData", this.resetData)
 
     this.user = getParameterByName("userId") ? getParameterByName("userId") : getParameterByName("userid")
-    this.citation = getParameterByName("cit")
-    if (this.citation) {
-      this.importFromOmeka()
+    // If we are editing a specific relationship, load it right away
+    var relationship_id = document.getElementById("main-citations").getAttribute("data-relationship");
+    if (relationship_id) {
+      this.importFromCrim(relationship_id);
     }
 
     this.exportDialog = new Export({container: $("#dialogs"), citation : this.citation})
@@ -193,35 +534,28 @@ class AppView extends Backbone.View {
     }
   }
 
-  importFromOmeka(){
-    // get the citation
-    $("#loader").show()
-    $.get("http://92.154.49.37/CRIM/api/citation/"+this.citation, (data)=>{
-      let json = JSON.parse(data)
-      // check that the user in the citation is the same as this.user
-      if (json.user == this.user){
-        this.importData(json)
-      }
-      else {
-        $("#loader").hide()
-      }
-    })
+  importFromCrim(relationship_id) {
+    $("#loader").show();
+    $.get("https://dev.crimproject.org/data/relationships/"+String(relationship_id)+"/", (data)=>{
+        let crim_json = JSON.parse(data);
+        let citations_json = serializedToInternal(crim_json);
+        this.importData(citations_json);
+      }, 'text')
   }
 
-  importMeiData(url){
-      // Go via Omas to bypass CORS
-      let omas_url = "http://159.65.177.99:5000/"+encodeURIComponent(url)+"/all/all/@all"
+  importMeiData(url) {
+    // Go via Omas to bypass CORS
+    let omas_url = OMAS+encodeURIComponent(url)+"/all/all/@all";
 
-      return (new Promise((res, rej)=>{
-        $.get(omas_url, (data) => {
-          res(data)
-        }, 'text')
-          .fail((msg)=>{
-              console.log(msg);
-              rej()
-          })
-      }))
-
+    return (new Promise((res, rej)=>{
+      $.get(omas_url, (data) => {
+        res(data)
+      }, 'text')
+        .fail((msg)=>{
+          console.log(msg);
+          rej()
+        })
+    }))
   }
 
   importData(data) {
@@ -251,9 +585,9 @@ class AppView extends Backbone.View {
     }
 
     for (let rel of data.relationships) {
-        let r = this.relationships.add(rel)
-        r.set("id", rel.cid)
-        r.cid = rel.cid
+      let r = this.relationships.add(rel)
+      r.set("id", rel.cid)
+      r.cid = rel.cid
     }
 
   }

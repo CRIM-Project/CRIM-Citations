@@ -2,6 +2,27 @@ import * as Backbone from 'backbone';
 import $ from 'jquery';
 import ScoreObservations from './coll-score-observations'
 
+
+function voicesFromMei(mei) {
+  mei.find("scoreDef, mei\\:scoreDef").first().find("staffDef, mei\\:staffDef").each((i, sd)=>{
+    var $sd = $(sd);
+    var voices = [];
+    var label = $sd.attr("label");
+    if (label) {
+      voices.push(label);
+    }
+    else {
+      let staffGrp = $sd.parent("staffGrp, mei\\:staffGrp");
+      if (staffGrp) {
+        let pos = $sd.index()+1;
+        voices.push($(staffGrp).attr("label") + " (" + pos + ")");
+      }
+    }
+    return voices;
+  })
+}
+
+
 class Score extends Backbone.Model {
   initialize() {
     this.observations = new ScoreObservations;
@@ -32,25 +53,9 @@ class Score extends Backbone.Model {
     return new_observ
   }
 
-  storeVoices(){
-    let $mei = $(this.get("mei"))
-    this.set("voices", [])
-    $mei.find("scoreDef, mei\\:scoreDef").first().find("staffDef, mei\\:staffDef").each((i, sd)=>{
-      let $sd = $(sd)
-      let voices = this.get("voices")
-      let label = $sd.attr("label")
-      if (label) {
-        voices.push(label)
-      }
-      else {
-        let staffGrp = $sd.parent("staffGrp, mei\\:staffGrp")
-        if (staffGrp) {
-          let pos = $sd.index()+1
-          voices.push($(staffGrp).attr("label") + " (" + pos + ")")
-        }
-      }
-      this.set("voices", voices)
-    })
+  storeVoices() {
+    let $mei = $(this.get("mei"));
+    this.set("voices", voicesFromMei($mei));
   }
 
 }
