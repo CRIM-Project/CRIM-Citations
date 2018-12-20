@@ -3,7 +3,8 @@ import * as Backbone from 'backbone';
 import Events from '../utils/backbone-events';
 import score_observation_tpl from '../templates/score_observation-tpl';
 import voice_tpl from '../templates/voice-tpl';
-import dialogPolyfill from 'dialog-polyfill'
+import dialogPolyfill from 'dialog-polyfill';
+
 
 class ScoreObservation extends Backbone.View {
 

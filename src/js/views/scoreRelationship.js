@@ -5,6 +5,7 @@ import score_relationship_tpl from '../templates/score_relationship-tpl';
 import dialogPolyfill from 'dialog-polyfill'
 import verovioToolkit from '../utils/verovioInstance';
 
+
 class ScoreRelationship extends Backbone.View {
 
   initialize(options) {

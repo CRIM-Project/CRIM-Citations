@@ -2,24 +2,8 @@ import $ from 'jquery';
 import * as Backbone from 'backbone';
 import Events from '../utils/backbone-events';
 import addfile_tpl from '../templates/addfile-tpl';
-import dialogPolyfill from 'dialog-polyfill'
-
-
-function printComposers(piece) {
-  var printed_role_list = [];
-  if (piece.mass) {
-    var all_roles = piece.roles.concat(piece.mass.roles);
-  }
-  else {
-    var all_roles = piece.roles;
-  }
-  for (let role of all_roles) {
-    if (role.role_type.role_type_id == "composer") {
-      printed_role_list.push(role.person.name);
-    }
-  };
-  return printed_role_list.join(", ");
-}
+import dialogPolyfill from 'dialog-polyfill';
+import {printComposers} from '../utils/import-functions';
 
 
 class AddFile extends Backbone.View {

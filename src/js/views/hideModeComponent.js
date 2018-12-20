@@ -2,6 +2,7 @@ import $ from 'jquery';
 import * as Backbone from 'backbone';
 import Events from '../utils/backbone-events';
 
+
 class HideModeComponent extends Backbone.View {
 
   get tageName() {

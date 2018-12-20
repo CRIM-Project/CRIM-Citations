@@ -5,6 +5,7 @@ import score_observations_tpl from '../templates/score_observations-tpl';
 import dialogPolyfill from 'dialog-polyfill'
 import verovioToolkit from '../utils/verovioInstance';
 
+
 class ScoreObservations extends Backbone.View {
 
   initialize(options) {

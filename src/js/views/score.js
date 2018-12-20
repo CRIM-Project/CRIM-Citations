@@ -2,10 +2,11 @@ import $ from 'jquery';
 import * as Backbone from 'backbone';
 import Continuo from 'continuo';
 import Events from '../utils/backbone-events';
-import score_tpl from '../templates/score-tpl'
+import score_tpl from '../templates/score-tpl';
 import ScoreObservationView from './scoreObservation';
 import ScoreObservationsView from './scoreObservations';
 import verovioToolkit from '../utils/verovioInstance';
+
 
 class ScoreView extends Backbone.View {
 

@@ -1,26 +1,7 @@
 import * as Backbone from 'backbone';
 import $ from 'jquery';
-import ScoreObservations from './coll-score-observations'
-
-
-function voicesFromMei(mei) {
-  mei.find("scoreDef, mei\\:scoreDef").first().find("staffDef, mei\\:staffDef").each((i, sd)=>{
-    var $sd = $(sd);
-    var voices = [];
-    var label = $sd.attr("label");
-    if (label) {
-      voices.push(label);
-    }
-    else {
-      let staffGrp = $sd.parent("staffGrp, mei\\:staffGrp");
-      if (staffGrp) {
-        let pos = $sd.index()+1;
-        voices.push($(staffGrp).attr("label") + " (" + pos + ")");
-      }
-    }
-    return voices;
-  })
-}
+import ScoreObservations from './coll-score-observations';
+import {voicesFromMei} from '../utils/import-functions';
 
 
 class Score extends Backbone.Model {
