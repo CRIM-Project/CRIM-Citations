@@ -131,7 +131,7 @@ class ScoreView extends Backbone.View {
     })
   }
 
-  setData(){
+  setData() {
     if (ScoreView.verovioData != this.model.cid) {
       verovioToolkit.loadData(this.model.get("mei"));
       ScoreView.verovioData = this.model.cid;
@@ -146,7 +146,10 @@ class ScoreView extends Backbone.View {
   highlight(ids) {
     this.setData();
     for (let id of ids) {
-      this.continuo.interView.addMusEvent(this.$el.find('#' + id).find('.cnt-selectable'));
+      console.log(this.$el.find('#' + id).find('.cnt-selectable'));
+      if (!this.$el.find('#' + id).hasClass("tie")) {
+        this.continuo.interView.addMusEvent(this.$el.find('#' + id).find('.cnt-selectable'));
+      }
     }
   }
 

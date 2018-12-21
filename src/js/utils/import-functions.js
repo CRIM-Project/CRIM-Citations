@@ -37,15 +37,6 @@ export function printComposers(piece) {
   return printed_role_list.join(", ");
 }
 
-function getMeiIds(url, ema) {
-  return $.get(OMAS+encodeURIComponent(url)+"/"+ema+"/highlight", (data)=>{
-    // console.log(data);
-    // const parser = new window.DOMParser();
-    // const meiDoc = parser.parseFromString(data, 'text/xml');
-    return data.querySelector("annot[type='ema_highlight']").getAttribute('plist').split(' ');
-  });
-}
-
 export function getVoicesList(voices_string, first_voice_name) {
   var voice_list = voices_string.split("\n");
   var options = []
@@ -247,25 +238,27 @@ export function serializedToInternal(serialized_data) {
   var scoreA_cid = "c_"+serialized_data["model_observation"]["piece"]["piece_id"];
   var scoreA_ema = serialized_data["model_observation"]["ema"];
   var scoreA_url = serialized_data["model_observation"]["piece"]["mei_links"][0];
-  var scoreA_meiids = getMeiIds(scoreA_url, scoreA_ema);
   var scoreB_cid = "c_"+serialized_data["derivative_observation"]["piece"]["piece_id"];
   var scoreB_ema = serialized_data["derivative_observation"]["ema"];
   var scoreB_url = serialized_data["derivative_observation"]["piece"]["mei_links"][0];
-  var scoreB_meiids = getMeiIds(scoreB_url, scoreB_ema);
+  var scoreA_title, scoreB_title;
   if (serialized_data["model_observation"]["piece"]["mass"]) {
-    var scoreA_title = serialized_data["model_observation"]["piece"]["mass"]["title"]+": "+serialized_data["model_observation"]["piece"]["title"];
+    scoreA_title = serialized_data["model_observation"]["piece"]["mass"]["title"]+": "+serialized_data["model_observation"]["piece"]["title"];
   }
   else {
-    var scoreA_title = serialized_data["model_observation"]["piece"]["title"];
+    scoreA_title = serialized_data["model_observation"]["piece"]["title"];
   }
   if (serialized_data["derivative_observation"]["piece"]["mass"]) {
-    var scoreB_title = serialized_data["derivative_observation"]["piece"]["mass"]["title"]+": "+serialized_data["derivative_observation"]["piece"]["title"];
+    scoreB_title = serialized_data["derivative_observation"]["piece"]["mass"]["title"]+": "+serialized_data["derivative_observation"]["piece"]["title"];
   }
   else {
-    var scoreB_title = serialized_data["derivative_observation"]["piece"]["title"];
+    scoreB_title = serialized_data["derivative_observation"]["piece"]["title"];
   }
   var scoreAobserv_cid = "c_"+serialized_data["model_observation"]["id"];
   var scoreBobserv_cid = "c_"+serialized_data["derivative_observation"]["id"];
+
+  var scoreA_emaurl = OMAS+encodeURIComponent(scoreA_url)+"/"+scoreA_ema+"/highlight";
+  var scoreB_emaurl = OMAS+encodeURIComponent(scoreB_url)+"/"+scoreB_ema+"/highlight";
 
   relationship["types"] = {}
   if (serialized_data["rt_q"]) {
@@ -312,11 +305,21 @@ export function serializedToInternal(serialized_data) {
 
   relationship["scoreA"] = scoreA_cid;
   relationship["scoreA_ema"] = scoreA_ema;
-  relationship["scoreA_meiids"] = scoreA_meiids;
+  relationship["scoreA_meiids"] = [];
+  $.get(scoreA_emaurl, (data)=>{
+    for (let id of data.querySelector("annot[type='ema_highlight']").getAttribute('plist').split(' ')) {
+      relationship["scoreA_meiids"].push(id.replace('#', ''));
+    }
+  });
   relationship["titleA"] = scoreA_title;
   relationship["scoreB"] = scoreB_cid;
   relationship["scoreB_ema"] = scoreB_ema;
-  relationship["scoreB_meiids"] = scoreB_meiids;
+  relationship["scoreB_meiids"] = [];
+  $.get(scoreB_emaurl, (data)=>{
+    for (let id of data.querySelector("annot[type='ema_highlight']").getAttribute('plist').split(' ')) {
+      relationship["scoreB_meiids"].push(id.replace('#', ''));
+    }
+  });
   relationship["titleB"] = scoreB_title;
   relationship["direction"] = "a2b";
   relationship["comment"] = serialized_data["remarks"];
@@ -354,7 +357,12 @@ export function serializedToInternal(serialized_data) {
   if (!$.isEmptyObject(observationA)) {
     observationA["ema"] = scoreA_ema;
     observationA["title"] = scoreA_title;
-    observationA["mei_ids"] = scoreA_meiids;
+    observationA["mei_ids"] = [];
+    $.get(scoreA_emaurl, (data)=>{
+      for (let id of data.querySelector("annot[type='ema_highlight']").getAttribute('plist').split(' ')) {
+        observationA["mei_ids"].push(id.replace('#', ''));
+      }
+    });
     observationA["cid"] = scoreAobserv_cid;
     observationA["score"] = scoreA_cid;
     observations.push(observationA);
@@ -362,7 +370,12 @@ export function serializedToInternal(serialized_data) {
   if (!$.isEmptyObject(observationB)) {
     observationB["ema"] = scoreB_ema;
     observationB["title"] = scoreB_title;
-    observationB["mei_ids"] = scoreB_meiids;
+    observationB["mei_ids"] = [];
+    $.get(scoreB_emaurl, (data)=>{
+      for (let id of data.querySelector("annot[type='ema_highlight']").getAttribute('plist').split(' ')) {
+        observationB["mei_ids"].push(id.replace('#', ''));
+      }
+    });
     observationB["cid"] = scoreBobserv_cid;
     observationB["score"] = scoreB_cid;
     observations.push(observationB);

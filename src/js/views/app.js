@@ -10,7 +10,7 @@ import Relationships from '../data/coll-relationships';
 import RelationshipView from './scoreRelationship';
 import HideModeComponent from './hideModeComponent';
 import getParameterByName from '../utils/paras';
-import {OMAS, voicesFromMei, printComposers, getVoicesList, getVoicePairsList, addObservationFields, serializedToInternal} from '../utils/import-functions';
+import {OMAS, serializedToInternal} from '../utils/import-functions';
 
 
 class AppView extends Backbone.View {
@@ -159,8 +159,6 @@ class AppView extends Backbone.View {
 
       export_obj.scores = scoresToKeep
 
-      // console.log(export_obj)
-
       this.exportDialog.show(export_obj)
 
       return export_obj
@@ -220,37 +218,37 @@ class AppView extends Backbone.View {
   }
 
   importData(data) {
-    $("#loader").show()
-    for (let score of data.scores) {
-      let s = this.scores.add(score)
-      s.set("id", score.cid)
-      s.cid = score.cid
-      s.observations.score = score.cid
+    $("#loader").show();
 
-      for (let observ of data.observations){
+    for (let score of data.scores) {
+      let s = this.scores.add(score);
+      s.set("id", score.cid);
+      s.cid = score.cid;
+      s.observations.score = score.cid;
+
+      for (let observ of data.observations) {
         if (observ.score == s.cid) {
-          let a = s.observations.add(observ)
-          a.set("id", observ.cid)
-          a.cid = observ.cid
+          let a = s.observations.add(observ);
+          a.set("id", observ.cid);
+          a.cid = observ.cid;
         }
       }
 
       // Get mei
       this.importMeiData(s.get("url")).then((mei)=>{
-        s.set("mei", mei)
-        let scoreView = new ScoreView({model: s})
-        this.$el.find("#create_edit .mdl-grid").append(scoreView.render())
-        scoreView.renderContinuoScore()
+        s.set("mei", mei);
+        let scoreView = new ScoreView({model: s});
+        this.$el.find("#create_edit .mdl-grid").append(scoreView.render());
+        scoreView.renderContinuoScore();
       })
 
     }
 
     for (let rel of data.relationships) {
-      let r = this.relationships.add(rel)
-      r.set("id", rel.cid)
-      r.cid = rel.cid
+      let r = this.relationships.add(rel);
+      r.set("id", rel.cid);
+      r.cid = rel.cid;
     }
-
   }
 
   doImport(){
