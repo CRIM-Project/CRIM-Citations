@@ -50,12 +50,12 @@ class AppView extends Backbone.View {
   }
 
   get events() {
-      return {
-        "click #add_btn": this.showAddFileDialog,
-        "click #export_btn": this.export,
-        "click #import_btn": this.import,
-        "click #clear_btn": this.resetData
-      }
+    return {
+      "click #add_btn": this.showAddFileDialog,
+      "click #export_btn": this.export,
+      "click #import_btn": this.import,
+      "click #clear_btn": this.resetData
+    }
   }
 
   addScore(fileInfo, createnew=true) {
@@ -199,7 +199,9 @@ class AppView extends Backbone.View {
         let crim_json = JSON.parse(data);
         let citations_json = serializedToInternal(crim_json);
         this.importData(citations_json);
-      }, 'text')
+      }, 'text');
+    $("#import_btn").hide();
+    $("#export_btn").show();
   }
 
   importMeiData(url) {
