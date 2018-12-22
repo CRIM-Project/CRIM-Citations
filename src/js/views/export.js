@@ -11,7 +11,6 @@ class Export extends Backbone.View {
 
   initialize (options) {
     this.container = options.container;
-    this.citation = options.citation;
   }
 
   get tagName(){
@@ -47,21 +46,23 @@ class Export extends Backbone.View {
   }
 
   expToCRIMOnline() {
-    var target_url;
+    var target_url, request_type;
     var processed_relationships = internalToSerialized(this.data);
     let r = confirm("This will send the data directly to the CRIM online database. Continue?");
     if (r) {
       for (var relationship of processed_relationships) {
         relationship['csrfmiddlewaretoken'] = csrftoken;
-        if (this.citation) {
-          target_url = '/data/relationships/'+this.citation;
+        if (this.data.relationship_id) {
+          target_url = '/data/relationships/'+this.data.relationship_id+'/';
+          request_type = 'PUT';
         }
         else {
           target_url = '/data/relationships/new/';
+          request_type = 'POST';
         }
         $.ajax({
           url: target_url,
-          type: 'POST',
+          type: request_type,
           data: relationship,
           withCredentials: true,
           success: () => {

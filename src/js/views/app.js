@@ -40,9 +40,9 @@ class AppView extends Backbone.View {
 
     this.user = getParameterByName("userId") ? getParameterByName("userId") : getParameterByName("userid")
     // If we are editing a specific relationship, load it right away
-    var relationship_id = document.getElementById("main-citations").getAttribute("data-relationship");
-    if (relationship_id) {
-      this.importFromCrim(relationship_id);
+    this.relationship_id = document.getElementById("main-citations").getAttribute("data-relationship");
+    if (this.relationship_id) {
+      this.importFromCrim(this.relationship_id);
     }
 
     this.exportDialog = new Export({container: $("#dialogs"), citation : this.citation})
@@ -134,14 +134,15 @@ class AppView extends Backbone.View {
   export() {
 
     if (this.relationships.models.length > 0) {
-      let time = (new Date()).toISOString().split(".")[0]
+      let time = (new Date()).toISOString().split(".")[0];
       let export_obj = {
-        relationships : this.relationships.toJSON(),
+        relationships: this.relationships.toJSON(),
         scores: this.scores.export(),
         observations: this.scores.exportObservations(),
+        relationship_id: this.relationship_id,
         created_at: time,
         user: this.user
-      }
+      };
 
       // Remove unreferenced scores
       let relScores = export_obj.relationships.reduce((acc, rel) => {
