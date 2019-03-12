@@ -61,6 +61,9 @@ class Export extends Backbone.View {
           request_type = 'POST';
         }
         $.ajax({
+          headers: {
+            'X-CSRFToken': csrftoken
+          },
           url: target_url,
           type: request_type,
           data: relationship,
