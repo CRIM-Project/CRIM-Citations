@@ -305,6 +305,9 @@ class ScoreRelationship extends Backbone.View {
       this.model = this.collection.add({})
     }
 
+    console.log(scores[0]);
+    console.log(this.model);
+    console.log(this.model.get("scoreA_meiids"));
     if (!this.model.get("scoreA")) {
       this.model.set("scoreA", scores[0].cid);
       this.model.set("scoreA_ema", scores[0].get("ema"));
@@ -320,6 +323,7 @@ class ScoreRelationship extends Backbone.View {
 
     this.scores[0].trigger("clearHighlight");
     this.scores[1].trigger("clearHighlight");
+    console.log(scores[0]);
     this.highlightNotation();
 
     this.container.append(this.$el.html(this.template(this.model.toJSON())))
