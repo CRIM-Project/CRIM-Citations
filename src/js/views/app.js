@@ -100,7 +100,7 @@ class AppView extends Backbone.View {
   startHideMode() {
     this.scores.trigger("disableButtons");
     this.$el.find(".crim_header").prepend(this.hideModeComponent.render());
-    // this.scores.trigger("restoreSelections");
+    this.scores.trigger("restoreSelections");
   }
 
   stopHideMode() {

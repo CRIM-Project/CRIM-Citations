@@ -1,8 +1,7 @@
 export var OMAS = "https://ema.crimproject.org/";
 
 export function voicesFromMei(mei) {
-  var parsed_mei = $.parseXML(mei);
-  var $mei = $(parsed_mei);
+  var $mei = $(mei);
   $mei.find("scoreDef, mei\\:scoreDef").first().find("staffDef, mei\\:staffDef").each((i, sd)=>{
     var $sd = $(sd);
     var voices = [];
@@ -325,7 +324,6 @@ export function serializedToInternal(serialized_data) {
   relationship["comment"] = serialized_data["remarks"];
   relationship["cid"] = relationship_cid;
   relationship["boolDir"] = true;
-  relationship["id"] = relationship_cid;
   relationship["scoreAobserv"] = scoreAobserv_cid;
   relationship["scoreBobserv"] = scoreBobserv_cid;
 
@@ -337,7 +335,6 @@ export function serializedToInternal(serialized_data) {
     scoreA["voices"] = voicesFromMei(scoreA_mei);
   });
   scoreA["cid"] = scoreA_cid;
-  scoreA["id"] = scoreA_cid;
 
   scoreB["url"] = scoreB_url;
   scoreB["title"] = scoreB_title;
@@ -347,7 +344,6 @@ export function serializedToInternal(serialized_data) {
     scoreB["voices"] = voicesFromMei(scoreB_mei);
   });
   scoreB["cid"] = scoreB_cid;
-  scoreB["id"] = scoreB_cid;
 
   addObservationFields(serialized_data["model_observation"], observationA);
   addObservationFields(serialized_data["derivative_observation"], observationB);
