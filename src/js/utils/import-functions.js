@@ -2,9 +2,10 @@ export var OMAS = "http://127.0.0.1:5000/";
 
 export function voicesFromMei(mei) {
   var $mei = $(mei);
+  console.log("!!!");
+  var voices = [];
   $mei.find("scoreDef, mei\\:scoreDef").first().find("staffDef, mei\\:staffDef").each((i, sd)=>{
     var $sd = $(sd);
-    var voices = [];
     var label = $sd.attr("label");
     if (label) {
       voices.push(label);
@@ -16,8 +17,9 @@ export function voicesFromMei(mei) {
         voices.push($(staffGrp).attr("label") + " (" + pos + ")");
       }
     }
-    return voices;
+    console.log(voices);
   })
+  return voices;
 }
 
 export function printComposers(piece) {
