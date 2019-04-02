@@ -34,7 +34,7 @@ export function printComposers(piece) {
       printed_role_list.push(role.person.name);
     }
   };
-  return printed_role_list.join(", ");
+  return "Composer: " + printed_role_list.join(", ");
 }
 
 export function getVoicesList(voices_string, first_voice_name) {
