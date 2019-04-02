@@ -145,6 +145,11 @@ class ScoreView extends Backbone.View {
 
   highlight(ids) {
     this.setData();
+    // We need to be on a page with a highlighted note
+    if (ids.length >= 1) {
+      var firstPage = verovioToolkit.getPageWithElement(ids[0].replace('#', ''));  // replacing # just in case
+      this.continuo.renderPage(firstPage);
+    }
     for (let id of ids) {
       if (this.$el.find('#' + id).find('.cnt-selectable').length != 0) {
         this.continuo.interView.addMusEvent(this.$el.find('#' + id).find('.cnt-selectable'));
