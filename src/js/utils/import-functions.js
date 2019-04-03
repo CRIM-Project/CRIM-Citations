@@ -259,6 +259,10 @@ export function serializedToInternal(serialized_data) {
   var scoreA_emaurl = OMAS+encodeURIComponent(scoreA_url)+"/"+scoreA_ema+"/highlight";
   var scoreB_emaurl = OMAS+encodeURIComponent(scoreB_url)+"/"+scoreB_ema+"/highlight";
 
+  var fileA_highlight = $.ajax({url: scoreA_emaurl, dataType: "xml"});
+  var fileB_highlight = $.ajax({url: scoreB_emaurl, dataType: "xml"});
+
+
   relationship["types"] = {}
   if (serialized_data["rt_q"]) {
     relationship["types"]["rt-q"] = {
@@ -305,20 +309,10 @@ export function serializedToInternal(serialized_data) {
   relationship["scoreA"] = scoreA_cid;
   relationship["scoreA_ema"] = scoreA_ema;
   relationship["scoreA_meiids"] = [];
-  $.get(scoreA_emaurl, (data)=>{
-    for (let id of data.querySelector("annot[type='ema_highlight']").getAttribute('plist').split(' ')) {
-      relationship["scoreA_meiids"].push(id.replace('#', ''));
-    }
-  });
   relationship["titleA"] = scoreA_title;
   relationship["scoreB"] = scoreB_cid;
   relationship["scoreB_ema"] = scoreB_ema;
   relationship["scoreB_meiids"] = [];
-  $.get(scoreB_emaurl, (data)=>{
-    for (let id of data.querySelector("annot[type='ema_highlight']").getAttribute('plist').split(' ')) {
-      relationship["scoreB_meiids"].push(id.replace('#', ''));
-    }
-  });
   relationship["titleB"] = scoreB_title;
   relationship["direction"] = "a2b";
   relationship["comment"] = serialized_data["remarks"];
@@ -331,49 +325,51 @@ export function serializedToInternal(serialized_data) {
   scoreA["title"] = scoreA_title;
   scoreA["piece_id"] = serialized_data["model_observation"]["piece"]["piece_id"];
   scoreA["composer"] = printComposers(serialized_data["model_observation"]["piece"]);
-  $.get(scoreA_url, (scoreA_mei)=>{
-    scoreA["voices"] = voicesFromMei(scoreA_mei);
-  });
+  scoreA["voices"] = voicesFromMei(fileA_highlight.responseText);
   scoreA["cid"] = scoreA_cid;
+  scoreA["mei"] = fileA_highlight.responseText;
 
   scoreB["url"] = scoreB_url;
   scoreB["title"] = scoreB_title;
   scoreB["piece_id"] = serialized_data["derivative_observation"]["piece"]["piece_id"];
   scoreB["composer"] = printComposers(serialized_data["derivative_observation"]["piece"]);
-  $.get(scoreB_url, (scoreB_mei)=>{
-    scoreB["voices"] = voicesFromMei(scoreB_mei);
-  });
+  scoreB["voices"] = voicesFromMei(fileB_highlight.responseText);
   scoreB["cid"] = scoreB_cid;
+  scoreB["mei"] = fileB_highlight.responseText;
 
   addObservationFields(serialized_data["model_observation"], observationA);
   addObservationFields(serialized_data["derivative_observation"], observationB);
 
+  var meiidsA = $(fileA_highlight.responseText).find("annot[type='ema_highlight']").attr("plist").split(' ');
+  for (let id of meiidsA) {
+    relationship["scoreA_meiids"].push(id.replace('#', ''));
+  }
   // Only fill out the observation if it is not empty, i.e. it has
   // a musical type and/or remarks; then add to `observations` list.
   if (!$.isEmptyObject(observationA)) {
     observationA["ema"] = scoreA_ema;
     observationA["title"] = scoreA_title;
     observationA["mei_ids"] = [];
-    $.get(scoreA_emaurl, (data)=>{
-      for (let id of data.querySelector("annot[type='ema_highlight']").getAttribute('plist').split(' ')) {
-        observationA["mei_ids"].push(id.replace('#', ''));
-      }
-    });
     observationA["cid"] = scoreAobserv_cid;
     observationA["score"] = scoreA_cid;
+    for (let id of meiidsA) {
+      observationA["mei_ids"].push(id.replace('#', ''));
+    }
     observations.push(observationA);
+  }
+  var meiidsB = $(fileB_highlight.responseText).find("annot[type='ema_highlight']").attr("plist").split(' ');
+  for (let id of meiidsB) {
+    relationship["scoreB_meiids"].push(id.replace('#', ''));
   }
   if (!$.isEmptyObject(observationB)) {
     observationB["ema"] = scoreB_ema;
     observationB["title"] = scoreB_title;
     observationB["mei_ids"] = [];
-    $.get(scoreB_emaurl, (data)=>{
-      for (let id of data.querySelector("annot[type='ema_highlight']").getAttribute('plist').split(' ')) {
-        observationB["mei_ids"].push(id.replace('#', ''));
-      }
-    });
     observationB["cid"] = scoreBobserv_cid;
     observationB["score"] = scoreB_cid;
+    for (let id of meiidsB) {
+      observationB["mei_ids"].push(id.replace('#', ''));
+    }
     observations.push(observationB);
   }
 
