@@ -153,7 +153,6 @@ class ScoreView extends Backbone.View {
     for (let id of ids) {
       console.log(this);
       if (this.$el.find('#' + id).find('.cnt-selectable').length != 0) {
-        console.log("!!!");
         this.continuo.interView.addMusEvent(this.$el.find('#' + id).find('.cnt-selectable'));
       }
     }

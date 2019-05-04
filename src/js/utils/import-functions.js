@@ -2,7 +2,6 @@ export var OMAS = "https://ema.crimproject.org/";
 
 export function voicesFromMei(mei) {
   var $mei = $(mei);
-  console.log("!!!");
   var voices = [];
   $mei.find("scoreDef, mei\\:scoreDef").first().find("staffDef, mei\\:staffDef").each((i, sd)=>{
     var $sd = $(sd);
@@ -17,7 +16,6 @@ export function voicesFromMei(mei) {
         voices.push($(staffGrp).attr("label") + " (" + pos + ")");
       }
     }
-    console.log(voices);
   })
   return voices;
 }
