@@ -2,7 +2,6 @@ export var OMAS = "http://127.0.0.1:5000/";
 
 export function voicesFromMei(mei) {
   var $mei = $(mei);
-  console.log("!!!");
   var voices = [];
   $mei.find("scoreDef, mei\\:scoreDef").first().find("staffDef, mei\\:staffDef").each((i, sd)=>{
     var $sd = $(sd);
@@ -17,7 +16,6 @@ export function voicesFromMei(mei) {
         voices.push($(staffGrp).attr("label") + " (" + pos + ")");
       }
     }
-    console.log(voices);
   })
   return voices;
 }
@@ -414,6 +412,8 @@ export function internalToSerialized(internal_data) {
     }
     return voices;
   }
+  // TODO: keep observation id information, so that we can update existing
+  // observations using PUT requests rather than creating new ones all the time.
   function getObservationFields(observation_cid, score_cid) {
     var old_observation = null;
     var new_observation = {};
