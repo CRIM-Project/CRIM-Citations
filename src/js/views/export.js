@@ -52,6 +52,9 @@ class Export extends Backbone.View {
     if (r) {
       for (var relationship of processed_relationships) {
         relationship['csrfmiddlewaretoken'] = csrftoken;
+        // Move relationship_id to the relationship itself, so that we don't end
+        // up with two relationships when we were supposed to be editing just one
+        // and run into problems.
         if (this.data.relationship_id) {
           target_url = '/data/relationships/'+this.data.relationship_id+'/';
           request_type = 'PUT';
