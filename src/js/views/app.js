@@ -89,12 +89,12 @@ class AppView extends Backbone.View {
   }
 
   openRelDialog(scores, rel) {
-    if (!scores && rel){
-      let mrel = this.relationships.get(rel)
-      scores = [this.scores.get(mrel.get("scoreA")), this.scores.get(mrel.get("scoreB"))]
+    if (!scores && rel) {
+      let mrel = this.relationships.get(rel);
+      scores = [this.scores.get(mrel.get("scoreA")), this.scores.get(mrel.get("scoreB"))];
     }
-    this.relationshipDialog.render(scores, rel)
-    this.relationshipDialog.show()
+    this.relationshipDialog.render(scores, rel);
+    this.relationshipDialog.show();
   }
 
   startHideMode() {
@@ -196,36 +196,36 @@ class AppView extends Backbone.View {
 
   importFromCrim(relationship_id) {
     $("#loader").show();
-    $.get("http://127.0.0.1:8000/data/relationships/"+String(relationship_id)+"/", (data)=>{
+    $.get("https://dev.crimproject.org/data/relationships/"+String(relationship_id)+"/", (data)=>{
       let crim_json = JSON.parse(data);
-      let citations_json = serializedToInternal(crim_json);
+      serializedToInternal(crim_json).then((citations_json) => {
+        for (let score of citations_json.scores) {
+          let s = this.scores.add(score);
+          s.set("id", score.cid);
+          s.cid = score.cid;
+          s.observations.score = score.cid;
 
-      for (let score of citations_json.scores) {
-        let s = this.scores.add(score);
-        s.set("id", score.cid);
-        s.cid = score.cid;
-        s.observations.score = score.cid;
-
-        for (let observ of citations_json.observations) {
-          if (observ.score == s.cid) {
-            let a = s.observations.add(observ);
-            a.set("id", observ.cid);
-            a.cid = observ.cid;
+          for (let observ of citations_json.observations) {
+            if (observ.score == s.cid) {
+              let a = s.observations.add(observ);
+              a.set("id", observ.cid);
+              a.cid = observ.cid;
+            }
           }
+
+          // Get mei
+          s.set("mei", score.mei);
+          let scoreView = new ScoreView({model: s});
+          this.$el.find("#create_edit .mdl-grid").append(scoreView.render());
+          scoreView.renderContinuoScore();
         }
 
-        // Get mei
-        s.set("mei", score.mei);
-        let scoreView = new ScoreView({model: s});
-        this.$el.find("#create_edit .mdl-grid").append(scoreView.render());
-        scoreView.renderContinuoScore();
-      }
-
-      for (let rel of citations_json.relationships) {
-        let r = this.relationships.add(rel);
-        r.set("id", rel.cid);
-        r.cid = rel.cid;
-      }
+        for (let rel of citations_json.relationships) {
+          let r = this.relationships.add(rel);
+          r.set("id", rel.cid);
+          r.cid = rel.cid;
+        }
+      })
     }, 'text');
     $("#import_btn").hide();
     $("#export_btn").show();
@@ -270,7 +270,6 @@ class AppView extends Backbone.View {
         this.$el.find("#create_edit .mdl-grid").append(scoreView.render());
         scoreView.renderContinuoScore();
       })
-
     }
 
     for (let rel of data.relationships) {
