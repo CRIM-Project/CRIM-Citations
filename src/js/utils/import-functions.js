@@ -259,131 +259,134 @@ export function serializedToInternal(serialized_data) {
   var scoreA_emaurl = OMAS+encodeURIComponent(scoreA_url)+"/"+scoreA_ema+"/highlight";
   var scoreB_emaurl = OMAS+encodeURIComponent(scoreB_url)+"/"+scoreB_ema+"/highlight";
 
-  relationship["types"] = {}
-  if (serialized_data["rt_q"]) {
-    relationship["types"]["rt-q"] = {
-			"label": "Quotation",
-			"ex": Boolean(serialized_data["rt_q_x"]),
-			"mo": Boolean(serialized_data["rt_q_monnayage"])
-  	};
-  }
-  if (serialized_data['rt_tm']) {
-    relationship["types"]["rt-tm"] = {
-			"label": "Mechanical transformation",
-			"snd": Boolean(serialized_data["rt_tm_snd"]),
-			"minv": Boolean(serialized_data["rt_tm_minv"]),
-			"r": Boolean(serialized_data["rt_tm_retrograde"]),
-			"ms": Boolean(serialized_data["rt_tm_ms"]),
-			"t": Boolean(serialized_data["rt_tm_transposed"]),
-			"td": Boolean(serialized_data["rt_tm_invertible"])
-		};
-  }
-  if (serialized_data['rt_tnm']) {
-    relationship["types"]["rt-tnm"] = {
-			"label": "Non-mechanical transformation",
-			"em": Boolean(serialized_data["rt_tnm_embellished"]),
-			"re": Boolean(serialized_data["rt_tnm_reduced"]),
-			"am": Boolean(serialized_data["rt_tnm_amplified"]),
-			"tr": Boolean(serialized_data["rt_tnm_truncated"]),
-			"ncs": Boolean(serialized_data["rt_tnm_ncs"]),
-			"ocs": Boolean(serialized_data["rt_tnm_ocs"]),
-			"ocst": Boolean(serialized_data["rt_tnm_ocst"]),
-			"nc": Boolean(serialized_data["rt_tnm_nc"])
-		};
-  }
-  if (serialized_data['rt_nm']) {
-    relationship["types"]["rt-nm"] = {
-			"label": "New material"
-		};
-  }
-  if (serialized_data['rt_om']) {
-    relationship["types"]["rt-om"] = {
-			"label": "Omission"
-		};
-  }
+  return new Promise(function (res, rej) {
+    fetch(scoreA_emaurl)
+      .then(response => response.text())
+      .then(function (fileA_highlight) {
+        fetch(scoreB_emaurl)
+        .then(response => response.text())
+        .then(function (fileB_highlight) {
+          relationship["types"] = {}
+          if (serialized_data["rt_q"]) {
+            relationship["types"]["rt-q"] = {
+              "label": "Quotation",
+              "ex": Boolean(serialized_data["rt_q_x"]),
+              "mo": Boolean(serialized_data["rt_q_monnayage"])
+            };
+          }
+          if (serialized_data['rt_tm']) {
+            relationship["types"]["rt-tm"] = {
+              "label": "Mechanical transformation",
+              "snd": Boolean(serialized_data["rt_tm_snd"]),
+              "minv": Boolean(serialized_data["rt_tm_minv"]),
+              "r": Boolean(serialized_data["rt_tm_retrograde"]),
+              "ms": Boolean(serialized_data["rt_tm_ms"]),
+              "t": Boolean(serialized_data["rt_tm_transposed"]),
+              "td": Boolean(serialized_data["rt_tm_invertible"])
+            };
+          }
+          if (serialized_data['rt_tnm']) {
+            relationship["types"]["rt-tnm"] = {
+              "label": "Non-mechanical transformation",
+              "em": Boolean(serialized_data["rt_tnm_embellished"]),
+              "re": Boolean(serialized_data["rt_tnm_reduced"]),
+              "am": Boolean(serialized_data["rt_tnm_amplified"]),
+              "tr": Boolean(serialized_data["rt_tnm_truncated"]),
+              "ncs": Boolean(serialized_data["rt_tnm_ncs"]),
+              "ocs": Boolean(serialized_data["rt_tnm_ocs"]),
+              "ocst": Boolean(serialized_data["rt_tnm_ocst"]),
+              "nc": Boolean(serialized_data["rt_tnm_nc"])
+            };
+          }
+          if (serialized_data['rt_nm']) {
+            relationship["types"]["rt-nm"] = {
+              "label": "New material"
+            };
+          }
+          if (serialized_data['rt_om']) {
+            relationship["types"]["rt-om"] = {
+              "label": "Omission"
+            };
+          }
 
-  relationship["scoreA"] = scoreA_cid;
-  relationship["scoreA_ema"] = scoreA_ema;
-  relationship["scoreA_meiids"] = [];
-  $.get(scoreA_emaurl, (data)=>{
-    for (let id of data.querySelector("annot[type='ema_highlight']").getAttribute('plist').split(' ')) {
-      relationship["scoreA_meiids"].push(id.replace('#', ''));
-    }
-  });
-  relationship["titleA"] = scoreA_title;
-  relationship["scoreB"] = scoreB_cid;
-  relationship["scoreB_ema"] = scoreB_ema;
-  relationship["scoreB_meiids"] = [];
-  $.get(scoreB_emaurl, (data)=>{
-    for (let id of data.querySelector("annot[type='ema_highlight']").getAttribute('plist').split(' ')) {
-      relationship["scoreB_meiids"].push(id.replace('#', ''));
-    }
-  });
-  relationship["titleB"] = scoreB_title;
-  relationship["direction"] = "a2b";
-  relationship["comment"] = serialized_data["remarks"];
-  relationship["cid"] = relationship_cid;
-  relationship["boolDir"] = true;
-  relationship["scoreAobserv"] = scoreAobserv_cid;
-  relationship["scoreBobserv"] = scoreBobserv_cid;
+          relationship["scoreA"] = scoreA_cid;
+          relationship["scoreA_ema"] = scoreA_ema;
+          relationship["scoreA_meiids"] = [];
 
-  scoreA["url"] = scoreA_url;
-  scoreA["title"] = scoreA_title;
-  scoreA["piece_id"] = serialized_data["model_observation"]["piece"]["piece_id"];
-  scoreA["composer"] = printComposers(serialized_data["model_observation"]["piece"]);
-  $.get(scoreA_url, (scoreA_mei)=>{
-    scoreA["voices"] = voicesFromMei(scoreA_mei);
-  });
-  scoreA["cid"] = scoreA_cid;
+          relationship["titleA"] = scoreA_title;
+          relationship["scoreB"] = scoreB_cid;
+          relationship["scoreB_ema"] = scoreB_ema;
+          relationship["scoreB_meiids"] = [];
+          relationship["titleB"] = scoreB_title;
+          relationship["direction"] = "a2b";
+          relationship["comment"] = serialized_data["remarks"];
+          relationship["cid"] = relationship_cid;
+          relationship["boolDir"] = true;
+          relationship["scoreAobserv"] = scoreAobserv_cid;
+          relationship["scoreBobserv"] = scoreBobserv_cid;
 
-  scoreB["url"] = scoreB_url;
-  scoreB["title"] = scoreB_title;
-  scoreB["piece_id"] = serialized_data["derivative_observation"]["piece"]["piece_id"];
-  scoreB["composer"] = printComposers(serialized_data["derivative_observation"]["piece"]);
-  $.get(scoreB_url, (scoreB_mei)=>{
-    scoreB["voices"] = voicesFromMei(scoreB_mei);
-  });
-  scoreB["cid"] = scoreB_cid;
+          scoreA["url"] = scoreA_url;
+          scoreA["title"] = scoreA_title;
+          scoreA["piece_id"] = serialized_data["model_observation"]["piece"]["piece_id"];
+          scoreA["composer"] = printComposers(serialized_data["model_observation"]["piece"]);
+          scoreA["voices"] = voicesFromMei(fileA_highlight);
+          scoreA["cid"] = scoreA_cid;
+          scoreA["mei"] = fileA_highlight;
 
-  addObservationFields(serialized_data["model_observation"], observationA);
-  addObservationFields(serialized_data["derivative_observation"], observationB);
+          scoreB["url"] = scoreB_url;
+          scoreB["title"] = scoreB_title;
+          scoreB["piece_id"] = serialized_data["derivative_observation"]["piece"]["piece_id"];
+          scoreB["composer"] = printComposers(serialized_data["derivative_observation"]["piece"]);
+          scoreB["voices"] = voicesFromMei(fileB_highlight);
+          scoreB["cid"] = scoreB_cid;
+          scoreB["mei"] = fileB_highlight;
 
-  // Only fill out the observation if it is not empty, i.e. it has
-  // a musical type and/or remarks; then add to `observations` list.
-  if (!$.isEmptyObject(observationA)) {
-    observationA["ema"] = scoreA_ema;
-    observationA["title"] = scoreA_title;
-    observationA["mei_ids"] = [];
-    $.get(scoreA_emaurl, (data)=>{
-      for (let id of data.querySelector("annot[type='ema_highlight']").getAttribute('plist').split(' ')) {
-        observationA["mei_ids"].push(id.replace('#', ''));
-      }
-    });
-    observationA["cid"] = scoreAobserv_cid;
-    observationA["score"] = scoreA_cid;
-    observations.push(observationA);
-  }
-  if (!$.isEmptyObject(observationB)) {
-    observationB["ema"] = scoreB_ema;
-    observationB["title"] = scoreB_title;
-    observationB["mei_ids"] = [];
-    $.get(scoreB_emaurl, (data)=>{
-      for (let id of data.querySelector("annot[type='ema_highlight']").getAttribute('plist').split(' ')) {
-        observationB["mei_ids"].push(id.replace('#', ''));
-      }
-    });
-    observationB["cid"] = scoreBobserv_cid;
-    observationB["score"] = scoreB_cid;
-    observations.push(observationB);
-  }
+          addObservationFields(serialized_data["model_observation"], observationA);
+          addObservationFields(serialized_data["derivative_observation"], observationB);
 
-  // observations might have 0, 1, or 2 depending on how many are empty.
-  var internal = {
-    'relationships': [relationship],
-    'scores': [scoreA, scoreB],
-    'observations': observations
-  }
-  return internal;
+          var meiidsA = $(fileA_highlight).find("annot[type='ema_highlight']").attr("plist").split(' ');
+          for (let id of meiidsA) {
+            relationship["scoreA_meiids"].push(id.replace('#', ''));
+          }
+          // Only fill out the observation if it is not empty, i.e. it has
+          // a musical type and/or remarks; then add to `observations` list.
+          if (!$.isEmptyObject(observationA)) {
+            observationA["ema"] = scoreA_ema;
+            observationA["title"] = scoreA_title;
+            observationA["mei_ids"] = [];
+            observationA["cid"] = scoreAobserv_cid;
+            observationA["score"] = scoreA_cid;
+            for (let id of meiidsA) {
+              observationA["mei_ids"].push(id.replace('#', ''));
+            }
+            observations.push(observationA);
+          }
+          var meiidsB = $(fileB_highlight).find("annot[type='ema_highlight']").attr("plist").split(' ');
+          for (let id of meiidsB) {
+            relationship["scoreB_meiids"].push(id.replace('#', ''));
+          }
+          if (!$.isEmptyObject(observationB)) {
+            observationB["ema"] = scoreB_ema;
+            observationB["title"] = scoreB_title;
+            observationB["mei_ids"] = [];
+            observationB["cid"] = scoreBobserv_cid;
+            observationB["score"] = scoreB_cid;
+            for (let id of meiidsB) {
+              observationB["mei_ids"].push(id.replace('#', ''));
+            }
+            observations.push(observationB);
+          }
+
+          // observations might have 0, 1, or 2 depending on how many are empty.
+          var internal = {
+            'relationships': [relationship],
+            'scores': [scoreA, scoreB],
+            'observations': observations
+          }
+          res(internal);
+        })
+      })
+  })
 }
 
 // Converts data from the internal format into the fields of a POST request
