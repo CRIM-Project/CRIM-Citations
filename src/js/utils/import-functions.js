@@ -423,6 +423,20 @@ export function internalToSerialized(internal_data) {
     }
     return voices;
   }
+  // Options are saved as a list of dictionaries, each one with only one key.
+  // This is a bit counterintuitive.  To get the key we actually want, we use
+  // this function instead of writing it out in full in place or using
+  // magic numbers.
+  function getOptions(options_list, k) {
+    for (var dict of options_list) {
+      for (var key in dict) {
+        if (key == k) {
+          return dict[key];
+        }
+      }
+    }
+    return null;
+  }
   // TODO: keep observation id information, so that we can update existing
   // observations using PUT requests rather than creating new ones all the time.
   function getObservationFields(observation_cid, score_cid) {
@@ -520,11 +534,11 @@ export function internalToSerialized(internal_data) {
       }
       if (old_observation.types['mt-cad']) {
         new_observation['mt_cad'] = true;
-        new_observation['mt_cad_cantizans'] = old_observation.types['mt-cad']['options']['voice1'];
-        new_observation['mt_cad_tenorizans'] = old_observation.types['mt-cad']['options']['voice2'];
-        new_observation['mt_cad_type'] = old_observation.types['mt-cad']['options']['type'];
+        new_observation['mt_cad_cantizans'] = getOptions(old_observation.types['mt-cad']['options'], 'voice1');
+        new_observation['mt_cad_tenorizans'] = getOptions(old_observation.types['mt-cad']['options'], 'voice2');
+        new_observation['mt_cad_type'] = getOptions(old_observation.types['mt-cad']['options'], 'type');
         new_observation['mt_cad_tone'] = old_observation.types['mt-cad']['tone'];
-        new_observation['mt_cad_dtv'] = old_observation.types['mt-cad']['options']['dove_voice1'];
+        new_observation['mt_cad_dtv'] = getOptions(old_observation.types['mt-cad']['options'], 'dove_voice1');
         new_observation['mt_cad_dti'] = old_observation.types['mt-cad']['dove'];
       }
       if (old_observation.types['mt-int']) {
