@@ -16,7 +16,7 @@ export function voicesFromMei(mei) {
         voices.push($(staffGrp).attr("label") + " (" + pos + ")");
       }
     }
-  })
+  });
   return voices;
 }
 
@@ -259,11 +259,6 @@ export function serializedToInternal(serialized_data) {
   var scoreA_emaurl = OMAS+encodeURIComponent(scoreA_url)+"/"+scoreA_ema+"/highlight";
   var scoreB_emaurl = OMAS+encodeURIComponent(scoreB_url)+"/"+scoreB_ema+"/highlight";
 
-  // The MEI needs to download before we can get the EMA expressions with the
-  // accompanying highlighted MEI elements; this is also the file that we display.
-  // var fileA_highlight = $.ajax({url: scoreA_emaurl, dataType: "xml", async: false, timeout: 10000});
-  // var fileB_highlight = $.ajax({url: scoreB_emaurl, dataType: "xml", async: false, timeout: 10000});
-
   return new Promise(function (res, rej) {
     fetch(scoreA_emaurl)
       .then(response => response.text())
@@ -388,8 +383,7 @@ export function serializedToInternal(serialized_data) {
             'scores': [scoreA, scoreB],
             'observations': observations
           }
-          console.log(internal)
-          res(internal)
+          res(internal);
         })
       })
   })

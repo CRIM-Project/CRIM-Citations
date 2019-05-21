@@ -35,16 +35,22 @@ class AddFile extends Backbone.View {
 
   open(e) {
     $("#loader").show()
-    if (this.$el.find("#crim-panel.is-active").length > 0){
-      for (let score of this.$el.find("#crim-panel .mdl-checkbox__input:checked")){
+    if (this.$el.find("#crim-panel.is-active").length > 0) {
+      let meiScores = [];
+      for (let score of this.$el.find("#crim-panel .mdl-checkbox__input:checked")) {
         let $score = $(score);
-        this.fromUrl($score.val(), $score.data("piece_id"), $score.data("title"), $score.data("composer"));
+        meiScores.push(this.fromUrl($score.val(), $score.data("piece_id"), $score.data("title"), $score.data("composer")));
       }
+      Promise.all(meiScores).then((data) => {
+        for (const fileInfo of data) {
+          Events.trigger('addScore', fileInfo);
+        }
+      })
     }
     else {
-      this.fromUrl()
+      this.fromUrl();
     }
-    this.close()
+    this.close();
   }
 
   fromUrl(url, piece_id, title, composer) {
@@ -62,13 +68,16 @@ class AddFile extends Backbone.View {
         "url": url
     };
 
-    $.get(url, (data) => {
-      fileInfo["string"] = data;
-      Events.trigger('addScore', fileInfo);
-    }, 'text')
-      .fail((msg)=>{
+    return new Promise((res, rej) => {
+      $.get(url, (data) => {
+        fileInfo["string"] = data;
+        res(fileInfo)
+      }, 'text')
+        .fail((msg)=>{
           console.log(msg);
-      })
+          rej(msg)
+        })
+    })
   }
 
   show() {

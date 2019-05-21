@@ -204,7 +204,7 @@ class AppView extends Backbone.View {
           s.set("id", score.cid);
           s.cid = score.cid;
           s.observations.score = score.cid;
-  
+
           for (let observ of citations_json.observations) {
             if (observ.score == s.cid) {
               let a = s.observations.add(observ);
@@ -212,14 +212,14 @@ class AppView extends Backbone.View {
               a.cid = observ.cid;
             }
           }
-  
+
           // Get mei
           s.set("mei", score.mei);
           let scoreView = new ScoreView({model: s});
           this.$el.find("#create_edit .mdl-grid").append(scoreView.render());
           scoreView.renderContinuoScore();
         }
-  
+
         for (let rel of citations_json.relationships) {
           let r = this.relationships.add(rel);
           r.set("id", rel.cid);
