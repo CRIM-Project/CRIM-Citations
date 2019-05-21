@@ -55,19 +55,17 @@ class Export extends Backbone.View {
         // Move relationship_id to the relationship itself, so that we don't end
         // up with two relationships when we were supposed to be editing just one
         // and run into problems.
-        if (this.data.relationship_id) {
-          target_url = '/data/relationships/'+this.data.relationship_id+'/';
-          request_type = 'PUT';
+        if (relationship.id == 'new') {
+          request_type = 'POST';
         }
         else {
-          target_url = '/data/relationships/new/';
-          request_type = 'POST';
+          request_type = 'PUT';
         }
         $.ajax({
           headers: {
             'X-CSRFToken': csrftoken
           },
-          url: target_url,
+          url: '/data/relationships/'+relationship.id+'/',
           type: request_type,
           data: relationship,
           withCredentials: true,

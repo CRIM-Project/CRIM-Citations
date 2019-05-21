@@ -560,6 +560,14 @@ export function internalToSerialized(internal_data) {
   var serialized_data = {};
   for (var old_relationship of internal_data.relationships) {
     var new_relationship = {};
+    // Add an ID only if it is a relationship from the CRIM database with a
+    // pre-assigned ID.
+    if (old_relationship.cid.includes('c_')) {
+      new_relationship['id'] = old_relationship.cid.replace('c_', '').replace('R', '');
+    }
+    else {
+      new_relationship['id'] = 'new';
+    }
     // There should be only one type for each relationship.
     if (old_relationship.types['rt-q']) {
       new_relationship['rt_q'] = true;
