@@ -33,12 +33,12 @@ export function printComposers(piece) {
       printed_role_list.push(role.person.name);
     }
   };
-  return "Composer: " + printed_role_list.join(", ");
+  return printed_role_list.join(", ");
 }
 
 export function getVoicesList(voices_string, first_voice_name) {
   var voice_list = voices_string.split("\n");
-  var options = []
+  var options = [];
   if ($.isEmptyObject(voice_list)) {
     return options;
   }
@@ -266,7 +266,7 @@ export function serializedToInternal(serialized_data) {
         fetch(scoreB_emaurl)
         .then(response => response.text())
         .then(function (fileB_highlight) {
-          relationship["types"] = {}
+          relationship["types"] = {};
           if (serialized_data["rt_q"]) {
             relationship["types"]["rt-q"] = {
               "label": "Quotation",
@@ -382,7 +382,7 @@ export function serializedToInternal(serialized_data) {
             'relationships': [relationship],
             'scores': [scoreA, scoreB],
             'observations': observations
-          }
+          };
           res(internal);
         })
       })
@@ -392,7 +392,7 @@ export function serializedToInternal(serialized_data) {
 // Converts data from the internal format into the fields of a POST request
 // that can add the data directly to the Django webapp.
 export function internalToSerialized(internal_data) {
-  var all_relationships = [];
+  var all_data = [];
   // Subfunctions for helping conversion process.
   function getPieceID(this_score_cid) {
     for (var score of internal_data.scores) {
@@ -431,6 +431,8 @@ export function internalToSerialized(internal_data) {
     }
     return null;
   }
+  // Keep observation id information, so that we can update existing
+  // observations using PUT requests rather than creating new ones all the time.
   function getObservationFields(observation_cid, score_cid) {
     var old_observation = null;
     var new_observation = {};
@@ -446,6 +448,11 @@ export function internalToSerialized(internal_data) {
       new_observation['piece'] = getPieceID(score_cid);
     }
     else {
+      // Add an ID only if it is an observation from the CRIM database with a
+      // pre-assigned ID.
+      if (old_observation.cid.includes('c_')) {
+        new_observation['observation_id'] = old_observation.cid.replace('c_', '');
+      }
       new_observation['piece'] = getPieceID(old_observation.score);
       if (old_observation.types['mt-cf']) {
         new_observation['mt_cf'] = true;
@@ -558,6 +565,14 @@ export function internalToSerialized(internal_data) {
   var serialized_data = {};
   for (var old_relationship of internal_data.relationships) {
     var new_relationship = {};
+    // Add an ID only if it is a relationship from the CRIM database with a
+    // pre-assigned ID.
+    if (old_relationship.cid.includes('c_')) {
+      new_relationship['relationship_id'] = old_relationship.cid.replace('c_', '').replace('R', '');
+    }
+    else {
+      new_relationship['relationship_id'] = 'new';
+    }
     // There should be only one type for each relationship.
     if (old_relationship.types['rt-q']) {
       new_relationship['rt_q'] = true;
@@ -598,26 +613,34 @@ export function internalToSerialized(internal_data) {
     let scoreA_observation = getObservationFields(old_relationship.scoreAobserv, old_relationship.scoreA);
     let scoreB_observation = getObservationFields(old_relationship.scoreBobserv, old_relationship.scoreB);
     if (old_relationship.direction == "b2a") {
-      new_relationship['model_ema'] = old_relationship.scoreB_ema;
+      scoreB_observation['ema'] = old_relationship.scoreB_ema;
       for (let field in scoreB_observation) {
         new_relationship['model_' + field] = scoreB_observation[field];
       }
-      new_relationship['derivative_ema'] = old_relationship.scoreA_ema;
+      scoreA_observation['ema'] = old_relationship.scoreA_ema;
       for (let field in scoreA_observation) {
         new_relationship['derivative_' + field] = scoreA_observation[field];
       }
     }
     else {
-      new_relationship['model_ema'] = old_relationship.scoreA_ema;
+      scoreA_observation['ema'] = old_relationship.scoreA_ema;
       for (let field in scoreA_observation) {
         new_relationship['model_' + field] = scoreA_observation[field];
       }
-      new_relationship['derivative_ema'] = old_relationship.scoreB_ema;
+      scoreB_observation['ema'] = old_relationship.scoreB_ema;
       for (let field in scoreB_observation) {
         new_relationship['derivative_' + field] = scoreB_observation[field];
       }
     }
-    all_relationships.push(new_relationship);
+    // We include observation data in the relationship as well as separately;
+    // this way, we can easily update existing observations, or create new
+    // ones as necessary with the relationship POST.
+    let this_data = {
+      'relationship': new_relationship,
+      'model': scoreA_observation,
+      'derivative': scoreB_observation
+    }
+    all_data.push(this_data);
   }
-  return all_relationships;
+  return all_data;
 }

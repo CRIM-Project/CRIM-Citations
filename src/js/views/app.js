@@ -196,7 +196,7 @@ class AppView extends Backbone.View {
 
   importFromCrim(relationship_id) {
     $("#loader").show();
-    $.get("https://crimproject.org/data/relationships/"+String(relationship_id)+"/", (data)=>{
+    $.get("https://dev.crimproject.org/data/relationships/"+String(relationship_id)+"/", (data)=>{
       let crim_json = JSON.parse(data);
       serializedToInternal(crim_json).then((citations_json) => {
         for (let score of citations_json.scores) {

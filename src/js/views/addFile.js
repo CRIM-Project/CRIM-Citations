@@ -35,11 +35,11 @@ class AddFile extends Backbone.View {
 
   open(e) {
     $("#loader").show()
-    if (this.$el.find("#crim-panel.is-active").length > 0){
-      let meiScores = []
-      for (let score of this.$el.find("#crim-panel .mdl-checkbox__input:checked")){
+    if (this.$el.find("#crim-panel.is-active").length > 0) {
+      let meiScores = [];
+      for (let score of this.$el.find("#crim-panel .mdl-checkbox__input:checked")) {
         let $score = $(score);
-        meiScores.push(this.fromUrl($score.val(), $score.data("piece_id"), $score.data("title"), $score.data("composer")))
+        meiScores.push(this.fromUrl($score.val(), $score.data("piece_id"), $score.data("title"), $score.data("composer")));
       }
       Promise.all(meiScores).then((data) => {
         for (const fileInfo of data) {
@@ -48,9 +48,9 @@ class AddFile extends Backbone.View {
       })
     }
     else {
-      this.fromUrl()
+      this.fromUrl();
     }
-    this.close()
+    this.close();
   }
 
   fromUrl(url, piece_id, title, composer) {
