@@ -22,15 +22,15 @@ class Export extends Backbone.View {
   }
 
   template(tpl){
-      return export_tpl(tpl);
+    return export_tpl(tpl);
   }
 
   get events() {
-      return {
-          "click .close": this.close,
-          "click #expToDisk": this.expToDisk,
-          "click #expToCRIMOnline": this.expToCRIMOnline
-      }
+    return {
+      "click .close": this.close,
+      "click #expToDisk": this.expToDisk,
+      "click #expToCRIMOnline": this.expToCRIMOnline
+    }
   }
 
   expToDisk() {
@@ -45,17 +45,54 @@ class Export extends Backbone.View {
     this.$el.find("#expDialogText").html("Your session has been downloaded. You may wish to clear your session before creating new analyses and downloading again.");
   }
 
+  expUpdatedObsToCRIMOnline(observation, type) {
+    var target_url, request_type;
+    var request_location;
+    if (observation.observation_id) {
+      request_location = '/data/observations/'+observation.observation_id+'/';
+    }
+    else {
+      request_location = '/data/observations/new/';
+    }
+    observation['csrfmiddlewaretoken'] = csrftoken;
+    $.ajax({
+      headers: {
+        'X-CSRFToken': csrftoken
+      },
+      url: request_location,
+      type: 'PUT',
+      data: observation,
+      withCredentials: true,
+      success: () => {
+        this.$el.find("#expDialogText").append("The " + type + "observation has been updated.");
+      },
+      error: (err) => {
+        this.$el.find("#expDialogText").append("<strong>An error occured.</strong> Updating the " + type + "observation was unsuccessful.");
+        console.log(err);
+      }
+    });
+  }
+
   expToCRIMOnline() {
     var target_url, request_type;
-    var processed_relationships = internalToSerialized(this.data);
+    var processed_data = internalToSerialized(this.data);
     let r = confirm("This will send the data directly to the CRIM online database. Continue?");
     if (r) {
-      for (var relationship of processed_relationships) {
+      for (var data of processed_data) {
+        var relationship = data.relationship
+        // If we have existing observations, then make separate AJAX requests
+        // for them.
+        if (data.model.observation_id) {
+          this.expUpdatedObsToCRIMOnline(data.model, 'model');
+        }
+        if (data.derivative.observation_id) {
+          this.expUpdatedObsToCRIMOnline(data.derivative, 'derivative');
+        }
         relationship['csrfmiddlewaretoken'] = csrftoken;
         // Move relationship_id to the relationship itself, so that we don't end
         // up with two relationships when we were supposed to be editing just one
         // and run into problems.
-        if (relationship.id == 'new') {
+        if (relationship.relationship_id == 'new') {
           request_type = 'POST';
         }
         else {
@@ -65,7 +102,7 @@ class Export extends Backbone.View {
           headers: {
             'X-CSRFToken': csrftoken
           },
-          url: '/data/relationships/'+relationship.id+'/',
+          url: '/data/relationships/'+relationship.relationship_id+'/',
           type: request_type,
           data: relationship,
           withCredentials: true,

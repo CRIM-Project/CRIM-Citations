@@ -392,7 +392,7 @@ export function serializedToInternal(serialized_data) {
 // Converts data from the internal format into the fields of a POST request
 // that can add the data directly to the Django webapp.
 export function internalToSerialized(internal_data) {
-  var all_relationships = [];
+  var all_data = [];
   // Subfunctions for helping conversion process.
   function getPieceID(this_score_cid) {
     for (var score of internal_data.scores) {
@@ -431,7 +431,7 @@ export function internalToSerialized(internal_data) {
     }
     return null;
   }
-  // TODO: keep observation id information, so that we can update existing
+  // Keep observation id information, so that we can update existing
   // observations using PUT requests rather than creating new ones all the time.
   function getObservationFields(observation_cid, score_cid) {
     var old_observation = null;
@@ -448,6 +448,11 @@ export function internalToSerialized(internal_data) {
       new_observation['piece'] = getPieceID(score_cid);
     }
     else {
+      // Add an ID only if it is an observation from the CRIM database with a
+      // pre-assigned ID.
+      if (old_observation.cid.includes('c_')) {
+        new_observation['observation_id'] = old_observation.cid.replace('c_', '');
+      }
       new_observation['piece'] = getPieceID(old_observation.score);
       if (old_observation.types['mt-cf']) {
         new_observation['mt_cf'] = true;
@@ -563,10 +568,10 @@ export function internalToSerialized(internal_data) {
     // Add an ID only if it is a relationship from the CRIM database with a
     // pre-assigned ID.
     if (old_relationship.cid.includes('c_')) {
-      new_relationship['id'] = old_relationship.cid.replace('c_', '').replace('R', '');
+      new_relationship['relationship_id'] = old_relationship.cid.replace('c_', '').replace('R', '');
     }
     else {
-      new_relationship['id'] = 'new';
+      new_relationship['relationship_id'] = 'new';
     }
     // There should be only one type for each relationship.
     if (old_relationship.types['rt-q']) {
@@ -608,26 +613,34 @@ export function internalToSerialized(internal_data) {
     let scoreA_observation = getObservationFields(old_relationship.scoreAobserv, old_relationship.scoreA);
     let scoreB_observation = getObservationFields(old_relationship.scoreBobserv, old_relationship.scoreB);
     if (old_relationship.direction == "b2a") {
-      new_relationship['model_ema'] = old_relationship.scoreB_ema;
+      scoreB_observation['ema'] = old_relationship.scoreB_ema;
       for (let field in scoreB_observation) {
         new_relationship['model_' + field] = scoreB_observation[field];
       }
-      new_relationship['derivative_ema'] = old_relationship.scoreA_ema;
+      scoreA_observation['ema'] = old_relationship.scoreA_ema;
       for (let field in scoreA_observation) {
         new_relationship['derivative_' + field] = scoreA_observation[field];
       }
     }
     else {
-      new_relationship['model_ema'] = old_relationship.scoreA_ema;
+      scoreA_observation['ema'] = old_relationship.scoreA_ema;
       for (let field in scoreA_observation) {
         new_relationship['model_' + field] = scoreA_observation[field];
       }
-      new_relationship['derivative_ema'] = old_relationship.scoreB_ema;
+      scoreB_observation['ema'] = old_relationship.scoreB_ema;
       for (let field in scoreB_observation) {
         new_relationship['derivative_' + field] = scoreB_observation[field];
       }
     }
-    all_relationships.push(new_relationship);
+    // We include observation data in the relationship as well as separately;
+    // this way, we can easily update existing observations, or create new
+    // ones as necessary with the relationship POST.
+    let this_data = {
+      'relationship': new_relationship,
+      'model': scoreA_observation,
+      'derivative': scoreB_observation
+    }
+    all_data.push(this_data);
   }
-  return all_relationships;
+  return all_data;
 }
