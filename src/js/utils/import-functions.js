@@ -33,12 +33,12 @@ export function printComposers(piece) {
       printed_role_list.push(role.person.name);
     }
   };
-  return "Composer: " + printed_role_list.join(", ");
+  return printed_role_list.join(", ");
 }
 
 export function getVoicesList(voices_string, first_voice_name) {
   var voice_list = voices_string.split("\n");
-  var options = []
+  var options = [];
   if ($.isEmptyObject(voice_list)) {
     return options;
   }
