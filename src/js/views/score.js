@@ -151,7 +151,7 @@ class ScoreView extends Backbone.View {
       this.continuo.renderPage(firstPage);
     }
     for (let id of ids) {
-      this.continuo.interView.addMusEventFromId(id)
+      this.continuo.interView.addMusEventFromId(id.replace('#', ''))
     }
   }
 
