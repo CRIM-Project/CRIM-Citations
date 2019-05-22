@@ -64,10 +64,10 @@ class Export extends Backbone.View {
       data: observation,
       withCredentials: true,
       success: () => {
-        this.$el.find("#expDialogText").append("The " + type + "observation has been updated.");
+        this.$el.find("#expDialogText").append("<p>Updated " + type + ".</p>");
       },
       error: (err) => {
-        this.$el.find("#expDialogText").append("<strong>An error occured.</strong> Updating the " + type + "observation was unsuccessful.");
+        this.$el.find("#expDialogText").append("<p><strong>An error occured when trying to update the " + type + " observation.</strong></p>");
         console.log(err);
       }
     });
