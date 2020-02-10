@@ -78,6 +78,7 @@ class Export extends Backbone.View {
     var processed_data = internalToSerialized(this.data);
     let r = confirm("This will send the data directly to the CRIM online database. Continue?");
     if (r) {
+      this.$el.find("#expToCRIMOnline").removeClass("btn-info");
       for (var data of processed_data) {
         var relationship = data.relationship
         // If we have existing observations, then make separate AJAX requests
@@ -111,7 +112,6 @@ class Export extends Backbone.View {
             // has already been performed. Users should think twice about
             // exporting or downloading the same relationships twice.
             this.$el.find("#expToCRIMOnline").addClass("btn-warning");
-            this.$el.find("#expToCRIMOnline").removeClass("btn-info");
             this.$el.find("#expDialogText").html("Your analyses have been successfully exported to the CRIM online database. You may wish to clear your session before creating new analyses and exporting again.");
           },
           error: (err) => {
